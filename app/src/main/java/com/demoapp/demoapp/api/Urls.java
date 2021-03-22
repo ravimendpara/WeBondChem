@@ -1,8 +1,8 @@
-package com.employeecontrol.controle.api;
+package com.demoapp.demoapp.api;
 
 public class Urls {
 
-    public static String BASE_URL = "http://91.74.105.110:8078/";//testing url
-   
+    public static String BASE_URL = "http://demo.jewelleryeasysoftware.in/STWebService.asmx/";
+
 
 }
