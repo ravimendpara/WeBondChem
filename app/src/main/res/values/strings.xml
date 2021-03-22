@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DemoApp</string>
+    <string name="app_name">Webond Chemicals</string>
 
     <string name="permissions_has_not_grant">Permissions has not been granted</string>
     <string name="permission_request">Permission Request</string>
