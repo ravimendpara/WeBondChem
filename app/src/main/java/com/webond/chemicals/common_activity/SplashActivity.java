@@ -49,7 +49,7 @@ public class SplashActivity extends AppCompatActivity {
         Thread timer = new Thread() {
             public void run() {
                 try {
-                    sleep(1600);
+                    sleep(1800);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
@@ -69,9 +69,9 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void redirectToLoginActivity() {
-//        Intent openMainActivity = new Intent(SplashActivity.this, LoginActivity.class);
-//        startActivity(openMainActivity);
-//        finish();
+        Intent openMainActivity = new Intent(SplashActivity.this, LoginActivity.class);
+        startActivity(openMainActivity);
+        finish();
     }
 
 

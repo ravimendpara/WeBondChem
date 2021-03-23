@@ -53,6 +53,12 @@ public class CommonUtil {
         return UUID.randomUUID().toString() + "_" + fileName;
     }
 
+    public static String getRandomSixDigitOTP() {
+        Random rnd = new Random();
+        int number = rnd.nextInt(999999);
+        return String.format("%06d", number);
+    }
+
     public static boolean checkIsEmptyOrNullCommon(Object object) {
         boolean isNullOrEmpty = false;
         if (object == null) {
