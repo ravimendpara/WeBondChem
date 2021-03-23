@@ -27,6 +27,4 @@ public class SendOtpPojo {//make list interface and implementer
     public void setMsg(String msg) {
         this.msg = msg;
     }
-
-
 }

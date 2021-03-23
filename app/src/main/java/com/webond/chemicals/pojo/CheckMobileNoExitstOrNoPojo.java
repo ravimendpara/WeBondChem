@@ -28,4 +28,5 @@ public class CheckMobileNoExitstOrNoPojo {
         this.msg = msg;
     }
 
+
 }

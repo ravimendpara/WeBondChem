@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class AddCustomerPojo {
 
+
     @SerializedName("Status")
     @Expose
     private Integer status;

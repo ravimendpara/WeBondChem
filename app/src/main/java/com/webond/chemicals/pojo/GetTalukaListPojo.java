@@ -60,6 +60,4 @@ public class GetTalukaListPojo {//make list in interface and implementer
     public void setTalukaIsStatus(Integer talukaIsStatus) {
         this.talukaIsStatus = talukaIsStatus;
     }
-
-
 }

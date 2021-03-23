@@ -28,4 +28,5 @@ public class AddDistributerPojo {
         this.msg = msg;
     }
 
+
 }

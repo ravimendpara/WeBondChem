@@ -12,7 +12,10 @@ import com.webond.chemicals.pojo.CheckMobileNoExitstOrNoPojo;
 import com.webond.chemicals.pojo.GetCityListPojo;
 import com.webond.chemicals.pojo.GetCustomerListPojo;
 import com.webond.chemicals.pojo.GetDealerListPojo;
-import com.webond.chemicals.pojo.GetDetailForLoginUserPojo;
+import com.webond.chemicals.pojo.GetDetailForLoginUserAdminPojo;
+import com.webond.chemicals.pojo.GetDetailsForLoginUserCustomerPojo;
+import com.webond.chemicals.pojo.GetDetailsForLoginUserDealerPojo;
+import com.webond.chemicals.pojo.GetDetailsForLoginUserDistributorPojo;
 import com.webond.chemicals.pojo.GetDistributorListPojo;
 import com.webond.chemicals.pojo.GetDistrictListPojo;
 import com.webond.chemicals.pojo.GetProductListPojo;
@@ -30,7 +33,7 @@ public interface IApiInterface {
 
 
     @GET("AddCustomer")
-    Call<AddCustomerPojo> addCustomer(
+    Call<ArrayList<AddCustomerPojo>> addCustomer(
             @Query("CustomerName") String CustomerName,
             @Query("DealerId") String DealerId,
             @Query("StateId") String StateId,
@@ -52,7 +55,7 @@ public interface IApiInterface {
     );
 
     @GET("AddDealer")
-    Call<AddDealerPojo> addDealer(
+    Call<ArrayList<AddDealerPojo>> addDealer(
             @Query("DealerName") String DealerName,
             @Query("DistributorId") String DistributorId,
             @Query("StateId") String StateId,
@@ -75,7 +78,7 @@ public interface IApiInterface {
 
 
     @GET("AddDistributer")
-    Call<AddDistributerPojo> addDistributor(
+    Call<ArrayList<AddDistributerPojo>> addDistributor(
             @Query("DistributerName") String DistributerName,
             @Query("StateId") String StateId,
             @Query("DistrictId") String DistrictId,
@@ -97,7 +100,7 @@ public interface IApiInterface {
 
 
     @GET("AddProduct")
-    Call<AddProductPojo> addProduct(
+    Call<ArrayList<AddProductPojo>> addProduct(
             @Query("ProductCode") String ProductCode,
             @Query("ProductName") String ProductName,
             @Query("ProductPhoto1") String ProductPhoto1,
@@ -119,16 +122,16 @@ public interface IApiInterface {
     );
 
     @GET("ApproveCustomer")
-    Call<ApproveCustomerPojo> approveCustomer(@Query("CustomerId") String CustomerId);
+    Call<ArrayList<ApproveCustomerPojo>> approveCustomer(@Query("CustomerId") String CustomerId);
 
     @GET("ApproveDealer")
-    Call<ApproveDealerPojo> approveDealer(@Query("DealerId") String DealerId);
+    Call<ArrayList<ApproveDealerPojo>> approveDealer(@Query("DealerId") String DealerId);
 
     @GET("ApproveDistributor")
-    Call<ApproveDistributorPojo> approveDistributor(@Query("DistributorId") String DistributorId);
+    Call<ArrayList<ApproveDistributorPojo>> approveDistributor(@Query("DistributorId") String DistributorId);
 
     @GET("CheckMobileNoExitstOrNo")
-    Call<CheckMobileNoExitstOrNoPojo> checkMobileNoExistOrNot(@Query("MobileNo") String MobileNo);
+    Call<ArrayList<CheckMobileNoExitstOrNoPojo>> checkMobileNoExistOrNot(@Query("MobileNo") String MobileNo);
 
     @GET("GetCityList")
     Call<ArrayList<GetCityListPojo>> getCityList(@Query("TalukaId") String TalukaId);
@@ -145,17 +148,26 @@ public interface IApiInterface {
 
 
     @GET("GetDetailForLoginUser")
-    Call<GetDetailForLoginUserPojo> getDetailsForLoginUser(@Query("MobileNo") String MobileNo);
+    Call<ArrayList<GetDetailForLoginUserAdminPojo>> getDetailsForLoginUserAdmin(@Query("MobileNo") String MobileNo);
+
+    @GET("GetDetailForLoginUser")
+    Call<ArrayList<GetDetailsForLoginUserDistributorPojo>> getDetailsForLoginUserDistributor(@Query("MobileNo") String MobileNo);
+
+    @GET("GetDetailForLoginUser")
+    Call<ArrayList<GetDetailsForLoginUserDealerPojo>> getDetailsForLoginUserDealer(@Query("MobileNo") String MobileNo);
+
+    @GET("GetDetailForLoginUser")
+    Call<ArrayList<GetDetailsForLoginUserCustomerPojo>> getDetailsForLoginUserCustomer(@Query("MobileNo") String MobileNo);
 
     @GET("GetDistributorList")
-    Call<GetDistributorListPojo> getDistributorList(@Query("LoginId") String LoginId,
+    Call<ArrayList<GetDistributorListPojo>> getDistributorList(@Query("LoginId") String LoginId,
                                                     @Query("FilterValue") String FilterValue);
 
     @GET("GetDistrictList")
     Call<ArrayList<GetDistrictListPojo>> getDistrictList(@Query("StateId") String StateId);
 
     @GET("GetProductList")
-    Call<GetProductListPojo> getProductList();
+    Call<ArrayList<GetProductListPojo>> getProductList();
 
     @GET("GetStateList")
     Call<ArrayList<GetStateListPojo>> getStateList();
