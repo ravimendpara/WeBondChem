@@ -69,9 +69,9 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void redirectToLoginActivity() {
-        Intent openMainActivity = new Intent(SplashActivity.this, LoginActivity.class);
-        startActivity(openMainActivity);
-        finish();
+//        Intent openMainActivity = new Intent(SplashActivity.this, LoginActivity.class);
+//        startActivity(openMainActivity);
+//        finish();
     }
 
 

@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#14489E</color>
-    <color name="colorPrimaryDark">#14489E</color>
-    <color name="colorAccent">#14489E</color>
+    <color name="colorPrimary">#039947</color>
+    <color name="colorPrimaryDark">#009746</color>
+    <color name="colorAccent">#393186</color>
 
     <color name="color_white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="color_black">#000000</color>
     <color name="color_transparent">#ffffff</color>
-    <color name="common_bg_color">#F3F4F6</color>
+    <color name="common_bg_color">#d5e8d5</color>
 
     <color name="white_color_with_85_opacity">#26FFFFFF</color>
     <color name="white_color_with_75_opacity">#BFFFFFFF</color>
-    <color name="color_primary_with_75_opacity">#BF14489E</color>
-    <color name="color_primary_with_80_opacity">#CC14489E</color>
-    <color name="color_primary_with_90_opacity">#E614489E</color>
-    <color name="color_primary_with_60_opacity">#4D14489E</color>
-    <color name="color_primary_with_30_opacity">#3314489E</color>
-    <color name="color_primary_with_70_opacity">#B314489E</color>
+    <color name="color_primary_with_75_opacity">#BF039947</color>
+    <color name="color_primary_with_80_opacity">#CC039947</color>
+    <color name="color_primary_with_90_opacity">#E6039947</color>
+    <color name="color_primary_with_60_opacity">#4D039947</color>
+    <color name="color_primary_with_30_opacity">#33039947</color>
+    <color name="color_primary_with_70_opacity">#B3039947</color>
 
-    <color name="color_accent_with_90_opacity">#E6CEA955</color>
-    <color name="color_accent_with_75_opacity">#66CEA955</color>
-    <color name="color_accent_with_80_opacity">#CCCEA955</color>
+    <color name="color_accent_with_90_opacity">#E6393186</color>
+    <color name="color_accent_with_75_opacity">#66393186</color>
+    <color name="color_accent_with_80_opacity">#CC393186</color>
 
     <color name="profile_heading_color">@color/colorAccent</color>
     <color name="profile_heading_value_color">@color/colorPrimary</color>
