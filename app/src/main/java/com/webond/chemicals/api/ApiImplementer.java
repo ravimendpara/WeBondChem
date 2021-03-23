@@ -229,15 +229,15 @@ public class ApiImplementer {
         call.enqueue(cb);
     }
 
-    public static void getCustomerListImplementer(String LoginType, String LoginId, String FilterValue, Callback<GetCustomerListPojo> cb) {
+    public static void getCustomerListImplementer(String LoginType, String LoginId, String FilterValue, Callback<ArrayList<GetCustomerListPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
-        Call<GetCustomerListPojo> call = apiService.getCustomerList(LoginType, LoginId, FilterValue);
+        Call<ArrayList<GetCustomerListPojo>> call = apiService.getCustomerList(LoginType, LoginId, FilterValue);
         call.enqueue(cb);
     }
 
-    public static void getDealerListImplementer(String LoginType, String LoginId, String FilterValue, Callback<GetDealerListPojo> cb) {
+    public static void getDealerListImplementer(String LoginType, String LoginId, String FilterValue, Callback<ArrayList<GetDealerListPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
-        Call<GetDealerListPojo> call = apiService.getDealerList(LoginType, LoginId, FilterValue);
+        Call<ArrayList<GetDealerListPojo>> call = apiService.getDealerList(LoginType, LoginId, FilterValue);
         call.enqueue(cb);
     }
 

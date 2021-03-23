@@ -137,12 +137,12 @@ public interface IApiInterface {
     Call<ArrayList<GetCityListPojo>> getCityList(@Query("TalukaId") String TalukaId);
 
     @GET("GetCustomerList")
-    Call<GetCustomerListPojo> getCustomerList(@Query("LoginType") String LoginType,
+    Call<ArrayList<GetCustomerListPojo>> getCustomerList(@Query("LoginType") String LoginType,
                                               @Query("LoginId") String LoginId,
                                               @Query("FilterValue") String FilterValue);
 
     @GET("GetDealerList")
-    Call<GetDealerListPojo> getDealerList(@Query("LoginType") String LoginType,
+    Call<ArrayList<GetDealerListPojo>> getDealerList(@Query("LoginType") String LoginType,
                                           @Query("LoginId") String LoginId,
                                           @Query("FilterValue") String FilterValue);
 

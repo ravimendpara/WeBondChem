@@ -15,6 +15,10 @@ import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.custom_class.BottomSheetDialogForVerifyOTP;
 import com.webond.chemicals.custom_class.SpinnerSimpleAdapter;
 import com.webond.chemicals.pojo.CheckMobileNoExitstOrNoPojo;
+import com.webond.chemicals.pojo.GetDetailForLoginUserAdminPojo;
+import com.webond.chemicals.pojo.GetDetailsForLoginUserCustomerPojo;
+import com.webond.chemicals.pojo.GetDetailsForLoginUserDealerPojo;
+import com.webond.chemicals.pojo.GetDetailsForLoginUserDistributorPojo;
 import com.webond.chemicals.pojo.SendOtpPojo;
 import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.DialogUtil;
@@ -34,6 +38,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private SpinnerSimpleAdapter spinnerAdapterUserType;
     private AppCompatEditText edtMobileNo;
     private MaterialCardView cvLogin;
+    private MaterialCardView cvRegister;
     private BottomSheetDialogForVerifyOTP bottomSheetDialogForVerifyOTP;
     private String randomSixDigitOTP;
 
@@ -50,6 +55,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edtMobileNo = findViewById(R.id.edtMobileNo);
         cvLogin = findViewById(R.id.cvLogin);
         cvLogin.setOnClickListener(this);
+        cvRegister = findViewById(R.id.cvRegister);
+        cvRegister.setOnClickListener(this);
         selectUserTypeArrayList.add(SELECT_USER_TYPE);
         selectUserTypeArrayList.add("Admin");
         selectUserTypeArrayList.add("Distributor");
@@ -93,6 +100,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (v.getId() == R.id.cvLogin) {
             if (isValid()) {
                 randomSixDigitOTP = CommonUtil.getRandomSixDigitOTP();
+                sendOTPApiCall(true, true, edtMobileNo.getText().toString().trim(), randomSixDigitOTP);
+            }
+        } else if (v.getId() == R.id.cvRegister) {
+            if (isValid()) {
                 checkIsMobileNoIsExistOrNot(true, false, edtMobileNo.getText().toString().trim());
             }
         }
@@ -103,6 +114,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (enteredOTP.equalsIgnoreCase(randomSixDigitOTP)) {
             bottomSheetDialogForVerifyOTP.dismiss();
             Toast.makeText(this, "OTP Verified Successfully!", Toast.LENGTH_SHORT).show();
+
         } else {
             Toast.makeText(this, "Invalid OTP", Toast.LENGTH_SHORT).show();
         }
@@ -122,7 +134,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (response.code() == 200 && response.body() != null &&
                             response.body().size() > 0) {
                         if (response.body().get(0).getStatus() == 1) {
-                            sendOTPApiCall(false, true, edtMobileNo.getText().toString().trim(), randomSixDigitOTP);
+
                         } else {
                             if (!isPdHide) {
                                 DialogUtil.hideProgressDialog();
@@ -197,4 +209,161 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
     }
+
+    private void getDetailsForLoginUserAdmin(boolean isPdShow, boolean isPdHide) {
+        if (isPdShow) {
+            DialogUtil.showProgressDialogNotCancelable(LoginActivity.this, "");
+        }
+        ApiImplementer.getDetailsForLoginUserAdminImplementer(edtMobileNo.getText().toString().trim(),
+                new Callback<ArrayList<GetDetailForLoginUserAdminPojo>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<GetDetailForLoginUserAdminPojo>> call, Response<ArrayList<GetDetailForLoginUserAdminPojo>> response) {
+                        if (isPdHide) {
+                            DialogUtil.hideProgressDialog();
+                        }
+                        try {
+                            if (response.code() == 200 && response.body() != null &&
+                                    response.body().size() > 0) {
+                                GetDetailForLoginUserAdminPojo getDetailForLoginUserAdminPojo = response.body().get(0);
+
+
+                            } else {
+                                if (!isPdHide) {
+                                    DialogUtil.hideProgressDialog();
+                                }
+                                Toast.makeText(LoginActivity.this, "Something went wrong,Please try again later.", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception ex) {
+                            if (!isPdHide) {
+                                DialogUtil.hideProgressDialog();
+                            }
+                            ex.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<GetDetailForLoginUserAdminPojo>> call, Throwable t) {
+                        DialogUtil.hideProgressDialog();
+                        Toast.makeText(LoginActivity.this, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void getDetailsForLoginUserDealer(boolean isPdShow, boolean isPdHide){
+        if (isPdShow) {
+            DialogUtil.showProgressDialogNotCancelable(LoginActivity.this, "");
+        }
+        ApiImplementer.getDetailsForLoginUserDealerImplementer(edtMobileNo.getText().toString().trim(),
+                new Callback<ArrayList<GetDetailsForLoginUserDealerPojo>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<GetDetailsForLoginUserDealerPojo>> call, Response<ArrayList<GetDetailsForLoginUserDealerPojo>> response) {
+                        if (isPdHide) {
+                            DialogUtil.hideProgressDialog();
+                        }
+                        try {
+                            if (response.code() == 200 && response.body() != null &&
+                                    response.body().size() > 0) {
+                                GetDetailsForLoginUserDealerPojo getDetailsForLoginUserDealerPojo = response.body().get(0);
+
+
+                            } else {
+                                if (!isPdHide) {
+                                    DialogUtil.hideProgressDialog();
+                                }
+                                Toast.makeText(LoginActivity.this, "Something went wrong,Please try again later.", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception ex) {
+                            if (!isPdHide) {
+                                DialogUtil.hideProgressDialog();
+                            }
+                            ex.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<GetDetailsForLoginUserDealerPojo>> call, Throwable t) {
+                        DialogUtil.hideProgressDialog();
+                        Toast.makeText(LoginActivity.this, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void getDetailsForLoginUserDistributor(boolean isPdShow, boolean isPdHide){
+        if (isPdShow) {
+            DialogUtil.showProgressDialogNotCancelable(LoginActivity.this, "");
+        }
+        ApiImplementer.getDetailsForLoginUserDistributorImplementer(edtMobileNo.getText().toString().trim(),
+                new Callback<ArrayList<GetDetailsForLoginUserDistributorPojo>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<GetDetailsForLoginUserDistributorPojo>> call, Response<ArrayList<GetDetailsForLoginUserDistributorPojo>> response) {
+                        if (isPdHide) {
+                            DialogUtil.hideProgressDialog();
+                        }
+                        try {
+                            if (response.code() == 200 && response.body() != null &&
+                                    response.body().size() > 0) {
+                                GetDetailsForLoginUserDistributorPojo getDetailsForLoginUserDistributorPojo = response.body().get(0);
+
+
+                            } else {
+                                if (!isPdHide) {
+                                    DialogUtil.hideProgressDialog();
+                                }
+                                Toast.makeText(LoginActivity.this, "Something went wrong,Please try again later.", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception ex) {
+                            if (!isPdHide) {
+                                DialogUtil.hideProgressDialog();
+                            }
+                            ex.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<GetDetailsForLoginUserDistributorPojo>> call, Throwable t) {
+                        DialogUtil.hideProgressDialog();
+                        Toast.makeText(LoginActivity.this, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void getDetailsForLoginUserCustomer(boolean isPdShow, boolean isPdHide){
+        if (isPdShow) {
+            DialogUtil.showProgressDialogNotCancelable(LoginActivity.this, "");
+        }
+        ApiImplementer.getDetailsForLoginUserCustomerImplementer(edtMobileNo.getText().toString().trim(),
+                new Callback<ArrayList<GetDetailsForLoginUserCustomerPojo>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<GetDetailsForLoginUserCustomerPojo>> call, Response<ArrayList<GetDetailsForLoginUserCustomerPojo>> response) {
+                        if (isPdHide) {
+                            DialogUtil.hideProgressDialog();
+                        }
+                        try {
+                            if (response.code() == 200 && response.body() != null &&
+                                    response.body().size() > 0) {
+                                GetDetailsForLoginUserCustomerPojo getDetailsForLoginUserCustomerPojo = response.body().get(0);
+
+
+                            } else {
+                                if (!isPdHide) {
+                                    DialogUtil.hideProgressDialog();
+                                }
+                                Toast.makeText(LoginActivity.this, "Something went wrong,Please try again later.", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception ex) {
+                            if (!isPdHide) {
+                                DialogUtil.hideProgressDialog();
+                            }
+                            ex.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<GetDetailsForLoginUserCustomerPojo>> call, Throwable t) {
+                        DialogUtil.hideProgressDialog();
+                        Toast.makeText(LoginActivity.this, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
 }
