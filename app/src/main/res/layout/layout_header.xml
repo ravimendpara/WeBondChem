@@ -20,7 +20,7 @@
             android:src="@drawable/ic_back"
             android:tint="@color/white" />
 
-        <com.webond.chemicals.custom_class.TextViewRegularFont
+        <com.webond.chemicals.custom_class.TextViewMediumFont
             android:id="@+id/tvHeaderTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

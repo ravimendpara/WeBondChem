@@ -91,7 +91,7 @@
                         android:layout_marginLeft="14dp"
                         android:layout_marginRight="6dp"
                         android:background="@null"
-                        android:fontFamily="@font/montserrat_regular"
+                        android:fontFamily="@font/montserrat_medium"
                         android:hint="Enter Your Mobile No."
                         android:inputType="number"
                         android:maxLength="10"
@@ -122,7 +122,7 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <com.webond.chemicals.custom_class.TextViewRegularFont
+                    <com.webond.chemicals.custom_class.TextViewMediumFont
                         android:layout_width="wrap_content"
                         android:layout_height="36dp"
                         android:layout_gravity="center"

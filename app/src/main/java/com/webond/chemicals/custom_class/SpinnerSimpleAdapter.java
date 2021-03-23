@@ -64,7 +64,7 @@ public class SpinnerSimpleAdapter extends BaseAdapter {
 
         CheckBox itemCheckBox;
 
-        private TextViewRegularFont tv_tv1;
+        private TextViewMediumFont tv_tv1;
 
     }
 

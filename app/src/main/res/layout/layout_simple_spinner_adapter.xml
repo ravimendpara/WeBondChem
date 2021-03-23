@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.webond.chemicals.custom_class.TextViewRegularFont
+    <com.webond.chemicals.custom_class.TextViewMediumFont
         android:id="@+id/tvForCustomSimpleSpinnerAdapter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
