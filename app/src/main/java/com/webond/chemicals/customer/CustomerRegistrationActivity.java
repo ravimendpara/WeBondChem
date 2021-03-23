@@ -7,12 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.webond.chemicals.R;
+import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
 
 public class CustomerRegistrationActivity extends AppCompatActivity implements View.OnClickListener {
 
     private AppCompatImageView imgBack;
-    private TextViewRegularFont tvHeaderTitle;
+    private TextViewMediumFont tvHeaderTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
