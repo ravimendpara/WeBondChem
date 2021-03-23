@@ -4,12 +4,11 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.employeecontrol.controle.custom_class.TextViewRegularFont
+    <com.webond.chemicals.custom_class.TextViewRegularFont
         android:id="@+id/tvForCustomSimpleSpinnerAdapter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:textColor="@color/colorPrimary"
-        android:textSize="12sp" />
+        android:textSize="13sp" />
 
 </LinearLayout>

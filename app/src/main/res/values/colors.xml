@@ -11,6 +11,11 @@
     <color name="color_transparent">#ffffff</color>
     <color name="common_bg_color">#d5e8d5</color>
 
+    <color name="color_black_with_90_opacity">#E6000000</color>
+    <color name="color_black_with_85_opacity">#D9000000</color>
+    <color name="color_black_with_75_opacity">#BF000000</color>
+    <color name="color_black_with_70_opacity">#B3000000</color>
+
     <color name="white_color_with_85_opacity">#26FFFFFF</color>
     <color name="white_color_with_75_opacity">#BFFFFFFF</color>
     <color name="color_primary_with_75_opacity">#BF039947</color>

@@ -27,7 +27,7 @@ public class TextViewBoldFont extends AppCompatTextView {
 
 
     private void init() {
-        setTypeface(ResourcesCompat.getFont(getContext(), R.font.roboto_bold), 1);
+        setTypeface(ResourcesCompat.getFont(getContext(), R.font.montserrat_bold), 1);
     }
 
 }

@@ -21,7 +21,7 @@
             android:layout_height="52dp"
             android:layout_marginRight="8dp"
             android:layout_gravity="center"
-            app:SpinKit_Color="@color/colorPrimary" />
+            app:SpinKit_Color="@color/colorAccent" />
 
 <!--        <ProgressBar-->
 <!--            android:layout_width="54dp"-->
@@ -29,7 +29,7 @@
 <!--            android:layout_marginRight="8dp"-->
 <!--            android:indeterminate="true"/>-->
 
-        <com.employeecontrol.controle.custom_class.TextViewRegularFont
+        <com.webond.chemicals.custom_class.TextViewRegularFont
             android:id="@+id/tvMsg"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

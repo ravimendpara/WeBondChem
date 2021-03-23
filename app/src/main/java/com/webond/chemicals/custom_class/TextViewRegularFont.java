@@ -28,7 +28,7 @@ public class TextViewRegularFont extends AppCompatTextView {
 
 
     private void init() {
-        setTypeface(ResourcesCompat.getFont(getContext(), R.font.roboto_regular), 1);
+        setTypeface(ResourcesCompat.getFont(getContext(), R.font.montserrat_regular), 1);
     }
 
 }

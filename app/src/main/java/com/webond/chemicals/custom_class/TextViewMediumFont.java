@@ -27,7 +27,7 @@ public class TextViewMediumFont extends AppCompatTextView {
 
 
     private void init() {
-        setTypeface(ResourcesCompat.getFont(getContext(), R.font.roboto_medium), 1);
+        setTypeface(ResourcesCompat.getFont(getContext(), R.font.montserrat_medium), 1);
     }
 
 }
