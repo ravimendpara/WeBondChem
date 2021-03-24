@@ -64,4 +64,5 @@
     <color name="color_header">#14489E</color>
 
     <color name="slycalendar_defSelectedColor_transparent">#2962ff</color>
+    <color name="darker_grey_color">#757575</color>
 </resources>

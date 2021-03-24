@@ -289,9 +289,9 @@ public class ApiImplementer {
         call.enqueue(cb);
     }
 
-    public static void getTalukaListApiImplementer(String DistrictId, Callback<ArrayList<GetTalukaListPojo>> cb) {
+    public static void getTalukaListApiImplementer(String districtId, Callback<ArrayList<GetTalukaListPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
-        Call<ArrayList<GetTalukaListPojo>> call = apiService.getTalukaList(DistrictId);
+        Call<ArrayList<GetTalukaListPojo>> call = apiService.getTalukaList(districtId);
         call.enqueue(cb);
     }
 

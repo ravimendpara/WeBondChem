@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -30,24 +33,15 @@ import java.util.UUID;
 
 public class CommonUtil {
 
-    //    public static final String LOGIN_USER_TYPE_MANAGER_CLIENT_OR_VENDOR = "manager_vendor_client";
-//    public static final String LOGIN_USER_TYPE_SUPERVISOR_GUARD_OR_STAFF = "supervisor_gaurd_staff";
+    public static final String FOLDER_NAME = "WeBond";
 
-
-    //for testing user name and pass
-//    userName:- manager1
-    //password:- mb%237s43mb%23723
-
-    public static final String STATUS_START_SHIFT = "start_shift";
-    public static final String STATUS_END_SHIFT = "end_shift";
-    public static final String STATUS_START_BREAK = "start_break";
-    public static final String STATUS_END_BREAK = "end_break";
-
-
-    public static final int ROW_PER_PAGE = 25;
-    public static final String FOLDER_NAME = "Event_Security";
-    private static final String KEY_REQUESTING_LOCATUON_UPDATE = "LocationUpdateEnable";
-
+    public static String getBase64StringFromFileObj(File file) {
+        Bitmap bm = BitmapFactory.decodeFile(file.getPath());
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); // bm is the bitmap object
+        byte[] byteUploaded = baos.toByteArray();
+        return Base64.encodeToString(byteUploaded, Base64.DEFAULT);
+    }
 
     public static String generateUniqueFileName(String fileName) {
         return UUID.randomUUID().toString() + "_" + fileName;
@@ -326,18 +320,18 @@ public class CommonUtil {
     }
 
 
-        public static CharSequence getLocationTitle(BackgroundLocationServices backgroundLocationServices) {
+    public static CharSequence getLocationTitle(BackgroundLocationServices backgroundLocationServices) {
         return String.format("Location Update: %1$s", DateFormat.getDateInstance().format(new Date()));
     }
 
-    public static void setRequestLocationUpdate(Context context, boolean value) {
-        PreferenceManager.getDefaultSharedPreferences(context)
-                .edit()
-                .putBoolean(KEY_REQUESTING_LOCATUON_UPDATE ,value);
-    }
-
-    public static boolean requestLocationUpdate(Context context) {
-        return  PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(KEY_REQUESTING_LOCATUON_UPDATE,false);
-    }
+//    public static void setRequestLocationUpdate(Context context, boolean value) {
+//        PreferenceManager.getDefaultSharedPreferences(context)
+//                .edit()
+//                .putBoolean(KEY_REQUESTING_LOCATUON_UPDATE, value);
+//    }
+//
+//    public static boolean requestLocationUpdate(Context context) {
+//        return PreferenceManager.getDefaultSharedPreferences(context)
+//                .getBoolean(KEY_REQUESTING_LOCATUON_UPDATE, false);
+//    }
 }
