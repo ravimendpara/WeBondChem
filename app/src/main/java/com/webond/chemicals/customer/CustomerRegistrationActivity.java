@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
+import com.jaiselrahman.filepicker.activity.FilePickerActivity;
 import com.jaiselrahman.filepicker.config.Configurations;
 import com.jaiselrahman.filepicker.model.MediaFile;
 import com.webond.chemicals.R;
@@ -264,22 +265,25 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
         if (v.getId() == R.id.imgBack) {
             onBackPressed();
         } else if (v.getId() == R.id.edtUploadAadharProof) {
-            Intent intent = new Intent(CustomerRegistrationActivity.this,
-                    com.jaiselrahman.filepicker.activity.FilePickerActivity.class);
-            intent.putExtra(com.jaiselrahman.filepicker.activity.FilePickerActivity.CONFIGS,
-                    new Configurations.Builder()
-                            .setCheckPermission(true)
-                            .setShowImages(true)
-                            .setShowAudios(false)
-                            .setShowVideos(false)
-                            .enableImageCapture(false)
-                            .setMaxSelection(1)
-                            .setSkipZeroSizeFiles(true)
-                            .build());
-            startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_UPLOAD_AADHAR_PROOF);
+            try {
+                Intent intent = new Intent(CustomerRegistrationActivity.this,
+                        FilePickerActivity.class);
+                intent.putExtra(FilePickerActivity.CONFIGS,
+                        new Configurations.Builder()
+                                .setCheckPermission(true)
+                                .setShowImages(true)
+                                .setShowAudios(false)
+                                .setShowVideos(false)
+                                .enableImageCapture(false)
+                                .setMaxSelection(1)
+                                .build());
+                startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_UPLOAD_AADHAR_PROOF);
+            } catch (Throwable ex) {
+                ex.printStackTrace();
+            }
         } else if (v.getId() == R.id.edtUploadPhoto) {
             Intent intent = new Intent(CustomerRegistrationActivity.this,
-                    com.jaiselrahman.filepicker.activity.FilePickerActivity.class);
+                    FilePickerActivity.class);
             intent.putExtra(com.jaiselrahman.filepicker.activity.FilePickerActivity.CONFIGS,
                     new Configurations.Builder()
                             .setCheckPermission(true)

@@ -36,9 +36,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".customer.CustomerRegistrationActivity"
-            android:screenOrientation="portrait" >
-
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".customer.CustomerDashboardActivity"
             android:screenOrientation="portrait" />

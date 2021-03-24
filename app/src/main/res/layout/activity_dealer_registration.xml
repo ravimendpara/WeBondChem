@@ -364,7 +364,7 @@
                         android:fontFamily="@font/montserrat_medium"
                         android:gravity="center_vertical"
                         android:hint="GST No"
-                        android:imeOptions="actionNext"
+                        android:imeOptions="actionDone"
                         android:inputType="number"
                         android:textSize="@dimen/registration_form_text_size"
                         app:errorIconDrawable="@null" />
