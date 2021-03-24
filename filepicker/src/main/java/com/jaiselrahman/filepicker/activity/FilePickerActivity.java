@@ -82,96 +82,92 @@ public class FilePickerActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        try {
-            configs = getIntent().getParcelableExtra(CONFIGS);
-            if (configs == null) {
-                configs = new Configurations.Builder().build();
+        configs = getIntent().getParcelableExtra(CONFIGS);
+        if (configs == null) {
+            configs = new Configurations.Builder().build();
+        }
+
+        if (getIntent().hasExtra(DIR_ID))
+            dirId = getIntent().getLongExtra(DIR_ID, 0);
+
+        if (useDocumentUi()) {
+            MimeTypeMap mimeType = MimeTypeMap.getSingleton();
+
+            String[] suffixes = configs.getSuffixes();
+            String[] mime = new String[suffixes.length];
+            for (int i = 0; i < suffixes.length; i++) {
+                mime[i] = mimeType.getMimeTypeFromExtension(
+                        suffixes[i].replace(".", "")
+                );
             }
 
-            if (getIntent().hasExtra(DIR_ID))
-                dirId = getIntent().getLongExtra(DIR_ID, 0);
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT)
+                    .setType("*/*")
+                    .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, configs.getMaxSelection() > 1)
+                    .putExtra(Intent.EXTRA_MIME_TYPES, mime);
+            startActivityForResult(intent, REQUEST_DOCUMENT);
+            return;
+        }
 
-            if (useDocumentUi()) {
-                MimeTypeMap mimeType = MimeTypeMap.getSingleton();
+        setContentView(R.layout.filepicker_gallery);
 
-                String[] suffixes = configs.getSuffixes();
-                String[] mime = new String[suffixes.length];
-                for (int i = 0; i < suffixes.length; i++) {
-                    mime[i] = mimeType.getMimeTypeFromExtension(
-                            suffixes[i].replace(".", "")
-                    );
-                }
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT)
-                        .setType("*/*")
-                        .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, configs.getMaxSelection() > 1)
-                        .putExtra(Intent.EXTRA_MIME_TYPES, mime);
-                startActivityForResult(intent, REQUEST_DOCUMENT);
-                return;
+        if (getIntent().hasExtra(DIR_TITLE))
+            title = getIntent().getStringExtra(DIR_TITLE);
+        else if (configs.getTitle() != null)
+            title = configs.getTitle();
+
+        if (title != null)
+            title_res = R.string.selection_count_title;
+
+        int spanCount;
+        if (getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_LANDSCAPE) {
+            spanCount = configs.getLandscapeSpanCount();
+        } else {
+            spanCount = configs.getPortraitSpanCount();
+        }
+
+        int imageSize = configs.getImageSize();
+        if (imageSize <= 0) {
+            Point point = new Point();
+            getWindowManager().getDefaultDisplay().getSize(point);
+            imageSize = Math.min(point.x, point.y) / configs.getPortraitSpanCount();
+        }
+
+        boolean isSingleChoice = configs.isSingleChoiceMode();
+        fileGalleryAdapter = new FileGalleryAdapter(this, imageSize,
+                dirId == null && configs.isImageCaptureEnabled(),
+                dirId == null && configs.isVideoCaptureEnabled());
+        fileGalleryAdapter.enableSelection(true);
+        fileGalleryAdapter.enableSingleClickSelection(configs.isSingleClickSelection());
+        fileGalleryAdapter.setOnSelectionListener(this);
+        fileGalleryAdapter.setSingleChoiceMode(isSingleChoice);
+        fileGalleryAdapter.setMaxSelection(isSingleChoice ? 1 : configs.getMaxSelection());
+        fileGalleryAdapter.setSelectedItems(configs.getSelectedMediaFiles());
+        fileGalleryAdapter.setOnCameraClickListener(this);
+        RecyclerView recyclerView = findViewById(R.id.file_gallery);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, spanCount) {
+            @Override
+            public boolean isAutoMeasureEnabled() {
+                return false;
             }
+        });
+        recyclerView.setAdapter(fileGalleryAdapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDimensionPixelSize(R.dimen.grid_spacing), spanCount));
+        recyclerView.setItemAnimator(null);
+        recyclerView.setHasFixedSize(false);
+        recyclerView.setItemViewCacheSize(20);
 
-            setContentView(R.layout.filepicker_gallery);
+        if (requestPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION)) {
+            loadFiles();
+        }
 
-            Toolbar toolbar = findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
-
-            if (getIntent().hasExtra(DIR_TITLE))
-                title = getIntent().getStringExtra(DIR_TITLE);
-            else if (configs.getTitle() != null)
-                title = configs.getTitle();
-
-            if (title != null)
-                title_res = R.string.selection_count_title;
-
-            int spanCount;
-            if (getResources().getConfiguration().orientation
-                    == Configuration.ORIENTATION_LANDSCAPE) {
-                spanCount = configs.getLandscapeSpanCount();
-            } else {
-                spanCount = configs.getPortraitSpanCount();
-            }
-
-            int imageSize = configs.getImageSize();
-            if (imageSize <= 0) {
-                Point point = new Point();
-                getWindowManager().getDefaultDisplay().getSize(point);
-                imageSize = Math.min(point.x, point.y) / configs.getPortraitSpanCount();
-            }
-
-            boolean isSingleChoice = configs.isSingleChoiceMode();
-            fileGalleryAdapter = new FileGalleryAdapter(this, imageSize,
-                    dirId == null && configs.isImageCaptureEnabled(),
-                    dirId == null && configs.isVideoCaptureEnabled());
-            fileGalleryAdapter.enableSelection(true);
-            fileGalleryAdapter.enableSingleClickSelection(configs.isSingleClickSelection());
-            fileGalleryAdapter.setOnSelectionListener(this);
-            fileGalleryAdapter.setSingleChoiceMode(isSingleChoice);
-            fileGalleryAdapter.setMaxSelection(isSingleChoice ? 1 : configs.getMaxSelection());
-            fileGalleryAdapter.setSelectedItems(configs.getSelectedMediaFiles());
-            fileGalleryAdapter.setOnCameraClickListener(this);
-            RecyclerView recyclerView = findViewById(R.id.file_gallery);
-            recyclerView.setLayoutManager(new GridLayoutManager(this, spanCount) {
-                @Override
-                public boolean isAutoMeasureEnabled() {
-                    return false;
-                }
-            });
-            recyclerView.setAdapter(fileGalleryAdapter);
-            recyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDimensionPixelSize(R.dimen.grid_spacing), spanCount));
-            recyclerView.setItemAnimator(null);
-            recyclerView.setHasFixedSize(false);
-            recyclerView.setItemViewCacheSize(20);
-
-            if (requestPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION)) {
-                loadFiles();
-            }
-
-            maxCount = configs.getMaxSelection();
-            if (maxCount > 0) {
-                setTitle(getResources().getString(title_res, fileGalleryAdapter.getSelectedItemCount(), maxCount, title));
-            }
-        }catch (Throwable ex){
-            ex.printStackTrace();
+        maxCount = configs.getMaxSelection();
+        if (maxCount > 0) {
+            setTitle(getResources().getString(title_res, fileGalleryAdapter.getSelectedItemCount(), maxCount, title));
         }
     }
 
@@ -216,52 +212,48 @@ public class FilePickerActivity extends AppCompatActivity
     @SuppressLint("NewApi")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        try {
-            if (requestCode == FileGalleryAdapter.CAPTURE_IMAGE_VIDEO) {
-                if (resultCode == RESULT_OK) {
-                    String path = fileGalleryAdapter.getLastCapturedFile();
-                    MediaScannerConnection.scanFile(this, new String[]{path}, null,
-                            new MediaScannerConnection.OnScanCompletedListener() {
-                                @Override
-                                public void onScanCompleted(String path, final Uri uri) {
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            viewModel.refresh();
-                                        }
-                                    });
-                                }
-                            });
-                } else {
-                    getContentResolver().delete(fileGalleryAdapter.getLastCapturedUri(),
-                            null, null);
-                }
-            } else if (requestCode == REQUEST_DOCUMENT) {
-                ContentResolver contentResolver = getContentResolver();
-                ArrayList<MediaFile> mediaFiles = new ArrayList<>();
-                if (data == null) {
-                    finish();
-                    return;
-                }
-                Uri uri = data.getData();
-                if (uri == null) {
-                    ClipData clipData = data.getClipData();
-                    for (int i = 0; i < clipData.getItemCount(); i++) {
-                        uri = clipData.getItemAt(i).getUri();
-                        mediaFiles.add(MediaFileLoader.asMediaFile(contentResolver, uri, configs));
-                    }
-                } else {
+        if (requestCode == FileGalleryAdapter.CAPTURE_IMAGE_VIDEO) {
+            if (resultCode == RESULT_OK) {
+                String path = fileGalleryAdapter.getLastCapturedFile();
+                MediaScannerConnection.scanFile(this, new String[]{path}, null,
+                        new MediaScannerConnection.OnScanCompletedListener() {
+                            @Override
+                            public void onScanCompleted(String path, final Uri uri) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        viewModel.refresh();
+                                    }
+                                });
+                            }
+                        });
+            } else {
+                getContentResolver().delete(fileGalleryAdapter.getLastCapturedUri(),
+                        null, null);
+            }
+        } else if (requestCode == REQUEST_DOCUMENT) {
+            ContentResolver contentResolver = getContentResolver();
+            ArrayList<MediaFile> mediaFiles = new ArrayList<>();
+            if (data == null) {
+                finish();
+                return;
+            }
+            Uri uri = data.getData();
+            if (uri == null) {
+                ClipData clipData = data.getClipData();
+                for (int i = 0; i < clipData.getItemCount(); i++) {
+                    uri = clipData.getItemAt(i).getUri();
                     mediaFiles.add(MediaFileLoader.asMediaFile(contentResolver, uri, configs));
                 }
-                Intent intent = new Intent();
-                intent.putExtra(MEDIA_FILES, mediaFiles);
-                setResult(RESULT_OK, intent);
-                finish();
             } else {
-                super.onActivityResult(requestCode, resultCode, data);
+                mediaFiles.add(MediaFileLoader.asMediaFile(contentResolver, uri, configs));
             }
-        }catch (Throwable ex){
-            ex.printStackTrace();
+            Intent intent = new Intent();
+            intent.putExtra(MEDIA_FILES, mediaFiles);
+            setResult(RESULT_OK, intent);
+            finish();
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
