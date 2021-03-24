@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "151541238374",
+    "project_id": "webond-834f9",
+    "storage_bucket": "webond-834f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:151541238374:android:e1c50f89a0a3d30bfe3ba7",
+        "android_client_info": {
+          "package_name": "com.webond.chemicals"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "151541238374-h7s94en5atj321rqnvstvuen6qemsk0l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDievOACWPJI9bwhFQ1HaNLcfqi4DS0Lk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "151541238374-h7s94en5atj321rqnvstvuen6qemsk0l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
