@@ -1,5 +1,6 @@
 package com.webond.chemicals.common_activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 
@@ -30,6 +31,7 @@ import com.webond.chemicals.pojo.GetDetailsForLoginUserDistributorPojo;
 import com.webond.chemicals.pojo.SendOtpPojo;
 import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.DialogUtil;
+import com.webond.chemicals.utils.IntentConstants;
 import com.webond.chemicals.utils.MySharedPreferences;
 
 import java.util.ArrayList;
@@ -165,32 +167,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             String selectedLoginUserType = selectUserTypeArrayList.get(spUserType.getSelectedItemPosition());
                             if (selectedLoginUserType.equalsIgnoreCase(DISTRIBUTOR)) {
                                 Intent intent = new Intent(LoginActivity.this, DistributorRegistrationActivity.class);
-                                startActivity(intent);
-                                finish();
+                                startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_DISTRIBUTOR_REGISTRATION);
                             } else if (selectedLoginUserType.equalsIgnoreCase(DEALER)) {
                                 Intent intent = new Intent(LoginActivity.this, DealerRegistrationActivity.class);
-                                startActivity(intent);
-                                finish();
+                                startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_DEALER_REGISTRATION);
                             } else if (selectedLoginUserType.equalsIgnoreCase(CUSTOMER)) {
                                 Intent intent = new Intent(LoginActivity.this, CustomerRegistrationActivity.class);
-                                startActivity(intent);
-                                finish();
+                                startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_CUSTOMER_REGISTRATION);
                             }
                         } else {
                             Toast.makeText(LoginActivity.this, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
                             String selectedLoginUserType = selectUserTypeArrayList.get(spUserType.getSelectedItemPosition());
                             if (selectedLoginUserType.equalsIgnoreCase(DISTRIBUTOR)) {
                                 Intent intent = new Intent(LoginActivity.this, DistributorRegistrationActivity.class);
-                                startActivity(intent);
-                                finish();
+                                startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_DISTRIBUTOR_REGISTRATION);
                             } else if (selectedLoginUserType.equalsIgnoreCase(DEALER)) {
                                 Intent intent = new Intent(LoginActivity.this, DealerRegistrationActivity.class);
-                                startActivity(intent);
-                                finish();
+                                startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_DEALER_REGISTRATION);
                             } else if (selectedLoginUserType.equalsIgnoreCase(CUSTOMER)) {
                                 Intent intent = new Intent(LoginActivity.this, CustomerRegistrationActivity.class);
-                                startActivity(intent);
-                                finish();
+                                startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_CUSTOMER_REGISTRATION);
                             }
                         }
                     } else {
@@ -604,4 +600,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == IntentConstants.REQUEST_CODE_FOR_CUSTOMER_REGISTRATION) {
+            Intent intent = new Intent(LoginActivity.this, CustomerDashboardActivity.class);
+            startActivity(intent);
+            finish();
+        }else if (resultCode == RESULT_OK && requestCode == IntentConstants.REQUEST_CODE_FOR_DEALER_REGISTRATION) {
+            Intent intent = new Intent(LoginActivity.this, DealerDashboardActivity.class);
+            startActivity(intent);
+            finish();
+        }else if (resultCode == RESULT_OK && requestCode == IntentConstants.REQUEST_CODE_FOR_DISTRIBUTOR_REGISTRATION) {
+            Intent intent = new Intent(LoginActivity.this, DistributorDashboardActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
 }

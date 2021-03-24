@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import com.jaiselrahman.filepicker.config.Configurations;
 import com.jaiselrahman.filepicker.model.MediaFile;
 import com.webond.chemicals.R;
 import com.webond.chemicals.api.ApiImplementer;
+import com.webond.chemicals.common_activity.LoginActivity;
 import com.webond.chemicals.custom_class.SpinnerSimpleAdapter;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
@@ -634,7 +636,7 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                             if (response.code() == 200 && response.body() != null) {
                                 if (response.body().size() > 0 && response.body().get(0).getStatus() == 1) {
                                     Toast.makeText(CustomerRegistrationActivity.this, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
-                                    getDetailsForLoginUserCustomer(false,true);
+                                    getDetailsForLoginUserCustomer(false, true);
                                 } else {
                                     if (!isPdHide) {
                                         DialogUtil.hideProgressDialog();
@@ -679,8 +681,8 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                                     response.body().size() > 0) {
                                 GetDetailsForLoginUserCustomerPojo getDetailsForLoginUserCustomerPojo = response.body().get(0);
                                 setDataForCustomer(getDetailsForLoginUserCustomerPojo);
-                                Intent intent = new Intent(CustomerRegistrationActivity.this, CustomerDashboardActivity.class);
-                                startActivity(intent);
+                                Intent intent = new Intent(CustomerRegistrationActivity.this, LoginActivity.class);
+                                setResult(Activity.RESULT_OK, intent);
                                 finish();
                             } else {
                                 if (!isPdHide) {
