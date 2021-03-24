@@ -35,6 +35,16 @@ public class CommonUtil {
 
     public static final String FOLDER_NAME = "WeBond";
 
+    public static final String FILTER_VALUE_ALL = "0";
+    public static final String FILTER_VALUE_APPROVE = "1";
+    public static final String FILTER_VALUE_PENDING = "2";
+
+    public static final String LOGIN_TYPE_ADMIN = "0";
+    public static final String LOGIN_TYPE_DISTRIBUTOR = "1";
+    public static final String LOGIN_TYPE_DEALER = "2";
+    public static final String LOGIN_TYPE_CUSTOMER = "3";
+
+
     public static String getBase64StringFromFileObj(File file) {
         Bitmap bm = BitmapFactory.decodeFile(file.getPath());
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

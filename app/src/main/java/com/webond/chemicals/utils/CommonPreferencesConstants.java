@@ -8,6 +8,7 @@ public class CommonPreferencesConstants {
 
     //common key for all type of user
     public static final String LOGIN_TYPE = "login_type";
+    public static final String VERIFIED_MOBILE_NO = "verified_mobile_no";
 
     //key for admin preferences
 

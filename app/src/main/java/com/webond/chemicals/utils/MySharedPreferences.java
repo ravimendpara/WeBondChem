@@ -49,6 +49,15 @@ public class MySharedPreferences {
         return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.LOGIN_TYPE, "");
     }
 
+    public void setVerifiedMobileNo(String verifiedMobileNo) {
+        editorForUserDetails.putString(CommonPreferencesConstants.VERIFIED_MOBILE_NO, verifiedMobileNo);
+        editorForUserDetails.apply();
+    }
+
+    public String getVerifiedMobileNo() {
+        return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.VERIFIED_MOBILE_NO, "");
+    }
+
     //    --Admin--
     public void setAdminCompanyId(String adminCompanyId) {
         editorForUserDetails.putString(CommonPreferencesConstants.ADMIN_COMPANY_ID, adminCompanyId);
@@ -335,7 +344,7 @@ public class MySharedPreferences {
     public String getCustomerPhotoPath() {
         return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.CUSTOMER_PHOTO_PATH, "");
     }
-    
+
     public void setCustomerDealerName(String customerDealerName) {
         editorForUserDetails.putString(CommonPreferencesConstants.CUSTOMER_DEALER_NAME, customerDealerName);
         editorForUserDetails.apply();
