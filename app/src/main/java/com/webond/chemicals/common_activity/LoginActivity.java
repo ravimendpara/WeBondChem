@@ -115,11 +115,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (v.getId() == R.id.cvLogin) {
             if (isValid()) {
                 randomSixDigitOTP = CommonUtil.getRandomSixDigitOTP();
+                Toast.makeText(this, "sended otp:- " + randomSixDigitOTP, Toast.LENGTH_LONG).show();
                 sendOTPApiCall(true, true, edtMobileNo.getText().toString().trim(), randomSixDigitOTP);
             }
         } else if (v.getId() == R.id.cvRegister) {
             if (isValid()) {
-                checkIsMobileNoIsExistOrNot(true, false, edtMobileNo.getText().toString().trim());
+                checkIsMobileNoIsExistOrNot(true, true, edtMobileNo.getText().toString().trim());
             }
         }
     }
@@ -160,7 +161,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             response.body().size() > 0) {
                         if (response.body().get(0).getStatus() == 1) {
                             Toast.makeText(LoginActivity.this, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
-                        } else {
+                            //TODO remove below three if else condition before going to live and also remove selectedLoginUserType line because mobile no already exist no need to register
                             String selectedLoginUserType = selectUserTypeArrayList.get(spUserType.getSelectedItemPosition());
                             if (selectedLoginUserType.equalsIgnoreCase(DISTRIBUTOR)) {
                                 Intent intent = new Intent(LoginActivity.this, DistributorRegistrationActivity.class);
@@ -175,7 +176,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 startActivity(intent);
                                 finish();
                             }
+                        } else {
                             Toast.makeText(LoginActivity.this, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
+                            String selectedLoginUserType = selectUserTypeArrayList.get(spUserType.getSelectedItemPosition());
+                            if (selectedLoginUserType.equalsIgnoreCase(DISTRIBUTOR)) {
+                                Intent intent = new Intent(LoginActivity.this, DistributorRegistrationActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else if (selectedLoginUserType.equalsIgnoreCase(DEALER)) {
+                                Intent intent = new Intent(LoginActivity.this, DealerRegistrationActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else if (selectedLoginUserType.equalsIgnoreCase(CUSTOMER)) {
+                                Intent intent = new Intent(LoginActivity.this, CustomerRegistrationActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
                         }
                     } else {
                         if (!isPdHide) {

@@ -22,12 +22,12 @@ import com.jaiselrahman.filepicker.config.Configurations;
 import com.jaiselrahman.filepicker.model.MediaFile;
 import com.webond.chemicals.R;
 import com.webond.chemicals.api.ApiImplementer;
-import com.webond.chemicals.common_activity.LoginActivity;
 import com.webond.chemicals.custom_class.SpinnerSimpleAdapter;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
 import com.webond.chemicals.pojo.AddCustomerPojo;
 import com.webond.chemicals.pojo.GetCityListPojo;
+import com.webond.chemicals.pojo.GetDetailsForLoginUserCustomerPojo;
 import com.webond.chemicals.pojo.GetDistrictListPojo;
 import com.webond.chemicals.pojo.GetStateListPojo;
 import com.webond.chemicals.pojo.GetTalukaListPojo;
@@ -315,7 +315,7 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                 String photo = uploadedPhotoBase64;
                 String photoName = uploadedPhotoName;
                 String dob = edtDOB.getText().toString().trim();
-                addCustomerApiCall(true, true, customerName, dealerId, stateId, districtId, talukaId, cityId, mobileNo, mobileNo2,
+                addCustomerApiCall(true, false, customerName, dealerId, stateId, districtId, talukaId, cityId, mobileNo, mobileNo2,
                         address, pinCode, email, aadharNo, aadharProof, aadharFileName, gstnNo, photo, photoName, dob);
             }
         }
@@ -634,6 +634,7 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                             if (response.code() == 200 && response.body() != null) {
                                 if (response.body().size() > 0 && response.body().get(0).getStatus() == 1) {
                                     Toast.makeText(CustomerRegistrationActivity.this, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
+                                    getDetailsForLoginUserCustomer(false,true);
                                 } else {
                                     if (!isPdHide) {
                                         DialogUtil.hideProgressDialog();
@@ -660,6 +661,101 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                         Toast.makeText(CustomerRegistrationActivity.this, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private void getDetailsForLoginUserCustomer(boolean isPdShow, boolean isPdHide) {
+        if (isPdShow) {
+            DialogUtil.showProgressDialogNotCancelable(CustomerRegistrationActivity.this, "");
+        }
+        ApiImplementer.getDetailsForLoginUserCustomerImplementer(edtMobileNo.getText().toString().trim(),
+                new Callback<ArrayList<GetDetailsForLoginUserCustomerPojo>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<GetDetailsForLoginUserCustomerPojo>> call, Response<ArrayList<GetDetailsForLoginUserCustomerPojo>> response) {
+                        if (isPdHide) {
+                            DialogUtil.hideProgressDialog();
+                        }
+                        try {
+                            if (response.code() == 200 && response.body() != null &&
+                                    response.body().size() > 0) {
+                                GetDetailsForLoginUserCustomerPojo getDetailsForLoginUserCustomerPojo = response.body().get(0);
+                                setDataForCustomer(getDetailsForLoginUserCustomerPojo);
+                                Intent intent = new Intent(CustomerRegistrationActivity.this, CustomerDashboardActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                if (!isPdHide) {
+                                    DialogUtil.hideProgressDialog();
+                                }
+                                Toast.makeText(CustomerRegistrationActivity.this, "Something went wrong,Please try again later.", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception ex) {
+                            if (!isPdHide) {
+                                DialogUtil.hideProgressDialog();
+                            }
+                            ex.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<GetDetailsForLoginUserCustomerPojo>> call, Throwable t) {
+                        DialogUtil.hideProgressDialog();
+                        Toast.makeText(CustomerRegistrationActivity.this, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void setDataForCustomer(GetDetailsForLoginUserCustomerPojo getDetailsForLoginUserCustomerPojo) {
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getLoginType())) {
+            mySharedPreferences.setLoginType(getDetailsForLoginUserCustomerPojo.getLoginType() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getCustomerId())) {
+            mySharedPreferences.setCustomerId(getDetailsForLoginUserCustomerPojo.getCustomerId() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getCustomerName())) {
+            mySharedPreferences.setCustomerName(getDetailsForLoginUserCustomerPojo.getCustomerName() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getMobileNo())) {
+            mySharedPreferences.setCustomerMobileNo(getDetailsForLoginUserCustomerPojo.getMobileNo() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getMobileNo2())) {
+            mySharedPreferences.setCustomerMobileNo2(getDetailsForLoginUserCustomerPojo.getMobileNo2() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getEmailId())) {
+            mySharedPreferences.setCustomerEmail(getDetailsForLoginUserCustomerPojo.getEmailId() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getPhotoPath())) {
+            mySharedPreferences.setCustomerPhotoPath(getDetailsForLoginUserCustomerPojo.getPhotoPath() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getDealerName())) {
+            mySharedPreferences.setCustomerDealerName(getDetailsForLoginUserCustomerPojo.getDealerName() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getDistributorName())) {
+            mySharedPreferences.setCustomerDistributorName(getDetailsForLoginUserCustomerPojo.getDistributorName() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getCityName())) {
+            mySharedPreferences.setCustomerCityName(getDetailsForLoginUserCustomerPojo.getCityName() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getTalukaName())) {
+            mySharedPreferences.setCustomerTalukaName(getDetailsForLoginUserCustomerPojo.getTalukaName() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getDistrictName())) {
+            mySharedPreferences.setCustomerDistrictName(getDetailsForLoginUserCustomerPojo.getDistrictName() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getStateName())) {
+            mySharedPreferences.setCustomerStateName(getDetailsForLoginUserCustomerPojo.getStateName() + "");
+        }
     }
 
 }

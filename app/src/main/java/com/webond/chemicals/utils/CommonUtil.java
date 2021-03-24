@@ -39,10 +39,10 @@ public class CommonUtil {
     public static final String FILTER_VALUE_APPROVE = "1";
     public static final String FILTER_VALUE_PENDING = "2";
 
-    public static final String LOGIN_TYPE_ADMIN = "0";
-    public static final String LOGIN_TYPE_DISTRIBUTOR = "1";
-    public static final String LOGIN_TYPE_DEALER = "2";
-    public static final String LOGIN_TYPE_CUSTOMER = "3";
+    public static final String LOGIN_TYPE_ADMIN = "1";
+    public static final String LOGIN_TYPE_DISTRIBUTOR = "2";
+    public static final String LOGIN_TYPE_DEALER = "3";
+    public static final String LOGIN_TYPE_CUSTOMER = "4";
 
 
     public static String getBase64StringFromFileObj(File file) {
