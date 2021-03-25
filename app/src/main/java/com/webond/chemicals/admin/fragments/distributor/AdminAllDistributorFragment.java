@@ -15,6 +15,7 @@ import com.webond.chemicals.R;
 import com.webond.chemicals.adapter.distributor.AllDistributorListAdapter;
 import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.pojo.GetDistributorListPojo;
+import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.MySharedPreferences;
 
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class AdminAllDistributorFragment extends Fragment {
         llLoading.setVisibility(View.VISIBLE);
         llNoDateFound.setVisibility(View.GONE);
         rvAdminAllDistributor.setVisibility(View.GONE);
-        ApiImplementer.getDistributorListApiImplementer("1", "0", new Callback<ArrayList<GetDistributorListPojo>>() {
+        ApiImplementer.getDistributorListApiImplementer("0", CommonUtil.FILTER_VALUE_ALL, new Callback<ArrayList<GetDistributorListPojo>>() {
             @Override
             public void onResponse(Call<ArrayList<GetDistributorListPojo>> call, Response<ArrayList<GetDistributorListPojo>> response) {
                 try {

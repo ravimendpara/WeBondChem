@@ -15,6 +15,7 @@ import com.webond.chemicals.R;
 import com.webond.chemicals.adapter.customer.PendingCustomerListAdapter;
 import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.pojo.GetCustomerListPojo;
+import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.MySharedPreferences;
 
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class AdminPendingCustomerFragment extends Fragment {
         llLoading.setVisibility(View.VISIBLE);
         llNoDateFound.setVisibility(View.GONE);
         rvAdminPendingCustomer.setVisibility(View.GONE);
-        ApiImplementer.getCustomerListImplementer("1", "0", "1", new Callback<ArrayList<GetCustomerListPojo>>() {
+        ApiImplementer.getCustomerListImplementer("1", "0", CommonUtil.FILTER_VALUE_PENDING, new Callback<ArrayList<GetCustomerListPojo>>() {
             @Override
             public void onResponse(Call<ArrayList<GetCustomerListPojo>> call, Response<ArrayList<GetCustomerListPojo>> response) {
                 try {

@@ -2,22 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.webond.chemicals">
 
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="true"
@@ -28,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".distributor.activity.DistributorManageCustomerActivity"></activity>
+        <activity android:name=".distributor.activity.DistributorManageDealerActivity" />
         <activity
             android:name=".admin.activity.AdminAddProductActivity"
             android:screenOrientation="portrait" />
@@ -39,14 +25,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".admin.activity.AdminManageDistributorActivity"
-            android:screenOrientation="portrait" >
-
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".admin.activity.AdminProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".distributor.DistributorRegistrationActivity"
+            android:name=".distributor.activity.DistributorRegistrationActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".dealer.DealerRegistrationActivity"
@@ -58,7 +42,7 @@
             android:name=".customer.CustomerDashboardActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".distributor.DistributorDashboardActivity"
+            android:name=".distributor.activity.DistributorDashboardActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".dealer.DealerDashboardActivity"
@@ -71,6 +55,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -88,5 +73,21 @@
                 android:resource="@xml/provider_path" />
         </provider>
     </application>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
 </manifest>

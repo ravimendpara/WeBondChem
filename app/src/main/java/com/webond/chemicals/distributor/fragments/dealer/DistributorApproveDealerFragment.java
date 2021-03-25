@@ -1,40 +1,39 @@
-package com.webond.chemicals.admin.fragments.customer;
+package com.webond.chemicals.distributor.fragments.dealer;
 
 import android.content.Context;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.webond.chemicals.R;
-import com.webond.chemicals.adapter.customer.ApproveCustomerListAdapter;
+import com.webond.chemicals.adapter.dealer.ApproveDealerListAdapter;
 import com.webond.chemicals.api.ApiImplementer;
-import com.webond.chemicals.pojo.GetCustomerListPojo;
+import com.webond.chemicals.pojo.GetDealerListPojo;
 import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.MySharedPreferences;
 
 import java.util.ArrayList;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-
-public class AdminApproveCustomerFragment extends Fragment {
+public class DistributorApproveDealerFragment extends Fragment {
 
     private Context context;
     private MySharedPreferences mySharedPreferences;
-    private RecyclerView rvAdminApproveCustomer;
+    private RecyclerView rvDistributorApproveDealer;
     private LinearLayout llLoading;
     private LinearLayout llNoDateFound;
 
-    public AdminApproveCustomerFragment() {
-
+    public DistributorApproveDealerFragment() {
+        // Required empty public constructor
     }
 
     @Override
@@ -43,45 +42,46 @@ public class AdminApproveCustomerFragment extends Fragment {
         this.context = context;
     }
 
+   
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_admin_approve_customer, container, false);
+        View view = inflater.inflate(R.layout.fragment_distributor_approve_dealer, container, false);
         initView(view);
-        getApproveCustomerListApiCall();
+        getApproveDealerListApiCall();
         return view;
     }
 
     private void initView(View view) {
         mySharedPreferences = new MySharedPreferences(context);
-        rvAdminApproveCustomer = view.findViewById(R.id.rvAdminApproveCustomer);
+        rvDistributorApproveDealer = view.findViewById(R.id.rvDistributorApproveDealer);
         llLoading = view.findViewById(R.id.llLoading);
         llNoDateFound = view.findViewById(R.id.llNoDateFound);
     }
 
-    private void getApproveCustomerListApiCall() {
+    private void getApproveDealerListApiCall() {
         llLoading.setVisibility(View.VISIBLE);
         llNoDateFound.setVisibility(View.GONE);
-        rvAdminApproveCustomer.setVisibility(View.GONE);
-        ApiImplementer.getCustomerListImplementer("1", "0", CommonUtil.FILTER_VALUE_APPROVE, new Callback<ArrayList<GetCustomerListPojo>>() {
+        rvDistributorApproveDealer.setVisibility(View.GONE);
+        ApiImplementer.getDealerListImplementer("2", mySharedPreferences.getDistributorId(), CommonUtil.FILTER_VALUE_APPROVE, new Callback<ArrayList<GetDealerListPojo>>() {
             @Override
-            public void onResponse(Call<ArrayList<GetCustomerListPojo>> call, Response<ArrayList<GetCustomerListPojo>> response) {
+            public void onResponse(Call<ArrayList<GetDealerListPojo>> call, Response<ArrayList<GetDealerListPojo>> response) {
                 try {
                     if (response.code() == 200 && response.body() != null) {
                         if (response.body().size() > 0) {
                             llLoading.setVisibility(View.GONE);
                             llNoDateFound.setVisibility(View.GONE);
-                            rvAdminApproveCustomer.setVisibility(View.VISIBLE);
-                            rvAdminApproveCustomer.setAdapter(new ApproveCustomerListAdapter(context, response.body()));
+                            rvDistributorApproveDealer.setVisibility(View.VISIBLE);
+                            rvDistributorApproveDealer.setAdapter(new ApproveDealerListAdapter(context, response.body()));
                         } else {
                             llLoading.setVisibility(View.GONE);
                             llNoDateFound.setVisibility(View.VISIBLE);
-                            rvAdminApproveCustomer.setVisibility(View.GONE);
+                            rvDistributorApproveDealer.setVisibility(View.GONE);
                         }
                     } else {
                         llLoading.setVisibility(View.GONE);
                         llNoDateFound.setVisibility(View.VISIBLE);
-                        rvAdminApproveCustomer.setVisibility(View.GONE);
+                        rvDistributorApproveDealer.setVisibility(View.GONE);
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -89,12 +89,12 @@ public class AdminApproveCustomerFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<GetCustomerListPojo>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<GetDealerListPojo>> call, Throwable t) {
                 llLoading.setVisibility(View.GONE);
                 llNoDateFound.setVisibility(View.VISIBLE);
-                rvAdminApproveCustomer.setVisibility(View.GONE);
+                rvDistributorApproveDealer.setVisibility(View.GONE);
             }
         });
     }
-
+    
 }
