@@ -1,9 +1,5 @@
 package com.webond.chemicals.dealer;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -14,19 +10,19 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
+
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
-import com.jaiselrahman.filepicker.config.Configurations;
-import com.jaiselrahman.filepicker.model.MediaFile;
 import com.webond.chemicals.R;
 import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.common_activity.LoginActivity;
 import com.webond.chemicals.custom_class.SpinnerSimpleAdapter;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
-import com.webond.chemicals.pojo.AddCustomerPojo;
 import com.webond.chemicals.pojo.AddDealerPojo;
 import com.webond.chemicals.pojo.GetCityListPojo;
-import com.webond.chemicals.pojo.GetDetailsForLoginUserCustomerPojo;
 import com.webond.chemicals.pojo.GetDetailsForLoginUserDealerPojo;
 import com.webond.chemicals.pojo.GetDistributorListByCityIdPojo;
 import com.webond.chemicals.pojo.GetDistrictListPojo;
@@ -34,6 +30,7 @@ import com.webond.chemicals.pojo.GetStateListPojo;
 import com.webond.chemicals.pojo.GetTalukaListPojo;
 import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.DialogUtil;
+import com.webond.chemicals.utils.FileUtils;
 import com.webond.chemicals.utils.IntentConstants;
 import com.webond.chemicals.utils.MySharedPreferences;
 
@@ -227,6 +224,9 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
         } else if (spCity.getSelectedItemPosition() == -1 || spCity.getSelectedItemPosition() == 0) {
             Toast.makeText(this, "Please select city", Toast.LENGTH_SHORT).show();
             return false;
+        } else if (spDistributor.getSelectedItemPosition() == -1 || spDistributor.getSelectedItemPosition() == 0) {
+            Toast.makeText(this, "Please select distributor", Toast.LENGTH_SHORT).show();
+            return false;
         } else if (CommonUtil.checkIsEmptyOrNullCommon(edtMobileNo.getText().toString().trim()) ||
                 edtMobileNo.getText().toString().trim().length() != 10) {
             Toast.makeText(this, "Please enter valid mobile no.", Toast.LENGTH_SHORT).show();
@@ -264,33 +264,17 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
         if (v.getId() == R.id.imgBack) {
             onBackPressed();
         } else if (v.getId() == R.id.edtUploadAadharProof) {
-            Intent intent = new Intent(DealerRegistrationActivity.this,
-                    com.jaiselrahman.filepicker.activity.FilePickerActivity.class);
-            intent.putExtra(com.jaiselrahman.filepicker.activity.FilePickerActivity.CONFIGS,
-                    new Configurations.Builder()
-                            .setCheckPermission(true)
-                            .setShowImages(true)
-                            .setShowAudios(false)
-                            .setShowVideos(false)
-                            .enableImageCapture(false)
-                            .setMaxSelection(1)
-                            .setSkipZeroSizeFiles(true)
-                            .build());
-            startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_UPLOAD_AADHAR_PROOF);
+            try {
+                Intent pickPhoto = new Intent(Intent.ACTION_GET_CONTENT);
+                pickPhoto.setType("image/*|application/*");
+                startActivityForResult(pickPhoto, IntentConstants.REQUEST_CODE_FOR_UPLOAD_AADHAR_PROOF);
+            } catch (Throwable ex) {
+                ex.printStackTrace();
+            }
         } else if (v.getId() == R.id.edtUploadPhoto) {
-            Intent intent = new Intent(DealerRegistrationActivity.this,
-                    com.jaiselrahman.filepicker.activity.FilePickerActivity.class);
-            intent.putExtra(com.jaiselrahman.filepicker.activity.FilePickerActivity.CONFIGS,
-                    new Configurations.Builder()
-                            .setCheckPermission(true)
-                            .setShowImages(true)
-                            .setShowAudios(false)
-                            .setShowVideos(false)
-                            .enableImageCapture(false)
-                            .setMaxSelection(1)
-                            .setSkipZeroSizeFiles(true)
-                            .build());
-            startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_UPLOAD_PHOTO);
+            Intent pickPhoto = new Intent(Intent.ACTION_GET_CONTENT);
+            pickPhoto.setType("image/*|application/*");
+            startActivityForResult(pickPhoto, IntentConstants.REQUEST_CODE_FOR_UPLOAD_PHOTO);
         } else if (v.getId() == R.id.edtDOB) {
             DatePickerDialog datePickerDialog_from = new DatePickerDialog(DealerRegistrationActivity.this, dob, myCalendar
                     .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
@@ -334,11 +318,10 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
 
         if (requestCode == IntentConstants.REQUEST_CODE_FOR_UPLOAD_AADHAR_PROOF && resultCode == RESULT_OK) {
             try {
-                ArrayList<MediaFile> files = data.getParcelableArrayListExtra(com.jaiselrahman.filepicker.activity.FilePickerActivity.MEDIA_FILES);
-                if (data != null && files != null && files.size() == 1) {
 
-                    String filePath = files.get(0).getPath().trim();
-                    File uploadedAadharProof = new File(filePath);
+                if (data != null && data.getData() != null) {
+                    String fileUrl = FileUtils.getPath(DealerRegistrationActivity.this, data.getData());
+                    File uploadedAadharProof = new File(fileUrl);
                     uploadedAadharProofBase64 = CommonUtil.getBase64StringFromFileObj(uploadedAadharProof);
                     uploadedAadharProofName = uploadedAadharProof.getName();
                     edtUploadAadharProof.setText(uploadedAadharProofName);
@@ -348,11 +331,9 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
             }
         } else if (requestCode == IntentConstants.REQUEST_CODE_FOR_UPLOAD_PHOTO && resultCode == RESULT_OK) {
             try {
-                ArrayList<MediaFile> files = data.getParcelableArrayListExtra(com.jaiselrahman.filepicker.activity.FilePickerActivity.MEDIA_FILES);
-                if (data != null && files != null && files.size() == 1) {
-
-                    String filePath = files.get(0).getPath().trim();
-                    File uploadedPhotoFile = new File(filePath);
+                if (data != null && data.getData() != null) {
+                    String fileUrl = FileUtils.getPath(DealerRegistrationActivity.this, data.getData());
+                    File uploadedPhotoFile = new File(fileUrl);
                     uploadedPhotoBase64 = CommonUtil.getBase64StringFromFileObj(uploadedPhotoFile);
                     uploadedPhotoName = uploadedPhotoFile.getName();
                     edtUploadPhoto.setText(uploadedPhotoName);

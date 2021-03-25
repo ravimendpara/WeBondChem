@@ -27,33 +27,60 @@ import com.webond.chemicals.pojo.SendOtpPojo;
 
 import java.util.ArrayList;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface IApiInterface {
 
 
-    @GET("AddCustomer")
+    //    @GET("AddCustomer")
+//    Call<ArrayList<AddCustomerPojo>> addCustomer(
+//            @Query("CustomerName") String CustomerName,
+//            @Query("DealerId") String DealerId,
+//            @Query("StateId") String StateId,
+//            @Query("DistrictId") String DistrictId,
+//            @Query("TalukaId") String TalukaId,
+//            @Query("CityId") String CityId,
+//            @Query("MobileNo") String MobileNo,
+//            @Query("MobileNo2") String MobileNo2,
+//            @Query("Address") String Address,
+//            @Query("PinCode") String PinCode,
+//            @Query("Email") String Email,
+//            @Query("AadharNo") String AadharNo,
+//            @Query("AadharProof") String AadharProof,
+//            @Query("AadharFileName") String AadharFileName,
+//            @Query("GSTNo") String GSTNo,
+//            @Query("Photo") String Photo,
+//            @Query("PhotoFileName") String PhotoFileName,
+//            @Query("DateOfBirth") String DateOfBirth
+//    );
+    @Multipart
+    @POST("AddCustomer")
     Call<ArrayList<AddCustomerPojo>> addCustomer(
-            @Query("CustomerName") String CustomerName,
-            @Query("DealerId") String DealerId,
-            @Query("StateId") String StateId,
-            @Query("DistrictId") String DistrictId,
-            @Query("TalukaId") String TalukaId,
-            @Query("CityId") String CityId,
-            @Query("MobileNo") String MobileNo,
-            @Query("MobileNo2") String MobileNo2,
-            @Query("Address") String Address,
-            @Query("PinCode") String PinCode,
-            @Query("Email") String Email,
-            @Query("AadharNo") String AadharNo,
-            @Query("AadharProof") String AadharProof,
-            @Query("AadharFileName") String AadharFileName,
-            @Query("GSTNo") String GSTNo,
-            @Query("Photo") String Photo,
-            @Query("PhotoFileName") String PhotoFileName,
-            @Query("DateOfBirth") String DateOfBirth
+            @Part("CustomerName") RequestBody CustomerName,
+            @Part("DealerId") RequestBody DealerId,
+            @Part("StateId") RequestBody StateId,
+            @Part("DistrictId") RequestBody DistrictId,
+            @Part("TalukaId") RequestBody TalukaId,
+            @Part("CityId") RequestBody CityId,
+            @Part("MobileNo") RequestBody MobileNo,
+            @Part("MobileNo2") RequestBody MobileNo2,
+            @Part("Address") RequestBody Address,
+            @Part("PinCode") RequestBody PinCode,
+            @Part("Email") RequestBody Email,
+            @Part("AadharNo") RequestBody AadharNo,
+            @Part MultipartBody.Part file,
+            @Part("AadharFileName") RequestBody AadharFileName,
+            @Part("GSTNo") RequestBody GSTNo,
+            @Part MultipartBody.Part photoFile,
+            @Part("PhotoFileName") RequestBody PhotoFileName,
+            @Part("DateOfBirth") RequestBody DateOfBirth
     );
 
     @GET("AddDealer")
