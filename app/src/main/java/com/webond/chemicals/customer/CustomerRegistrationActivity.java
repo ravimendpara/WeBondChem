@@ -291,6 +291,7 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
             try {
                 Intent pickPhoto = new Intent(Intent.ACTION_GET_CONTENT);
                 pickPhoto.setType("image/*|application/*");
+                pickPhoto.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
                 startActivityForResult(pickPhoto, IntentConstants.REQUEST_CODE_FOR_UPLOAD_AADHAR_PROOF);
             } catch (Throwable ex) {
                 ex.printStackTrace();
@@ -298,6 +299,7 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
         } else if (v.getId() == R.id.edtUploadPhoto) {
             Intent pickPhoto = new Intent(Intent.ACTION_GET_CONTENT);
             pickPhoto.setType("image/*|application/*");
+            pickPhoto.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
             startActivityForResult(pickPhoto, IntentConstants.REQUEST_CODE_FOR_UPLOAD_PHOTO);
         } else if (v.getId() == R.id.edtDOB) {
             DatePickerDialog datePickerDialog_from = new DatePickerDialog(CustomerRegistrationActivity.this, dob, myCalendar

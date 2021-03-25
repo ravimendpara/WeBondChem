@@ -1,15 +1,15 @@
 package com.webond.chemicals.common_activity;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatEditText;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatEditText;
 
 import com.google.android.material.card.MaterialCardView;
 import com.webond.chemicals.R;
@@ -162,8 +162,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (response.code() == 200 && response.body() != null &&
                             response.body().size() > 0) {
                         if (response.body().get(0).getStatus() == 1) {
-                            Toast.makeText(LoginActivity.this, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
-                            //TODO remove below three if else condition before going to live and also remove selectedLoginUserType line because mobile no already exist no need to register
                             String selectedLoginUserType = selectUserTypeArrayList.get(spUserType.getSelectedItemPosition());
                             if (selectedLoginUserType.equalsIgnoreCase(DISTRIBUTOR)) {
                                 Intent intent = new Intent(LoginActivity.this, DistributorRegistrationActivity.class);
@@ -177,17 +175,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             }
                         } else {
                             Toast.makeText(LoginActivity.this, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
-                            String selectedLoginUserType = selectUserTypeArrayList.get(spUserType.getSelectedItemPosition());
-                            if (selectedLoginUserType.equalsIgnoreCase(DISTRIBUTOR)) {
-                                Intent intent = new Intent(LoginActivity.this, DistributorRegistrationActivity.class);
-                                startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_DISTRIBUTOR_REGISTRATION);
-                            } else if (selectedLoginUserType.equalsIgnoreCase(DEALER)) {
-                                Intent intent = new Intent(LoginActivity.this, DealerRegistrationActivity.class);
-                                startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_DEALER_REGISTRATION);
-                            } else if (selectedLoginUserType.equalsIgnoreCase(CUSTOMER)) {
-                                Intent intent = new Intent(LoginActivity.this, CustomerRegistrationActivity.class);
-                                startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_CUSTOMER_REGISTRATION);
-                            }
                         }
                     } else {
                         if (!isPdHide) {
@@ -607,11 +594,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Intent intent = new Intent(LoginActivity.this, CustomerDashboardActivity.class);
             startActivity(intent);
             finish();
-        }else if (resultCode == RESULT_OK && requestCode == IntentConstants.REQUEST_CODE_FOR_DEALER_REGISTRATION) {
+        } else if (resultCode == RESULT_OK && requestCode == IntentConstants.REQUEST_CODE_FOR_DEALER_REGISTRATION) {
             Intent intent = new Intent(LoginActivity.this, DealerDashboardActivity.class);
             startActivity(intent);
             finish();
-        }else if (resultCode == RESULT_OK && requestCode == IntentConstants.REQUEST_CODE_FOR_DISTRIBUTOR_REGISTRATION) {
+        } else if (resultCode == RESULT_OK && requestCode == IntentConstants.REQUEST_CODE_FOR_DISTRIBUTOR_REGISTRATION) {
             Intent intent = new Intent(LoginActivity.this, DistributorDashboardActivity.class);
             startActivity(intent);
             finish();

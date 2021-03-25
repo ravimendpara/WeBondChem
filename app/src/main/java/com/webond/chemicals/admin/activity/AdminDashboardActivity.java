@@ -92,6 +92,8 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    Intent intent = new Intent(AdminDashboardActivity.this, AdminAddProductActivity.class);
+                    startActivity(intent);
                 }
             }, 400);
         }
