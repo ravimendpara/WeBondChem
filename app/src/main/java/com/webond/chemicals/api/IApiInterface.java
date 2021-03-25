@@ -27,104 +27,81 @@ import com.webond.chemicals.pojo.SendOtpPojo;
 
 import java.util.ArrayList;
 
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface IApiInterface {
 
-
-    //    @GET("AddCustomer")
-//    Call<ArrayList<AddCustomerPojo>> addCustomer(
-//            @Query("CustomerName") String CustomerName,
-//            @Query("DealerId") String DealerId,
-//            @Query("StateId") String StateId,
-//            @Query("DistrictId") String DistrictId,
-//            @Query("TalukaId") String TalukaId,
-//            @Query("CityId") String CityId,
-//            @Query("MobileNo") String MobileNo,
-//            @Query("MobileNo2") String MobileNo2,
-//            @Query("Address") String Address,
-//            @Query("PinCode") String PinCode,
-//            @Query("Email") String Email,
-//            @Query("AadharNo") String AadharNo,
-//            @Query("AadharProof") String AadharProof,
-//            @Query("AadharFileName") String AadharFileName,
-//            @Query("GSTNo") String GSTNo,
-//            @Query("Photo") String Photo,
-//            @Query("PhotoFileName") String PhotoFileName,
-//            @Query("DateOfBirth") String DateOfBirth
-//    );
-    @Multipart
+    @FormUrlEncoded
     @POST("AddCustomer")
     Call<ArrayList<AddCustomerPojo>> addCustomer(
-            @Part("CustomerName") RequestBody CustomerName,
-            @Part("DealerId") RequestBody DealerId,
-            @Part("StateId") RequestBody StateId,
-            @Part("DistrictId") RequestBody DistrictId,
-            @Part("TalukaId") RequestBody TalukaId,
-            @Part("CityId") RequestBody CityId,
-            @Part("MobileNo") RequestBody MobileNo,
-            @Part("MobileNo2") RequestBody MobileNo2,
-            @Part("Address") RequestBody Address,
-            @Part("PinCode") RequestBody PinCode,
-            @Part("Email") RequestBody Email,
-            @Part("AadharNo") RequestBody AadharNo,
-            @Part MultipartBody.Part file,
-            @Part("AadharFileName") RequestBody AadharFileName,
-            @Part("GSTNo") RequestBody GSTNo,
-            @Part MultipartBody.Part photoFile,
-            @Part("PhotoFileName") RequestBody PhotoFileName,
-            @Part("DateOfBirth") RequestBody DateOfBirth
+            @Field("CustomerName") String CustomerName,
+            @Field("DealerId") String DealerId,
+            @Field("StateId") String StateId,
+            @Field("DistrictId") String DistrictId,
+            @Field("TalukaId") String TalukaId,
+            @Field("CityId") String CityId,
+            @Field("MobileNo") String MobileNo,
+            @Field("MobileNo2") String MobileNo2,
+            @Field("Address") String Address,
+            @Field("PinCode") String PinCode,
+            @Field("Email") String Email,
+            @Field("AadharNo") String AadharNo,
+            @Field("AadharProof") String AadharProof,
+            @Field("AadharFileName") String AadharFileName,
+            @Field("GSTNo") String GSTNo,
+            @Field("Photo") String Photo,
+            @Field("PhotoFileName") String PhotoFileName,
+            @Field("DateOfBirth") String DateOfBirth
     );
 
-    @GET("AddDealer")
+    @FormUrlEncoded
+    @POST("AddDealer")
     Call<ArrayList<AddDealerPojo>> addDealer(
-            @Query("DealerName") String DealerName,
-            @Query("DistributorId") String DistributorId,
-            @Query("StateId") String StateId,
-            @Query("DistrictId") String DistrictId,
-            @Query("TalukaId") String TalukaId,
-            @Query("CityId") String CityId,
-            @Query("MobileNo") String MobileNo,
-            @Query("MobileNo2") String MobileNo2,
-            @Query("Address") String Address,
-            @Query("PinCode") String PinCode,
-            @Query("Email") String Email,
-            @Query("AadharNo") String AadharNo,
-            @Query("AadharProof") String AadharProof,
-            @Query("AadharFileName") String AadharFileName,
-            @Query("GSTNo") String GSTNo,
-            @Query("Photo") String Photo,
-            @Query("PhotoFileName") String PhotoFileName,
-            @Query("DateOfBirth") String DateOfBirth
+            @Field("DealerName") String DealerName,
+            @Field("DistributorId") String DistributorId,
+            @Field("StateId") String StateId,
+            @Field("DistrictId") String DistrictId,
+            @Field("TalukaId") String TalukaId,
+            @Field("CityId") String CityId,
+            @Field("MobileNo") String MobileNo,
+            @Field("MobileNo2") String MobileNo2,
+            @Field("Address") String Address,
+            @Field("PinCode") String PinCode,
+            @Field("Email") String Email,
+            @Field("AadharNo") String AadharNo,
+            @Field("AadharProof") String AadharProof,
+            @Field("AadharFileName") String AadharFileName,
+            @Field("GSTNo") String GSTNo,
+            @Field("Photo") String Photo,
+            @Field("PhotoFileName") String PhotoFileName,
+            @Field("DateOfBirth") String DateOfBirth
     );
 
-
-    @GET("AddDistributer")
+    @FormUrlEncoded
+    @POST("AddDistributer")
     Call<ArrayList<AddDistributerPojo>> addDistributor(
-            @Query("DistributerName") String DistributerName,
-            @Query("StateId") String StateId,
-            @Query("DistrictId") String DistrictId,
-            @Query("TalukaId") String TalukaId,
-            @Query("CityId") String CityId,
-            @Query("MobileNo") String MobileNo,
-            @Query("MobileNo2") String MobileNo2,
-            @Query("Address") String Address,
-            @Query("PinCode") String PinCode,
-            @Query("Email") String Email,
-            @Query("AadharNo") String AadharNo,
-            @Query("AadharProof") String AadharProof,
-            @Query("AadharFileName") String AadharFileName,
-            @Query("GSTNo") String GSTNo,
-            @Query("Photo") String Photo,
-            @Query("PhotoFileName") String PhotoFileName,
-            @Query("DateOfBith") String DateOfBith
+            @Field("DistributerName") String DistributerName,
+            @Field("StateId") String StateId,
+            @Field("DistrictId") String DistrictId,
+            @Field("TalukaId") String TalukaId,
+            @Field("CityId") String CityId,
+            @Field("MobileNo") String MobileNo,
+            @Field("MobileNo2") String MobileNo2,
+            @Field("Address") String Address,
+            @Field("PinCode") String PinCode,
+            @Field("Email") String Email,
+            @Field("AadharNo") String AadharNo,
+            @Field("AadharProof") String AadharProof,
+            @Field("AadharFileName") String AadharFileName,
+            @Field("GSTNo") String GSTNo,
+            @Field("Photo") String Photo,
+            @Field("PhotoFileName") String PhotoFileName,
+            @Field("DateOfBith") String DateOfBith
     );
 
 
@@ -151,13 +128,15 @@ public interface IApiInterface {
     );
 
     @GET("ApproveCustomer")
-    Call<ArrayList<ApproveCustomerPojo>> approveCustomer(@Query("CustomerId") String CustomerId);
+    Call<ArrayList<ApproveCustomerPojo>> approveCustomer(@Query("CustomerId") String CustomerId,
+                                                         @Query("Status") String Status);
 
     @GET("ApproveDealer")
-    Call<ArrayList<ApproveDealerPojo>> approveDealer(@Query("DealerId") String DealerId);
+    Call<ArrayList<ApproveDealerPojo>> approveDealer(@Query("DealerId") String DealerId,
+                                                     @Query("Status") String Status);
 
     @GET("ApproveDistributor")
-    Call<ArrayList<ApproveDistributorPojo>> approveDistributor(@Query("DistributorId") String DistributorId);
+    Call<ArrayList<ApproveDistributorPojo>> approveDistributor(@Query("DistributorId") String DistributorId, @Query("Status") String status);
 
     @GET("CheckMobileNoExitstOrNo")
     Call<ArrayList<CheckMobileNoExitstOrNoPojo>> checkMobileNoExistOrNot(@Query("MobileNo") String MobileNo);

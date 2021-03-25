@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
@@ -41,9 +43,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -151,6 +150,25 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
         edtDOB.setOnClickListener(this);
         cvSubmit = findViewById(R.id.cvSubmit);
         cvSubmit.setOnClickListener(this);
+
+        edtMobileNo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!CommonUtil.checkIsEmptyOrNullCommon(s.toString())) {
+                    edtMobileNo2.setText(s.toString() + "");
+                }
+            }
+        });
 
         spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -289,52 +307,25 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
             datePickerDialog_from.show();
         } else if (v.getId() == R.id.cvSubmit) {
             if (isValid()) {
-//                String customerName = edtCustomerName.getText().toString().trim();
-//                String dealerId = dealerHashMap.get(dealerArrayList.get(spDealer.getSelectedItemPosition()));
-//                String stateId = stateHashMap.get(stateArrayList.get(spState.getSelectedItemPosition()));
-//                String districtId = districtHashMap.get(districtArrayList.get(spDistrict.getSelectedItemPosition()));
-//                String talukaId = talukaHashMap.get(talukaArrayList.get(spTaluka.getSelectedItemPosition()));
-//                String cityId = cityHashMap.get(cityArrayList.get(spCity.getSelectedItemPosition()));
-//                String mobileNo = edtMobileNo.getText().toString().trim();
-//                String mobileNo2 = edtMobileNo2.getText().toString().trim();
-//                String address = edtAddress.getText().toString().trim();
-//                String pinCode = edtPincode.getText().toString().trim();
-//                String email = edtEMail.getText().toString().trim();
-//                String aadharNo = edtAadharNo.getText().toString().trim();
-//                String aadharProof = uploadedAadharProofBase64;
-//                String aadharFileName = uploadedAadharProofName;
-//                String gstnNo = edtGSTNo.getText().toString().trim();
-//                String photo = uploadedPhotoBase64;
-//                String photoName = uploadedPhotoName;
-//                String dob = edtDOB.getText().toString().trim();
-
-
-                RequestBody customerName = RequestBody.create(MediaType.parse("text/plain"), edtCustomerName.getText().toString().trim());
-                RequestBody dealerId = RequestBody.create(MediaType.parse("text/plain"), dealerHashMap.get(dealerArrayList.get(spDealer.getSelectedItemPosition())));
-                RequestBody stateId = RequestBody.create(MediaType.parse("text/plain"),stateHashMap.get(stateArrayList.get(spState.getSelectedItemPosition())));
-                RequestBody districtId = RequestBody.create(MediaType.parse("text/plain"),districtHashMap.get(districtArrayList.get(spDistrict.getSelectedItemPosition())));
-                RequestBody talukaId = RequestBody.create(MediaType.parse("text/plain"),talukaHashMap.get(talukaArrayList.get(spTaluka.getSelectedItemPosition())));
-                RequestBody cityId = RequestBody.create(MediaType.parse("text/plain"),cityHashMap.get(cityArrayList.get(spCity.getSelectedItemPosition())));
-                RequestBody mobileNo = RequestBody.create(MediaType.parse("text/plain"),edtMobileNo.getText().toString().trim());
-                RequestBody mobileNo2 = RequestBody.create(MediaType.parse("text/plain"),edtMobileNo2.getText().toString().trim());
-                RequestBody address = RequestBody.create(MediaType.parse("text/plain"),edtAddress.getText().toString().trim());
-                RequestBody pinCode = RequestBody.create(MediaType.parse("text/plain"),edtPincode.getText().toString().trim());
-                RequestBody email = RequestBody.create(MediaType.parse("text/plain"),edtEMail.getText().toString().trim());
-                RequestBody aadharNo = RequestBody.create(MediaType.parse("text/plain"),edtAadharNo.getText().toString().trim());
-                MultipartBody.Part aadharProof = file1;
-                RequestBody aadharFileName = RequestBody.create(MediaType.parse("text/plain"),uploadedAadharProofName);
-                RequestBody gstnNo = RequestBody.create(MediaType.parse("text/plain"),edtGSTNo.getText().toString().trim());
-                MultipartBody.Part photo = file2;
-                RequestBody photoName = RequestBody.create(MediaType.parse("text/plain"),uploadedPhotoName);
-                RequestBody dob = RequestBody.create(MediaType.parse("text/plain"),edtDOB.getText().toString().trim());
-
-
-
-
-
-
-
-                addCustomerApiCall(true, false, customerName, dealerId, stateId, districtId, talukaId, cityId, mobileNo, mobileNo2,
+                String customerName = edtCustomerName.getText().toString().trim();
+                String dealerId = dealerHashMap.get(dealerArrayList.get(spDealer.getSelectedItemPosition()));
+                String stateId = stateHashMap.get(stateArrayList.get(spState.getSelectedItemPosition()));
+                String districtId = districtHashMap.get(districtArrayList.get(spDistrict.getSelectedItemPosition()));
+                String talukaId = talukaHashMap.get(talukaArrayList.get(spTaluka.getSelectedItemPosition()));
+                String cityId = cityHashMap.get(cityArrayList.get(spCity.getSelectedItemPosition()));
+                String mobileNo = edtMobileNo.getText().toString().trim();
+                String mobileNo2 = edtMobileNo2.getText().toString().trim();
+                String address = edtAddress.getText().toString().trim();
+                String pinCode = edtPincode.getText().toString().trim();
+                String email = edtEMail.getText().toString().trim();
+                String aadharNo = edtAadharNo.getText().toString().trim();
+                String aadharProof = uploadedAadharProofBase64;
+                String aadharFileName = uploadedAadharProofName;
+                String gstnNo = edtGSTNo.getText().toString().trim();
+                String photo = uploadedPhotoBase64;
+                String photoName = uploadedPhotoName;
+                String dob = edtDOB.getText().toString().trim();
+                addCustomerApiCall(true, true, customerName, dealerId, stateId, districtId, talukaId, cityId, mobileNo, mobileNo2,
                         address, pinCode, email, aadharNo, aadharProof, aadharFileName, gstnNo, photo, photoName, dob);
             }
         }
@@ -344,10 +335,6 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
     public void onBackPressed() {
         super.onBackPressed();
     }
-
-    MultipartBody.Part file1;
-    MultipartBody.Part file2;
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -362,14 +349,6 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                     uploadedAadharProofBase64 = CommonUtil.getBase64StringFromFileObj(uploadedAadharProof);
                     uploadedAadharProofName = uploadedAadharProof.getName();
                     edtUploadAadharProof.setText(uploadedAadharProofName);
-
-//                    MultipartBody.Part fileToUploadPassport;
-
-                    RequestBody mFile = RequestBody.create(MediaType.parse("application*//*"), uploadedAadharProof);
-
-                    file1 = MultipartBody.Part.createFormData("file", uploadedAadharProof.getName(), mFile);
-                    System.out.print("sdfsf");
-
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -379,12 +358,6 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                 if (data != null && data.getData() != null) {
                     String fileUrl = FileUtils.getPath(CustomerRegistrationActivity.this, data.getData());
                     File uploadedPhotoFile = new File(fileUrl);
-
-                    RequestBody mFile = RequestBody.create(MediaType.parse("application*//*"), uploadedPhotoFile);
-
-                    file2 = MultipartBody.Part.createFormData("file", uploadedPhotoFile.getName(), mFile);
-                    System.out.print("sdfsf");
-
                     uploadedPhotoBase64 = CommonUtil.getBase64StringFromFileObj(uploadedPhotoFile);
                     uploadedPhotoName = uploadedPhotoFile.getName();
                     edtUploadPhoto.setText(uploadedPhotoName);
@@ -711,18 +684,12 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
     }
 
 
-    //    private void addCustomerApiCall(boolean isPdShow, boolean isPdHide, String CustomerName,
-//                                    String DealerId, String StateId, String DistrictId, String TalukaId,
-//                                    String CityId, String MobileNo, String MobileNo2, String Address,
-//                                    String PinCode, String Email, String AadharNo, String AadharProof,
-//                                    String AadharFileName, String GSTNo, String Photo,
-//                                    String PhotoFileName, String DateOfBirth) {
-    private void addCustomerApiCall(boolean isPdShow, boolean isPdHide, RequestBody CustomerName,
-                                    RequestBody DealerId, RequestBody StateId, RequestBody DistrictId, RequestBody TalukaId,
-                                    RequestBody CityId, RequestBody MobileNo, RequestBody MobileNo2, RequestBody Address,
-                                    RequestBody PinCode, RequestBody Email, RequestBody AadharNo, MultipartBody.Part AadharProof,
-                                    RequestBody AadharFileName, RequestBody GSTNo, MultipartBody.Part Photo,
-                                    RequestBody PhotoFileName, RequestBody DateOfBirth) {
+    private void addCustomerApiCall(boolean isPdShow, boolean isPdHide, String CustomerName,
+                                    String DealerId, String StateId, String DistrictId, String TalukaId,
+                                    String CityId, String MobileNo, String MobileNo2, String Address,
+                                    String PinCode, String Email, String AadharNo, String AadharProof,
+                                    String AadharFileName, String GSTNo, String Photo,
+                                    String PhotoFileName, String DateOfBirth) {
         if (isPdShow) {
             DialogUtil.showProgressDialogNotCancelable(CustomerRegistrationActivity.this, "");
         }
@@ -738,7 +705,8 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                             if (response.code() == 200 && response.body() != null) {
                                 if (response.body().size() > 0 && response.body().get(0).getStatus() == 1) {
                                     Toast.makeText(CustomerRegistrationActivity.this, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
-                                    getDetailsForLoginUserCustomer(false, true);
+                                    finish();
+//                                    getDetailsForLoginUserCustomer(false, true);
                                 } else {
                                     if (!isPdHide) {
                                         DialogUtil.hideProgressDialog();

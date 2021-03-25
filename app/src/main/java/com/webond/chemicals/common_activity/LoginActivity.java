@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.google.android.material.card.MaterialCardView;
 import com.webond.chemicals.R;
-import com.webond.chemicals.admin.AdminDashboardActivity;
+import com.webond.chemicals.admin.activity.AdminDashboardActivity;
 import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.custom_class.BottomSheetDialogForVerifyOTP;
 import com.webond.chemicals.custom_class.SpinnerSimpleAdapter;

@@ -9,12 +9,9 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-
-//import com.employeecontrol.controle.services.BackgroundLocationServices;
 
 import com.webond.chemicals.services.BackgroundLocationServices;
 
@@ -31,6 +28,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+//import com.employeecontrol.controle.services.BackgroundLocationServices;
+
 public class CommonUtil {
 
     public static final String FOLDER_NAME = "WeBond";
@@ -43,6 +42,9 @@ public class CommonUtil {
     public static final String LOGIN_TYPE_DISTRIBUTOR = "2";
     public static final String LOGIN_TYPE_DEALER = "3";
     public static final String LOGIN_TYPE_CUSTOMER = "4";
+
+    public static final String APPROVE_STATUS = "1";
+    public static final String REJECT_STATUS = "2";
 
 
 

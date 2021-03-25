@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".admin.AdminDashboardActivity">
+    tools:context=".admin.activity.AdminDashboardActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cvProfile"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginLeft="22dp"
                     android:layout_marginTop="22dp"
@@ -89,9 +89,9 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cvProductList"
+                    android:id="@+id/cvManageDistributor"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginLeft="11dp"
                     android:layout_marginTop="22dp"
@@ -120,7 +120,7 @@
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_shop"
+                                android:src="@drawable/ic_manage"
                                 android:tint="@color/white" />
 
                         </LinearLayout>
@@ -129,7 +129,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Product List"
+                            android:gravity="center"
+                            android:text="Manage\nDistributor"
                             android:textColor="@color/darker_grey_color"
                             android:textSize="@dimen/dashboard_text_size" />
 
@@ -145,9 +146,9 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cvManageOrder"
+                    android:id="@+id/cvManageDealer"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginLeft="22dp"
                     android:layout_marginTop="11dp"
@@ -176,7 +177,7 @@
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_manage_order"
+                                android:src="@drawable/ic_manage"
                                 android:tint="@color/white" />
 
                         </LinearLayout>
@@ -185,7 +186,115 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Manage Order"
+                            android:gravity="center"
+                            android:text="Manage\nDealer"
+                            android:textColor="@color/darker_grey_color"
+                            android:textSize="@dimen/dashboard_text_size" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvManageCustomer"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="11dp"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginRight="22dp"
+                    android:layout_marginBottom="11dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="8dp"
+                    app:contentPadding="18dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="74dp"
+                            android:layout_height="74dp"
+                            android:background="@drawable/bg_product_list_bg"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_manage"
+                                android:tint="@color/white" />
+
+                        </LinearLayout>
+
+                        <com.webond.chemicals.custom_class.TextViewMediumFont
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:gravity="center"
+                            android:text="Manage\nCustomer"
+                            android:textColor="@color/darker_grey_color"
+                            android:textSize="@dimen/dashboard_text_size" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvAddProduct"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginRight="11dp"
+                    android:layout_marginBottom="11dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="8dp"
+                    app:contentPadding="18dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="74dp"
+                            android:layout_height="74dp"
+                            android:background="@drawable/bg_profile"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_manage"
+                                android:tint="@color/white" />
+
+                        </LinearLayout>
+
+                        <com.webond.chemicals.custom_class.TextViewMediumFont
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:gravity="center"
+                            android:text="Add\nProduct"
                             android:textColor="@color/darker_grey_color"
                             android:textSize="@dimen/dashboard_text_size" />
 
@@ -195,7 +304,7 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginLeft="11dp"
                     android:layout_marginTop="11dp"
@@ -225,7 +334,7 @@
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_shop"
+                                android:src="@drawable/ic_manage"
                                 android:tint="@color/white" />
 
                         </LinearLayout>
@@ -234,7 +343,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Product List"
+                            android:gravity="center"
+                            android:text="Manage\nCustomer"
                             android:textColor="@color/darker_grey_color"
                             android:textSize="@dimen/dashboard_text_size" />
 

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
@@ -140,6 +142,25 @@ public class DistributorRegistrationActivity extends AppCompatActivity implement
         edtDOB.setOnClickListener(this);
         cvSubmit = findViewById(R.id.cvSubmit);
         cvSubmit.setOnClickListener(this);
+
+        edtMobileNo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!CommonUtil.checkIsEmptyOrNullCommon(s.toString())) {
+                    edtMobileNo2.setText(s.toString() + "");
+                }
+            }
+        });
 
         spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -291,7 +312,7 @@ public class DistributorRegistrationActivity extends AppCompatActivity implement
                 String photo = uploadedPhotoBase64;
                 String photoName = uploadedPhotoName;
                 String dob = edtDOB.getText().toString().trim();
-                addDistributorApiCall(true, false, distributorName, stateId, districtId, talukaId, cityId, mobileNo, mobileNo2,
+                addDistributorApiCall(true, true, distributorName, stateId, districtId, talukaId, cityId, mobileNo, mobileNo2,
                         address, pinCode, email, aadharNo, aadharProof, aadharFileName, gstnNo, photo, photoName, dob);
             }
         }
@@ -604,7 +625,8 @@ public class DistributorRegistrationActivity extends AppCompatActivity implement
                             if (response.code() == 200 && response.body() != null) {
                                 if (response.body().size() > 0 && response.body().get(0).getStatus() == 1) {
                                     Toast.makeText(DistributorRegistrationActivity.this, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
-                                    getDetailsForLoginUserDistributor(false, true);
+                                    finish();
+//                                    getDetailsForLoginUserDistributor(false, true);
                                 } else {
                                     if (!isPdHide) {
                                         DialogUtil.hideProgressDialog();

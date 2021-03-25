@@ -27,8 +27,6 @@ import com.webond.chemicals.pojo.SendOtpPojo;
 
 import java.util.ArrayList;
 
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -36,64 +34,24 @@ public class ApiImplementer {
 
     //TODO Student side module implementers
 
-//    public static void addCustomerImplementer(String CustomerName,
-//                                              String DealerId,
-//                                              String StateId,
-//                                              String DistrictId,
-//                                              String TalukaId,
-//                                              String CityId,
-//                                              String MobileNo,
-//                                              String MobileNo2,
-//                                              String Address,
-//                                              String PinCode,
-//                                              String Email,
-//                                              String AadharNo,
-//                                              String AadharProof,
-//                                              String AadharFileName,
-//                                              String GSTNo,
-//                                              String Photo,
-//                                              String PhotoFileName,
-//                                              String DateOfBirth, Callback<ArrayList<AddCustomerPojo>> cb) {
-//        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
-//        Call<ArrayList<AddCustomerPojo>> call = apiService.addCustomer(CustomerName,
-//                DealerId,
-//                StateId,
-//                DistrictId,
-//                TalukaId,
-//                CityId,
-//                MobileNo,
-//                MobileNo2,
-//                Address,
-//                PinCode,
-//                Email,
-//                AadharNo,
-//                AadharProof,
-//                AadharFileName,
-//                GSTNo,
-//                Photo,
-//                PhotoFileName,
-//                DateOfBirth);
-//        call.enqueue(cb);
-//    }
-
-    public static void addCustomerImplementer(RequestBody CustomerName,
-                                              RequestBody DealerId,
-                                              RequestBody StateId,
-                                              RequestBody DistrictId,
-                                              RequestBody TalukaId,
-                                              RequestBody CityId,
-                                              RequestBody MobileNo,
-                                              RequestBody MobileNo2,
-                                              RequestBody Address,
-                                              RequestBody PinCode,
-                                              RequestBody Email,
-                                              RequestBody AadharNo,
-                                              MultipartBody.Part AadharProof,
-                                              RequestBody AadharFileName,
-                                              RequestBody GSTNo,
-                                              MultipartBody.Part Photo,
-                                              RequestBody PhotoFileName,
-                                              RequestBody DateOfBirth, Callback<ArrayList<AddCustomerPojo>> cb) {
+    public static void addCustomerImplementer(String CustomerName,
+                                              String DealerId,
+                                              String StateId,
+                                              String DistrictId,
+                                              String TalukaId,
+                                              String CityId,
+                                              String MobileNo,
+                                              String MobileNo2,
+                                              String Address,
+                                              String PinCode,
+                                              String Email,
+                                              String AadharNo,
+                                              String AadharProof,
+                                              String AadharFileName,
+                                              String GSTNo,
+                                              String Photo,
+                                              String PhotoFileName,
+                                              String DateOfBirth, Callback<ArrayList<AddCustomerPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<AddCustomerPojo>> call = apiService.addCustomer(CustomerName,
                 DealerId,
@@ -243,21 +201,21 @@ public class ApiImplementer {
         call.enqueue(cb);
     }
 
-    public static void approveCustomerImplementer(String CustomerId, Callback<ArrayList<ApproveCustomerPojo>> cb) {
+    public static void approveCustomerImplementer(String CustomerId,String status, Callback<ArrayList<ApproveCustomerPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
-        Call<ArrayList<ApproveCustomerPojo>> call = apiService.approveCustomer(CustomerId);
+        Call<ArrayList<ApproveCustomerPojo>> call = apiService.approveCustomer(CustomerId,status);
         call.enqueue(cb);
     }
 
-    public static void approveDealerImplementer(String DealerId, Callback<ArrayList<ApproveDealerPojo>> cb) {
+    public static void approveDealerImplementer(String DealerId,String Status, Callback<ArrayList<ApproveDealerPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
-        Call<ArrayList<ApproveDealerPojo>> call = apiService.approveDealer(DealerId);
+        Call<ArrayList<ApproveDealerPojo>> call = apiService.approveDealer(DealerId,Status);
         call.enqueue(cb);
     }
 
-    public static void approveDistributorImplementer(String DistributorId, Callback<ArrayList<ApproveDistributorPojo>> cb) {
+    public static void approveDistributorImplementer(String DistributorId, String status, Callback<ArrayList<ApproveDistributorPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
-        Call<ArrayList<ApproveDistributorPojo>> call = apiService.approveDistributor(DistributorId);
+        Call<ArrayList<ApproveDistributorPojo>> call = apiService.approveDistributor(DistributorId, status);
         call.enqueue(cb);
     }
 
