@@ -1,6 +1,8 @@
 package com.webond.chemicals.admin.activity;
 
+import android.content.ClipData;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -14,9 +16,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.webond.chemicals.R;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.utils.CommonUtil;
-import com.webond.chemicals.utils.FileUtils;
 import com.webond.chemicals.utils.IntentConstants;
 import com.webond.chemicals.utils.MySharedPreferences;
+
+import java.util.ArrayList;
 
 public class AdminAddProductActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -127,12 +130,26 @@ public class AdminAddProductActivity extends AppCompatActivity implements View.O
 
         if (requestCode == IntentConstants.REQUEST_CODE_FOR_UPLOAD_PHOTO && resultCode == RESULT_OK) {
             try {
-
                 if (data != null && data.getData() != null) {
-                    String fileUrl = FileUtils.getPath(AdminAddProductActivity.this, data.getData());
-
+                    ClipData clipData = data.getClipData();
+                    ArrayList<Uri> fileUrls = new ArrayList<>();
+                    if (fileUrls.size() < 6) {
+                        isFileUploaded = true;
+                        if (clipData != null) {
+                            for (int i = 0; i < clipData.getItemCount(); i++) {
+                                clipData.getItemAt(i).getText();
+                                fileUrls.add(clipData.getItemAt(i).getUri());
+                            }
+                        } else {
+                            fileUrls.add(data.getData());
+                        }
+                    } else {
+                        isFileUploaded = false;
+                        Toast.makeText(this, "You can't upload more than file photo", Toast.LENGTH_SHORT).show();
+                    }
                 }
             } catch (Exception ex) {
+                isFileUploaded = false;
                 ex.printStackTrace();
             }
         }
