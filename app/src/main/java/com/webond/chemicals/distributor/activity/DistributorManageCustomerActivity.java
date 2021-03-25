@@ -9,14 +9,11 @@ import android.view.View;
 
 import com.google.android.material.tabs.TabLayout;
 import com.webond.chemicals.R;
-import com.webond.chemicals.admin.fragments.customer.AdminAllCustomerFragment;
-import com.webond.chemicals.admin.fragments.customer.AdminApproveCustomerFragment;
-import com.webond.chemicals.admin.fragments.customer.AdminPendingCustomerFragment;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.ViewPagerAdapter;
-import com.webond.chemicals.distributor.fragments.customer.DistributorAllCutomerFragment;
-import com.webond.chemicals.distributor.fragments.customer.DistributorApproveCutomerFragment;
-import com.webond.chemicals.distributor.fragments.customer.DistributorPendingCutomerFragment;
+import com.webond.chemicals.distributor.fragments.customer.DistributorAllCustomerFragment;
+import com.webond.chemicals.distributor.fragments.customer.DistributorApproveCustomerFragment;
+import com.webond.chemicals.distributor.fragments.customer.DistributorPendingCustomerFragment;
 
 public class DistributorManageCustomerActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -45,9 +42,9 @@ public class DistributorManageCustomerActivity extends AppCompatActivity impleme
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragment(new DistributorPendingCutomerFragment(), "Pending");
-        viewPagerAdapter.addFragment(new DistributorApproveCutomerFragment(), "Approve");
-        viewPagerAdapter.addFragment(new DistributorAllCutomerFragment(), "All");
+        viewPagerAdapter.addFragment(new DistributorPendingCustomerFragment(), "Pending");
+        viewPagerAdapter.addFragment(new DistributorApproveCustomerFragment(), "Approve");
+        viewPagerAdapter.addFragment(new DistributorAllCustomerFragment(), "All");
         viewPager.setAdapter(viewPagerAdapter);
     }
 
