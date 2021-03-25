@@ -45,6 +45,7 @@ public class CommonUtil {
     public static final String LOGIN_TYPE_CUSTOMER = "4";
 
 
+
     public static String getBase64StringFromFileObj(File file) {
         Bitmap bm = BitmapFactory.decodeFile(file.getPath());
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

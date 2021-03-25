@@ -11,11 +11,13 @@ import com.webond.chemicals.pojo.ApproveDistributorPojo;
 import com.webond.chemicals.pojo.CheckMobileNoExitstOrNoPojo;
 import com.webond.chemicals.pojo.GetCityListPojo;
 import com.webond.chemicals.pojo.GetCustomerListPojo;
+import com.webond.chemicals.pojo.GetDealerListByCityIdPojo;
 import com.webond.chemicals.pojo.GetDealerListPojo;
 import com.webond.chemicals.pojo.GetDetailForLoginUserAdminPojo;
 import com.webond.chemicals.pojo.GetDetailsForLoginUserCustomerPojo;
 import com.webond.chemicals.pojo.GetDetailsForLoginUserDealerPojo;
 import com.webond.chemicals.pojo.GetDetailsForLoginUserDistributorPojo;
+import com.webond.chemicals.pojo.GetDistributorListByCityIdPojo;
 import com.webond.chemicals.pojo.GetDistributorListPojo;
 import com.webond.chemicals.pojo.GetDistrictListPojo;
 import com.webond.chemicals.pojo.GetProductListPojo;
@@ -298,6 +300,18 @@ public class ApiImplementer {
     public static void sendOtpApiImplementer(String MobileNo, String Otp, Callback<ArrayList<SendOtpPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<SendOtpPojo>> call = apiService.sendOtp(MobileNo, Otp);
+        call.enqueue(cb);
+    }
+
+    public static void getDealerListByCityIdApiImplementer(String cityId, Callback<ArrayList<GetDealerListByCityIdPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<GetDealerListByCityIdPojo>> call = apiService.getDealerListByCityId(cityId);
+        call.enqueue(cb);
+    }
+
+    public static void getDistributorListByCityIdApiImplementer(String cityId, Callback<ArrayList<GetDistributorListByCityIdPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<GetDistributorListByCityIdPojo>> call = apiService.getDistributorListByCityId(cityId);
         call.enqueue(cb);
     }
 

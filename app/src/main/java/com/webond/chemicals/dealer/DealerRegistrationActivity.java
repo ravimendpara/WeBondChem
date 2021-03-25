@@ -28,6 +28,7 @@ import com.webond.chemicals.pojo.AddDealerPojo;
 import com.webond.chemicals.pojo.GetCityListPojo;
 import com.webond.chemicals.pojo.GetDetailsForLoginUserCustomerPojo;
 import com.webond.chemicals.pojo.GetDetailsForLoginUserDealerPojo;
+import com.webond.chemicals.pojo.GetDistributorListByCityIdPojo;
 import com.webond.chemicals.pojo.GetDistrictListPojo;
 import com.webond.chemicals.pojo.GetStateListPojo;
 import com.webond.chemicals.pojo.GetTalukaListPojo;
@@ -53,6 +54,7 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
     private static final String SELECT_DISTRICT = "Select District";
     private static final String SELECT_TALUKA = "Select Taluka";
     private static final String SELECT_CITY = "Select City";
+    private static final String SELECT_DISTRIBUTOR = "Select Distributor";
 
     private MySharedPreferences mySharedPreferences;
     private AppCompatImageView imgBack;
@@ -62,6 +64,7 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
     private Spinner spDistrict;
     private Spinner spTaluka;
     private Spinner spCity;
+    private Spinner spDistributor;
     private TextInputEditText edtMobileNo;
     private TextInputEditText edtMobileNo2;
     private TextInputEditText edtAddress;
@@ -83,6 +86,7 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
     private SpinnerSimpleAdapter spinnerAdapterDistrict;
     private SpinnerSimpleAdapter spinnerAdapterUserTaluka;
     private SpinnerSimpleAdapter spinnerAdapterUserCity;
+    private SpinnerSimpleAdapter spinnerAdapterDistributor;
 
     private ArrayList<String> stateArrayList;
     private HashMap<String, String> stateHashMap;
@@ -92,6 +96,8 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
     private HashMap<String, String> talukaHashMap;
     private ArrayList<String> cityArrayList;
     private HashMap<String, String> cityHashMap;
+    private ArrayList<String> distributorArrayList;
+    private HashMap<String, String> distributorHashMap;
 
 
     final DatePickerDialog.OnDateSetListener dob = new DatePickerDialog.OnDateSetListener() {
@@ -127,6 +133,7 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
         spDistrict = findViewById(R.id.spDistrict);
         spTaluka = findViewById(R.id.spTaluka);
         spCity = findViewById(R.id.spCity);
+        spDistributor = findViewById(R.id.spDistributor);
         edtMobileNo = findViewById(R.id.edtMobileNo);
         edtMobileNo2 = findViewById(R.id.edtMobileNo2);
         edtAddress = findViewById(R.id.edtAddress);
@@ -293,7 +300,7 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
         } else if (v.getId() == R.id.cvSubmit) {
             if (isValid()) {
                 String dealerName = edtDealerName.getText().toString().trim();
-                String distributorId = "0";//TODO do not pass 0 here ask to ravibhai for distributor id for dealer registration form
+                String distributorId = distributorHashMap.get(distributorArrayList.get(spDistributor.getSelectedItemPosition()));
                 String stateId = stateHashMap.get(stateArrayList.get(spState.getSelectedItemPosition()));
                 String districtId = districtHashMap.get(districtArrayList.get(spDistrict.getSelectedItemPosition()));
                 String talukaId = talukaHashMap.get(talukaArrayList.get(spTaluka.getSelectedItemPosition()));
@@ -512,7 +519,7 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
 
 //                            spTaluka.setSelection(1);
                             String talukaId = talukaHashMap.get(talukaArrayList.get(1));
-                            getCityApiCall(false, true, talukaId);
+                            getCityApiCall(false, false, talukaId);
                         } else {
                             if (!isPdHide) {
                                 DialogUtil.hideProgressDialog();
@@ -574,7 +581,8 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
                             spinnerAdapterUserCity = new SpinnerSimpleAdapter(DealerRegistrationActivity.this, cityArrayList);
                             spCity.setAdapter(spinnerAdapterUserCity);
 //                            spCity.setSelection(1);
-
+                            String cityId = cityHashMap.get(cityArrayList.get(1));
+                            getDistributorApiCall(false, true, cityId);
                         } else {
                             if (!isPdHide) {
                                 DialogUtil.hideProgressDialog();
@@ -608,6 +616,69 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
         });
     }
 
+    private void getDistributorApiCall(boolean isPdShow, boolean isPdHide, String cityId) {
+        if (isPdShow) {
+            DialogUtil.showProgressDialogNotCancelable(DealerRegistrationActivity.this, "");
+        }
+        ApiImplementer.getDistributorListByCityIdApiImplementer(cityId, new Callback<ArrayList<GetDistributorListByCityIdPojo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<GetDistributorListByCityIdPojo>> call, Response<ArrayList<GetDistributorListByCityIdPojo>> response) {
+                if (isPdHide) {
+                    DialogUtil.hideProgressDialog();
+                }
+                try {
+                    if (response.code() == 200 && response.body() != null) {
+                        if (response.body().size() > 0) {
+                            ArrayList<GetDistributorListByCityIdPojo> getDistributorListByCityIdPojoArrayList = response.body();
+                            distributorArrayList = new ArrayList<>();
+                            distributorArrayList.add(SELECT_DISTRIBUTOR);
+                            distributorHashMap = new HashMap<>();
+                            for (int i = 0; i < getDistributorListByCityIdPojoArrayList.size(); i++) {
+                                if (!CommonUtil.checkIsEmptyOrNullCommon(getDistributorListByCityIdPojoArrayList.get(i).getDistributorName())) {
+                                    String distributorName = getDistributorListByCityIdPojoArrayList.get(i).getDistributorName().trim();
+                                    distributorArrayList.add(distributorName);
+                                    distributorHashMap.put(distributorName, getDistributorListByCityIdPojoArrayList.get(i).getDistributorId().toString());
+                                }
+                            }
+
+                            spinnerAdapterDistributor = new SpinnerSimpleAdapter(DealerRegistrationActivity.this, distributorArrayList);
+                            spDistributor.setAdapter(spinnerAdapterDistributor);
+//                            spCity.setSelection(1);
+
+                        } else {
+                            if (!isPdHide) {
+                                DialogUtil.hideProgressDialog();
+                            }
+                            distributorArrayList = new ArrayList<>();
+                            distributorArrayList.add(SELECT_DISTRIBUTOR);
+                            distributorHashMap = new HashMap<>();
+                            spinnerAdapterDistributor = new SpinnerSimpleAdapter(DealerRegistrationActivity.this, distributorArrayList);
+                            spDistributor.setAdapter(spinnerAdapterDistributor);
+                            Toast.makeText(DealerRegistrationActivity.this, "Distributors Not Found!", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        if (!isPdHide) {
+                            DialogUtil.hideProgressDialog();
+                        }
+                        Toast.makeText(DealerRegistrationActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception ex) {
+                    if (!isPdHide) {
+                        DialogUtil.hideProgressDialog();
+                    }
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<GetDistributorListByCityIdPojo>> call, Throwable t) {
+                DialogUtil.hideProgressDialog();
+                Toast.makeText(DealerRegistrationActivity.this, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
     private void addDealerApiCall(boolean isPdShow, boolean isPdHide,
                                   String dealerName,
                                   String distributorId, String StateId, String DistrictId, String TalukaId,
@@ -618,9 +689,9 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
         if (isPdShow) {
             DialogUtil.showProgressDialogNotCancelable(DealerRegistrationActivity.this, "");
         }
-        ApiImplementer.addDealerImplementer(dealerName,distributorId,StateId,DistrictId,TalukaId,CityId,
-                MobileNo,MobileNo2,Address,PinCode,Email,AadharNo,AadharProof,AadharFileName,GSTNo,
-                Photo,PhotoFileName,DateOfBirth, new Callback<ArrayList<AddDealerPojo>>() {
+        ApiImplementer.addDealerImplementer(dealerName, distributorId, StateId, DistrictId, TalukaId, CityId,
+                MobileNo, MobileNo2, Address, PinCode, Email, AadharNo, AadharProof, AadharFileName, GSTNo,
+                Photo, PhotoFileName, DateOfBirth, new Callback<ArrayList<AddDealerPojo>>() {
                     @Override
                     public void onResponse(Call<ArrayList<AddDealerPojo>> call, Response<ArrayList<AddDealerPojo>> response) {
                         if (isPdHide) {

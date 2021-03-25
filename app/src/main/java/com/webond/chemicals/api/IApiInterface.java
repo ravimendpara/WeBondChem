@@ -11,11 +11,13 @@ import com.webond.chemicals.pojo.ApproveDistributorPojo;
 import com.webond.chemicals.pojo.CheckMobileNoExitstOrNoPojo;
 import com.webond.chemicals.pojo.GetCityListPojo;
 import com.webond.chemicals.pojo.GetCustomerListPojo;
+import com.webond.chemicals.pojo.GetDealerListByCityIdPojo;
 import com.webond.chemicals.pojo.GetDealerListPojo;
 import com.webond.chemicals.pojo.GetDetailForLoginUserAdminPojo;
 import com.webond.chemicals.pojo.GetDetailsForLoginUserCustomerPojo;
 import com.webond.chemicals.pojo.GetDetailsForLoginUserDealerPojo;
 import com.webond.chemicals.pojo.GetDetailsForLoginUserDistributorPojo;
+import com.webond.chemicals.pojo.GetDistributorListByCityIdPojo;
 import com.webond.chemicals.pojo.GetDistributorListPojo;
 import com.webond.chemicals.pojo.GetDistrictListPojo;
 import com.webond.chemicals.pojo.GetProductListPojo;
@@ -138,13 +140,13 @@ public interface IApiInterface {
 
     @GET("GetCustomerList")
     Call<ArrayList<GetCustomerListPojo>> getCustomerList(@Query("LoginType") String LoginType,
-                                              @Query("LoginId") String LoginId,
-                                              @Query("FilterValue") String FilterValue);
+                                                         @Query("LoginId") String LoginId,
+                                                         @Query("FilterValue") String FilterValue);
 
     @GET("GetDealerList")
     Call<ArrayList<GetDealerListPojo>> getDealerList(@Query("LoginType") String LoginType,
-                                          @Query("LoginId") String LoginId,
-                                          @Query("FilterValue") String FilterValue);
+                                                     @Query("LoginId") String LoginId,
+                                                     @Query("FilterValue") String FilterValue);
 
 
     @GET("GetDetailForLoginUser")
@@ -161,7 +163,7 @@ public interface IApiInterface {
 
     @GET("GetDistributorList")
     Call<ArrayList<GetDistributorListPojo>> getDistributorList(@Query("LoginId") String LoginId,
-                                                    @Query("FilterValue") String FilterValue);
+                                                               @Query("FilterValue") String FilterValue);
 
     @GET("GetDistrictList")
     Call<ArrayList<GetDistrictListPojo>> getDistrictList(@Query("StateId") String StateId);
@@ -178,5 +180,12 @@ public interface IApiInterface {
     @GET("SendOtp")
     Call<ArrayList<SendOtpPojo>> sendOtp(@Query("MobileNo") String MobileNo,
                                          @Query("Otp") String Otp);
+
+    @GET("GetDealerListByCityId")
+    Call<ArrayList<GetDealerListByCityIdPojo>> getDealerListByCityId(@Query("cityid") String cityId);
+
+    @GET("GetDistributorListByCityId")
+    Call<ArrayList<GetDistributorListByCityIdPojo>> getDistributorListByCityId(@Query("cityid") String cityid);
+
 
 }
