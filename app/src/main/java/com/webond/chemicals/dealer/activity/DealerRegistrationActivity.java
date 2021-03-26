@@ -567,9 +567,9 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
                             cityHashMap = new HashMap<>();
                             for (int i = 0; i < getCityListPojoArrayList.size(); i++) {
                                 if (!CommonUtil.checkIsEmptyOrNullCommon(getCityListPojoArrayList.get(i).getCityName())) {
-                                    String districtName = getCityListPojoArrayList.get(i).getCityName().trim();
-                                    cityArrayList.add(districtName);
-                                    cityHashMap.put(districtName, getCityListPojoArrayList.get(i).getCityId().toString());
+                                    String cityName = getCityListPojoArrayList.get(i).getCityName().trim();
+                                    cityArrayList.add(cityName);
+                                    cityHashMap.put(cityName, getCityListPojoArrayList.get(i).getCityId().toString());
                                 }
                             }
 

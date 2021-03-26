@@ -12,6 +12,7 @@ public class CheckMobileNoExitstOrNoPojo {
     @Expose
     private String msg;
 
+
     public Integer getStatus() {
         return status;
     }

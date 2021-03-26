@@ -36,6 +36,7 @@ import com.webond.chemicals.utils.IntentConstants;
 import com.webond.chemicals.utils.MySharedPreferences;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,6 +51,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final String DISTRIBUTOR = "Distributor";
     private static final String DEALER = "Dealer";
     private static final String CUSTOMER = "Customer";
+
+    private HashMap<String,String> userTypeHashMap = new HashMap<>();
 
     private Spinner spUserType;
     private SpinnerSimpleAdapter spinnerAdapterUserType;
@@ -100,9 +103,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         cvRegister.setOnClickListener(this);
         selectUserTypeArrayList.add(SELECT_USER_TYPE);
         selectUserTypeArrayList.add(ADMIN);
+        userTypeHashMap.put(ADMIN,"1");
         selectUserTypeArrayList.add(DISTRIBUTOR);
+        userTypeHashMap.put(DISTRIBUTOR,"2");
         selectUserTypeArrayList.add(DEALER);
+        userTypeHashMap.put(DEALER,"3");
         selectUserTypeArrayList.add(CUSTOMER);
+        userTypeHashMap.put(CUSTOMER,"4");
         spinnerAdapterUserType = new SpinnerSimpleAdapter(LoginActivity.this, selectUserTypeArrayList);
         spUserType.setAdapter(spinnerAdapterUserType);
 
@@ -191,7 +198,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             response.body().size() > 0) {
 
                         if (isFromLogin) {
-                            if (response.body().get(0).getStatus() == 0) {
+                            if (response.body().get(0).getStatus().toString().equalsIgnoreCase(userTypeHashMap.get(selectUserTypeArrayList.get(spUserType.getSelectedItemPosition())))) {
                                 Toast.makeText(LoginActivity.this, "sended otp:- " + randomSixDigitOTP, Toast.LENGTH_LONG).show();
                                 sendOTPApiCall(false, true, edtMobileNo.getText().toString().trim(), randomSixDigitOTP);
                             } else {
@@ -201,7 +208,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 Toast.makeText(LoginActivity.this, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            if (response.body().get(0).getStatus() == 1) {
+                            if (response.body().get(0).getStatus() == 0) {
                                 String selectedLoginUserType = selectUserTypeArrayList.get(spUserType.getSelectedItemPosition());
                                 if (selectedLoginUserType.equalsIgnoreCase(DISTRIBUTOR)) {
                                     Intent intent = new Intent(LoginActivity.this, DistributorRegistrationActivity.class);

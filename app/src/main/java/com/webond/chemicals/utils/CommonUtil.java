@@ -32,6 +32,32 @@ import java.util.UUID;
 
 public class CommonUtil {
 
+    //changes
+//    2 distributor
+//1 admin
+//3 dealer
+//4 customer
+//
+//
+              //for place order
+//            image,name,code,qty,point
+//
+    //below api response changed
+//1)GetProductList ma distributor,dealer and customer total point param added in response
+//2)GetProductDetailById ma image nu name apididha response
+//3)photo1 required for add product
+//4)GetDetailForLoginUser ma customer,dealer,distributor ma cityid and dealer id add krya che response distributorid cityid,cityid
+    //5)approve and reject krya pachi list refresh thavu joi
+    //6)dealer na registration ma distributor nthi avta dropdown ma
+    //7)product list ni design hibond na product list jevi krvani che
+    //8)add order ni screen ma prodcut nu list batavanu and place order na btn per order dispatch no dialog same as hibond
+    //9)get dealer by taluka id api pedning,
+    //10)get distributor by taluka id api pending
+//    11)place order api pending
+//            12)approve order api pending
+    
+
+
     public static final String FOLDER_NAME = "WeBond";
 
     public static final String FILTER_VALUE_ALL = "0";
