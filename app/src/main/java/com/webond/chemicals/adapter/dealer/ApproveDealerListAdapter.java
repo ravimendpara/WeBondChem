@@ -191,7 +191,7 @@ public class ApproveDealerListAdapter extends RecyclerView.Adapter<ApproveDealer
                     if (response.code() == 200 && response.body() != null && response.body().size() > 0) {
                         if (response.body().get(0).getStatus() == 1) {
                             getDealerListPojoArrayList.remove(position);
-                            notifyItemRangeChanged(position, getDealerListPojoArrayList.size());
+                            notifyDataSetChanged();
                         } else {
                             Toast.makeText(context, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
                         }

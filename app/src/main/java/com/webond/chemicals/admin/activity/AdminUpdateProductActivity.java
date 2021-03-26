@@ -48,7 +48,7 @@ public class AdminUpdateProductActivity extends AppCompatActivity implements Vie
     private TextInputEditText edtDealerPercentage;
     private TextInputEditText edtCustomerPercentage;
     private TextInputEditText edtProductDescription;
-    private MaterialCardView cvSubmit;
+    private MaterialCardView cvUpdate;
     private boolean isPhotoUploaded1 = false;
     private boolean isPhotoUploaded2 = false;
     private boolean isPhotoUploaded3 = false;
@@ -112,8 +112,8 @@ public class AdminUpdateProductActivity extends AppCompatActivity implements Vie
         edtDealerPercentage = findViewById(R.id.edtDealerPercentage);
         edtCustomerPercentage = findViewById(R.id.edtCustomerPercentage);
         edtProductDescription = findViewById(R.id.edtProductDescription);
-        cvSubmit = findViewById(R.id.cvSubmit);
-        cvSubmit.setOnClickListener(this);
+        cvUpdate = findViewById(R.id.cvUpdate);
+        cvUpdate.setOnClickListener(this);
     }
 
     private boolean isValid() {
@@ -153,7 +153,7 @@ public class AdminUpdateProductActivity extends AppCompatActivity implements Vie
     public void onClick(View v) {
         if (v.getId() == R.id.imgBack) {
             onBackPressed();
-        } else if (v.getId() == R.id.cvSubmit) {
+        } else if (v.getId() == R.id.cvUpdate) {
             if (isValid()) {
 
                 String productCode = edtProductCode.getText().toString().trim();

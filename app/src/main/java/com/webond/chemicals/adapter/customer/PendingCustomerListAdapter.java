@@ -158,7 +158,7 @@ public class PendingCustomerListAdapter extends RecyclerView.Adapter<PendingCust
                     if (response.code() == 200 && response.body() != null && response.body().size() > 0) {
                         if (response.body().get(0).getStatus() == 1) {
                             getCustomerListPojoArrayList.remove(position);
-                            notifyItemRemoved(position);
+                            notifyDataSetChanged();
                         } else {
                             Toast.makeText(context, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
                         }
