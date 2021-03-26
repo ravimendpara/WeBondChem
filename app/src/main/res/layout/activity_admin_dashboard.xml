@@ -44,7 +44,7 @@
                     android:id="@+id/recyclerViewPagerStudentSideBanner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:svp_colorActiveIndicator="#CEA955"
+                    app:svp_colorActiveIndicator="@color/colorPrimaryDark"
                     app:svp_colorInactiveIndicator="@color/gray"
                     app:svp_runAuto="true"
                     app:svp_timeMillis="2500" />
