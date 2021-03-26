@@ -50,8 +50,13 @@ public class AdminApproveDealerFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_admin_approve_dealer, container, false);
         initView(view);
-        getApproveDealerListApiCall();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getApproveDealerListApiCall();
     }
 
     private void initView(View view) {

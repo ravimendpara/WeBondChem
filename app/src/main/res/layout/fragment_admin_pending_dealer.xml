@@ -11,9 +11,9 @@
         android:id="@+id/rvAdminPendingDealer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layoutAnimation="@anim/layout_animation_from_bottom_for_list"
         android:scrollbars="none"
         android:visibility="gone"
-        android:layoutAnimation="@anim/layout_animation_from_bottom_for_list"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <include
@@ -21,8 +21,8 @@
         layout="@layout/loading_layout" />
 
     <include
-        android:visibility="gone"
         android:id="@+id/llNoDateFound"
-        layout="@layout/layout_no_data_found" />
+        layout="@layout/layout_no_data_found"
+        android:visibility="gone" />
 
 </LinearLayout>

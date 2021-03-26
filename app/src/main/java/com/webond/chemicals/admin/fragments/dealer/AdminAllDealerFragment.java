@@ -49,8 +49,13 @@ public class AdminAllDealerFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin_all_dealer, container, false);
         initView(view);
-        getApproveDealerListApiCall();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getApproveDealerListApiCall();
     }
 
     private void initView(View view) {
