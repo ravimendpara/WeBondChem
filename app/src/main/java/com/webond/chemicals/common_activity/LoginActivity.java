@@ -68,19 +68,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         initView();
 
         if (mySharedPreferences.isLogin()) {
-            if (mySharedPreferences.getLoginType().equalsIgnoreCase("0")) {
+            if (mySharedPreferences.getLoginType().equalsIgnoreCase(CommonUtil.LOGIN_TYPE_ADMIN)) {
                 Intent intent = new Intent(LoginActivity.this, AdminDashboardActivity.class);
                 startActivity(intent);
                 finish();
-            } else if (mySharedPreferences.getLoginType().equalsIgnoreCase("1")) {
+            } else if (mySharedPreferences.getLoginType().equalsIgnoreCase(CommonUtil.LOGIN_TYPE_DISTRIBUTOR)) {
                 Intent intent = new Intent(LoginActivity.this, DistributorDashboardActivity.class);
                 startActivity(intent);
                 finish();
-            } else if (mySharedPreferences.getLoginType().equalsIgnoreCase("2")) {
+            } else if (mySharedPreferences.getLoginType().equalsIgnoreCase(CommonUtil.LOGIN_TYPE_DEALER)) {
                 Intent intent = new Intent(LoginActivity.this, DealerDashboardActivity.class);
                 startActivity(intent);
                 finish();
-            } else if (mySharedPreferences.getLoginType().equalsIgnoreCase("3")) {
+            } else if (mySharedPreferences.getLoginType().equalsIgnoreCase(CommonUtil.LOGIN_TYPE_CUSTOMER)) {
                 Intent intent = new Intent(LoginActivity.this, CustomerDashboardActivity.class);
                 startActivity(intent);
                 finish();
