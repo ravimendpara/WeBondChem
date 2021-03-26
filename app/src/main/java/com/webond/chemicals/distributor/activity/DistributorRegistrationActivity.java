@@ -56,6 +56,7 @@ public class DistributorRegistrationActivity extends AppCompatActivity implement
     private MySharedPreferences mySharedPreferences;
     private AppCompatImageView imgBack;
     private TextViewMediumFont tvHeaderTitle;
+    private TextInputEditText edtDistributorPedthiName;
     private TextInputEditText edtDistributorName;
     private Spinner spState;
     private Spinner spDistrict;
@@ -123,6 +124,7 @@ public class DistributorRegistrationActivity extends AppCompatActivity implement
         imgBack.setOnClickListener(this);
         tvHeaderTitle = findViewById(R.id.tvHeaderTitle);
         edtDistributorName = findViewById(R.id.edtDistributorName);
+        edtDistributorPedthiName = findViewById(R.id.edtDistributorPedthiName);
         spState = findViewById(R.id.spState);
         spDistrict = findViewById(R.id.spDistrict);
         spTaluka = findViewById(R.id.spTaluka);
@@ -224,7 +226,11 @@ public class DistributorRegistrationActivity extends AppCompatActivity implement
     }
 
     private boolean isValid() {
-        if (CommonUtil.checkIsEmptyOrNullCommon(edtDistributorName.getText().toString().trim())) {
+
+        if (CommonUtil.checkIsEmptyOrNullCommon(edtDistributorPedthiName.getText().toString().trim())) {
+            Toast.makeText(this, "Please enter pedthi name", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (CommonUtil.checkIsEmptyOrNullCommon(edtDistributorName.getText().toString().trim())) {
             Toast.makeText(this, "Please enter distributor name", Toast.LENGTH_SHORT).show();
             return false;
         } else if (spState.getSelectedItemPosition() == -1 || spState.getSelectedItemPosition() == 0) {
@@ -297,6 +303,7 @@ public class DistributorRegistrationActivity extends AppCompatActivity implement
             datePickerDialog_from.show();
         } else if (v.getId() == R.id.cvSubmit) {
             if (isValid()) {
+                String pedthiName = edtDistributorPedthiName.getText().toString().trim();
                 String distributorName = edtDistributorName.getText().toString().trim();
                 String stateId = stateHashMap.get(stateArrayList.get(spState.getSelectedItemPosition()));
                 String districtId = districtHashMap.get(districtArrayList.get(spDistrict.getSelectedItemPosition()));
@@ -314,7 +321,7 @@ public class DistributorRegistrationActivity extends AppCompatActivity implement
                 String photo = uploadedPhotoBase64;
                 String photoName = uploadedPhotoName;
                 String dob = edtDOB.getText().toString().trim();
-                addDistributorApiCall(true, true, distributorName, stateId, districtId, talukaId, cityId, mobileNo, mobileNo2,
+                addDistributorApiCall(true, true, distributorName,pedthiName, stateId, districtId, talukaId, cityId, mobileNo, mobileNo2,
                         address, pinCode, email, aadharNo, aadharProof, aadharFileName, gstnNo, photo, photoName, dob);
             }
         }
@@ -609,14 +616,14 @@ public class DistributorRegistrationActivity extends AppCompatActivity implement
         });
     }
 
-    private void addDistributorApiCall(boolean isPdShow, boolean isPdHide, String DistributerName, String StateId,
+    private void addDistributorApiCall(boolean isPdShow, boolean isPdHide, String DistributerName,String PethiName, String StateId,
                                        String DistrictId, String TalukaId, String CityId, String MobileNo, String MobileNo2,
                                        String Address, String PinCode, String Email, String AadharNo, String AadharProof,
                                        String AadharFileName, String GSTNo, String Photo, String PhotoFileName, String DateOfBith) {
         if (isPdShow) {
             DialogUtil.showProgressDialogNotCancelable(DistributorRegistrationActivity.this, "");
         }
-        ApiImplementer.addDistributorImplementer(DistributerName, StateId, DistrictId, TalukaId, CityId, MobileNo, MobileNo2,
+        ApiImplementer.addDistributorImplementer(DistributerName,PethiName, StateId, DistrictId, TalukaId, CityId, MobileNo, MobileNo2,
                 Address, PinCode, Email, AadharNo, AadharProof, AadharFileName, GSTNo, Photo, PhotoFileName, DateOfBith, new Callback<ArrayList<AddDistributerPojo>>() {
                     @Override
                     public void onResponse(Call<ArrayList<AddDistributerPojo>> call, Response<ArrayList<AddDistributerPojo>> response) {

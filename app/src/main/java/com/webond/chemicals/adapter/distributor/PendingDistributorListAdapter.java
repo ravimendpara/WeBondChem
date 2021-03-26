@@ -4,9 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.webond.chemicals.R;
 import com.webond.chemicals.api.ApiImplementer;
+import com.webond.chemicals.custom_class.Animations;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
 import com.webond.chemicals.pojo.ApproveDistributorPojo;
@@ -57,6 +60,10 @@ public class PendingDistributorListAdapter extends RecyclerView.Adapter<PendingD
                     .centerCrop()
                     .placeholder(R.drawable.person_img)
                     .into(holder.imgPendingDistributor);
+        }
+
+         if (!CommonUtil.checkIsEmptyOrNullCommon(getDistributorListPojo.getPethiName())) {
+            holder.tvPedthiName.setText(getDistributorListPojo.getPethiName() + "");
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getDistributorListPojo.getDistributorName())) {
@@ -112,6 +119,14 @@ public class PendingDistributorListAdapter extends RecyclerView.Adapter<PendingD
             }
         });
 
+        holder.llExpandedHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean show = toggleLayout(!getDistributorArrayList.get(position).isExpanded(), holder.ivViewMoreBtn, holder.llExpandableLayout);
+                getDistributorArrayList.get(position).setExpanded(show);
+            }
+        });
+
     }
 
     @Override
@@ -132,10 +147,19 @@ public class PendingDistributorListAdapter extends RecyclerView.Adapter<PendingD
         TextViewMediumFont tvStatusPendingDistributor;
         MaterialButton btnApprovePendingDistributor;
         MaterialButton btnRejectPendingDistributor;
+        TextViewMediumFont tvPedthiName;
+
+        AppCompatImageView ivViewMoreBtn;
+        LinearLayout llExpandedHeader;
+        LinearLayout llExpandableLayout;
 
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            tvPedthiName = itemView.findViewById(R.id.tvPedthiName);
+            ivViewMoreBtn = itemView.findViewById(R.id.ivViewMoreBtn);
+            llExpandedHeader = itemView.findViewById(R.id.llExpandedHeader);
+            llExpandableLayout = itemView.findViewById(R.id.llExpandableLayout);
             imgPendingDistributor = itemView.findViewById(R.id.imgPendingDistributor);
             tvNamePendingDistributor = itemView.findViewById(R.id.tvNamePendingDistributor);
             tvMobileNoPendingDistributor = itemView.findViewById(R.id.tvMobileNoPendingDistributor);
@@ -148,6 +172,17 @@ public class PendingDistributorListAdapter extends RecyclerView.Adapter<PendingD
             btnApprovePendingDistributor = itemView.findViewById(R.id.btnApprovePendingDistributor);
             btnRejectPendingDistributor = itemView.findViewById(R.id.btnRejectPendingDistributor);
         }
+    }
+
+    private boolean toggleLayout(boolean isExpanded, View v, LinearLayout layoutExpand) {
+        Animations.toggleArrow(v, isExpanded);
+        if (isExpanded) {
+            Animations.expand(layoutExpand);
+        } else {
+            Animations.collapse(layoutExpand);
+        }
+        return isExpanded;
+
     }
 
     private void approveOrRejectDistributorApiCall(String distributorId, String status, int position, ArrayList<GetDistributorListPojo> getDistributorListPojos) {

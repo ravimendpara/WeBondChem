@@ -4,9 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.webond.chemicals.R;
 import com.webond.chemicals.api.ApiImplementer;
+import com.webond.chemicals.custom_class.Animations;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
 import com.webond.chemicals.pojo.ApproveDealerPojo;
@@ -57,6 +60,10 @@ public class PendingDealerListAdapter extends RecyclerView.Adapter<PendingDealer
                     .centerCrop()
                     .placeholder(R.drawable.person_img)
                     .into(holder.imgPendingDealer);
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDealerListPojo.getPedthiName())) {
+            holder.tvPedthiName.setText(getDealerListPojo.getPedthiName() + "");
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getDealerListPojo.getDealerName())) {
@@ -111,6 +118,14 @@ public class PendingDealerListAdapter extends RecyclerView.Adapter<PendingDealer
                 approveOrRejectDealerApiCall(getDealerListPojo.getDealerId() + "", CommonUtil.REJECT_STATUS, position, getDealerListPojoArrayList);
             }
         });
+
+        holder.llExpandedHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean show = toggleLayout(!getDealerListPojoArrayList.get(position).isExpanded(), holder.ivViewMoreBtn, holder.llExpandableLayout);
+                getDealerListPojoArrayList.get(position).setExpanded(show);
+            }
+        });
     }
 
     @Override
@@ -131,6 +146,11 @@ public class PendingDealerListAdapter extends RecyclerView.Adapter<PendingDealer
         TextViewMediumFont tvStatusPendingDealer;
         MaterialButton btnApprovePendingDealer;
         MaterialButton btnRejectPendingDealer;
+        TextViewMediumFont tvPedthiName;
+
+        AppCompatImageView ivViewMoreBtn;
+        LinearLayout llExpandedHeader;
+        LinearLayout llExpandableLayout;
         
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -145,7 +165,22 @@ public class PendingDealerListAdapter extends RecyclerView.Adapter<PendingDealer
             tvStatusPendingDealer = itemView.findViewById(R.id.tvStatusPendingDealer);
             btnApprovePendingDealer = itemView.findViewById(R.id.btnApprovePendingDealer);
             btnRejectPendingDealer = itemView.findViewById(R.id.btnRejectPendingDealer);
+            tvPedthiName = itemView.findViewById(R.id.tvPedthiName);
+            ivViewMoreBtn = itemView.findViewById(R.id.ivViewMoreBtn);
+            llExpandedHeader = itemView.findViewById(R.id.llExpandedHeader);
+            llExpandableLayout = itemView.findViewById(R.id.llExpandableLayout);
         }
+    }
+
+    private boolean toggleLayout(boolean isExpanded, View v, LinearLayout layoutExpand) {
+        Animations.toggleArrow(v, isExpanded);
+        if (isExpanded) {
+            Animations.expand(layoutExpand);
+        } else {
+            Animations.collapse(layoutExpand);
+        }
+        return isExpanded;
+
     }
 
     private void approveOrRejectDealerApiCall(String DealerId, String status, int position, ArrayList<GetDealerListPojo> getDealerListPojoArrayList) {

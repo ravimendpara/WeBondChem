@@ -5,12 +5,25 @@ import com.google.gson.annotations.SerializedName;
 
 public class GetDealerListPojo {
 
+    boolean isExpanded = false;
+
+    public boolean isExpanded() {
+        return isExpanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        isExpanded = expanded;
+    }
+
     @SerializedName("DealerId")
     @Expose
     private Integer dealerId;
     @SerializedName("DealerName")
     @Expose
     private String dealerName;
+    @SerializedName("PethiName")
+    @Expose
+    private String pedthiName;
     @SerializedName("DistributorId")
     @Expose
     private Integer distributorId;
@@ -71,6 +84,14 @@ public class GetDealerListPojo {
     @SerializedName("PhotoPath")
     @Expose
     private String photoPath;
+
+    public String getPedthiName() {
+        return pedthiName;
+    }
+
+    public void setPedthiName(String pedthiName) {
+        this.pedthiName = pedthiName;
+    }
 
     public Integer getDealerId() {
         return dealerId;

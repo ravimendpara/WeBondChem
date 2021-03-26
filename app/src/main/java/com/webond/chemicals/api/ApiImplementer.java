@@ -76,6 +76,7 @@ public class ApiImplementer {
 
 
     public static void addDealerImplementer(String DealerName,
+                                            String PethiName,
                                             String DistributorId,
                                             String StateId,
                                             String DistrictId,
@@ -97,6 +98,7 @@ public class ApiImplementer {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<AddDealerPojo>> call = apiService.addDealer(
                 DealerName,
+                PethiName,
                 DistributorId,
                 StateId,
                 DistrictId,
@@ -119,6 +121,7 @@ public class ApiImplementer {
 
     public static void addDistributorImplementer(
             String DistributerName,
+            String PethiName,
             String StateId,
             String DistrictId,
             String TalukaId,
@@ -139,6 +142,7 @@ public class ApiImplementer {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<AddDistributerPojo>> call = apiService.addDistributor(
                 DistributerName,
+                PethiName,
                 StateId,
                 DistrictId,
                 TalukaId,

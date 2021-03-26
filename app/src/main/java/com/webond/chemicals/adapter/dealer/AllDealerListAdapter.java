@@ -4,13 +4,16 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.webond.chemicals.R;
+import com.webond.chemicals.custom_class.Animations;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
 import com.webond.chemicals.pojo.GetDealerListPojo;
@@ -51,6 +54,10 @@ public class AllDealerListAdapter extends RecyclerView.Adapter<AllDealerListAdap
                     .into(holder.imgAllDealer);
         }
 
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDealerListPojo.getPedthiName())) {
+            holder.tvPedthiName.setText(getDealerListPojo.getPedthiName() + "");
+        }
+
         if (!CommonUtil.checkIsEmptyOrNullCommon(getDealerListPojo.getDealerName())) {
             holder.tvNameAllDealer.setText(getDealerListPojo.getDealerName() + "");
         }
@@ -89,6 +96,15 @@ public class AllDealerListAdapter extends RecyclerView.Adapter<AllDealerListAdap
             }
             holder.tvStatusAllDealer.setText(getDealerListPojo.getStatus() + "");
         }
+
+        holder.llExpandedHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean show = toggleLayout(!getDealerListPojoArrayList.get(position).isExpanded(), holder.ivViewMoreBtn, holder.llExpandableLayout);
+                getDealerListPojoArrayList.get(position).setExpanded(show);
+            }
+        });
+
     }
 
     @Override
@@ -107,9 +123,18 @@ public class AllDealerListAdapter extends RecyclerView.Adapter<AllDealerListAdap
         TextViewMediumFont tvTalukaAllDealer;
         TextViewMediumFont tvCityAllDealer;
         TextViewMediumFont tvStatusAllDealer;
+        TextViewMediumFont tvPedthiName;
+
+        AppCompatImageView ivViewMoreBtn;
+        LinearLayout llExpandedHeader;
+        LinearLayout llExpandableLayout;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            tvPedthiName = itemView.findViewById(R.id.tvPedthiName);
+            ivViewMoreBtn = itemView.findViewById(R.id.ivViewMoreBtn);
+            llExpandedHeader = itemView.findViewById(R.id.llExpandedHeader);
+            llExpandableLayout = itemView.findViewById(R.id.llExpandableLayout);
             imgAllDealer = itemView.findViewById(R.id.imgAllDealer);
             tvNameAllDealer = itemView.findViewById(R.id.tvNameAllDealer);
             tvMobileNoAllDealer = itemView.findViewById(R.id.tvMobileNoAllDealer);
@@ -120,6 +145,17 @@ public class AllDealerListAdapter extends RecyclerView.Adapter<AllDealerListAdap
             tvCityAllDealer = itemView.findViewById(R.id.tvCityAllDealer);
             tvStatusAllDealer = itemView.findViewById(R.id.tvStatusAllDealer);
         }
+    }
+
+    private boolean toggleLayout(boolean isExpanded, View v, LinearLayout layoutExpand) {
+        Animations.toggleArrow(v, isExpanded);
+        if (isExpanded) {
+            Animations.expand(layoutExpand);
+        } else {
+            Animations.collapse(layoutExpand);
+        }
+        return isExpanded;
+
     }
 
 }

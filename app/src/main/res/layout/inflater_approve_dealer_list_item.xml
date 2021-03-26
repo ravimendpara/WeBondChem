@@ -6,13 +6,47 @@
     android:layout_margin="12dp"
     android:orientation="vertical"
     app:cardCornerRadius="6dp"
-    app:cardElevation="6dp"
-    app:contentPadding="8dp">
+    app:cardElevation="6dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/llExpandedHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_common_expande_header"
+            android:orientation="horizontal">
+
+            <com.webond.chemicals.custom_class.TextViewMediumFont
+                android:id="@+id/tvPedthiName"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:text="-"
+                android:textAllCaps="true"
+                android:textColor="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivViewMoreBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_expand_more" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/llExpandableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -233,6 +267,8 @@
                     android:textSize="13sp" />
 
             </LinearLayout>
+
+        </LinearLayout>
 
         </LinearLayout>
 

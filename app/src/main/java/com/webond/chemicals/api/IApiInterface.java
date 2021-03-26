@@ -63,6 +63,7 @@ public interface IApiInterface {
     @POST("AddDealer")
     Call<ArrayList<AddDealerPojo>> addDealer(
             @Field("DealerName") String DealerName,
+            @Field("PethiName") String PethiName,
             @Field("DistributorId") String DistributorId,
             @Field("StateId") String StateId,
             @Field("DistrictId") String DistrictId,
@@ -86,6 +87,7 @@ public interface IApiInterface {
     @POST("AddDistributer")
     Call<ArrayList<AddDistributerPojo>> addDistributor(
             @Field("DistributerName") String DistributerName,
+            @Field("PethiName") String PethiName,
             @Field("StateId") String StateId,
             @Field("DistrictId") String DistrictId,
             @Field("TalukaId") String TalukaId,

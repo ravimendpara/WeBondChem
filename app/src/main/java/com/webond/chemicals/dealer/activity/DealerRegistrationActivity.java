@@ -58,6 +58,7 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
     private MySharedPreferences mySharedPreferences;
     private AppCompatImageView imgBack;
     private TextViewMediumFont tvHeaderTitle;
+    private TextInputEditText edtDealerPedthiName;
     private TextInputEditText edtDealerName;
     private Spinner spState;
     private Spinner spDistrict;
@@ -128,6 +129,7 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
         imgBack.setOnClickListener(this);
         tvHeaderTitle = findViewById(R.id.tvHeaderTitle);
         edtDealerName = findViewById(R.id.edtDealerName);
+        edtDealerPedthiName = findViewById(R.id.edtDealerPedthiName);
         spState = findViewById(R.id.spState);
         spDistrict = findViewById(R.id.spDistrict);
         spTaluka = findViewById(R.id.spTaluka);
@@ -230,7 +232,10 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
     }
 
     private boolean isValid() {
-        if (CommonUtil.checkIsEmptyOrNullCommon(edtDealerName.getText().toString().trim())) {
+        if (CommonUtil.checkIsEmptyOrNullCommon(edtDealerPedthiName.getText().toString().trim())) {
+            Toast.makeText(this, "Please enter pedthi name", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (CommonUtil.checkIsEmptyOrNullCommon(edtDealerName.getText().toString().trim())) {
             Toast.makeText(this, "Please enter dealer name", Toast.LENGTH_SHORT).show();
             return false;
         } else if (spState.getSelectedItemPosition() == -1 || spState.getSelectedItemPosition() == 0) {
@@ -307,6 +312,7 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
         } else if (v.getId() == R.id.cvSubmit) {
             if (isValid()) {
                 String dealerName = edtDealerName.getText().toString().trim();
+                String pedthiName = edtDealerPedthiName.getText().toString().trim();
                 String distributorId = distributorHashMap.get(distributorArrayList.get(spDistributor.getSelectedItemPosition()));
                 String stateId = stateHashMap.get(stateArrayList.get(spState.getSelectedItemPosition()));
                 String districtId = districtHashMap.get(districtArrayList.get(spDistrict.getSelectedItemPosition()));
@@ -324,7 +330,7 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
                 String photo = uploadedPhotoBase64;
                 String photoName = uploadedPhotoName;
                 String dob = edtDOB.getText().toString().trim();
-                addDealerApiCall(true, true, dealerName, distributorId, stateId, districtId, talukaId, cityId, mobileNo, mobileNo2,
+                addDealerApiCall(true, true, dealerName,pedthiName, distributorId, stateId, districtId, talukaId, cityId, mobileNo, mobileNo2,
                         address, pinCode, email, aadharNo, aadharProof, aadharFileName, gstnNo, photo, photoName, dob);
             }
         }
@@ -684,7 +690,7 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
 
 
     private void addDealerApiCall(boolean isPdShow, boolean isPdHide,
-                                  String dealerName,
+                                  String dealerName,String PethiName,
                                   String distributorId, String StateId, String DistrictId, String TalukaId,
                                   String CityId, String MobileNo, String MobileNo2, String Address,
                                   String PinCode, String Email, String AadharNo, String AadharProof,
@@ -693,7 +699,7 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
         if (isPdShow) {
             DialogUtil.showProgressDialogNotCancelable(DealerRegistrationActivity.this, "");
         }
-        ApiImplementer.addDealerImplementer(dealerName, distributorId, StateId, DistrictId, TalukaId, CityId,
+        ApiImplementer.addDealerImplementer(dealerName,PethiName, distributorId, StateId, DistrictId, TalukaId, CityId,
                 MobileNo, MobileNo2, Address, PinCode, Email, AadharNo, AadharProof, AadharFileName, GSTNo,
                 Photo, PhotoFileName, DateOfBirth, new Callback<ArrayList<AddDealerPojo>>() {
                     @Override

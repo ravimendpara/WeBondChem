@@ -4,13 +4,16 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.webond.chemicals.R;
+import com.webond.chemicals.custom_class.Animations;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
 import com.webond.chemicals.pojo.GetDealerListPojo;
@@ -51,6 +54,10 @@ public class ApproveDealerListAdapter extends RecyclerView.Adapter<ApproveDealer
                     .into(holder.imgApproveDealer);
         }
 
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDealerListPojo.getPedthiName())) {
+            holder.tvPedthiName.setText(getDealerListPojo.getPedthiName() + "");
+        }
+
         if (!CommonUtil.checkIsEmptyOrNullCommon(getDealerListPojo.getDealerName())) {
             holder.tvNameApproveDealer.setText(getDealerListPojo.getDealerName() + "");
         }
@@ -89,6 +96,13 @@ public class ApproveDealerListAdapter extends RecyclerView.Adapter<ApproveDealer
             }
             holder.tvStatusApproveDealer.setText(getDealerListPojo.getStatus() + "");
         }
+        holder.llExpandedHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean show = toggleLayout(!getDealerListPojoArrayList.get(position).isExpanded(), holder.ivViewMoreBtn, holder.llExpandableLayout);
+                getDealerListPojoArrayList.get(position).setExpanded(show);
+            }
+        });
     }
 
     @Override
@@ -107,7 +121,12 @@ public class ApproveDealerListAdapter extends RecyclerView.Adapter<ApproveDealer
         TextViewMediumFont tvTalukaApproveDealer;
         TextViewMediumFont tvCityApproveDealer;
         TextViewMediumFont tvStatusApproveDealer;
-        
+        TextViewMediumFont tvPedthiName;
+
+        AppCompatImageView ivViewMoreBtn;
+        LinearLayout llExpandedHeader;
+        LinearLayout llExpandableLayout;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             imgApproveDealer = itemView.findViewById(R.id.imgApproveDealer);
@@ -119,7 +138,22 @@ public class ApproveDealerListAdapter extends RecyclerView.Adapter<ApproveDealer
             tvTalukaApproveDealer = itemView.findViewById(R.id.tvTalukaApproveDealer);
             tvCityApproveDealer = itemView.findViewById(R.id.tvCityApproveDealer);
             tvStatusApproveDealer = itemView.findViewById(R.id.tvStatusApproveDealer);
+            tvPedthiName = itemView.findViewById(R.id.tvPedthiName);
+            ivViewMoreBtn = itemView.findViewById(R.id.ivViewMoreBtn);
+            llExpandedHeader = itemView.findViewById(R.id.llExpandedHeader);
+            llExpandableLayout = itemView.findViewById(R.id.llExpandableLayout);
         }
+    }
+
+    private boolean toggleLayout(boolean isExpanded, View v, LinearLayout layoutExpand) {
+        Animations.toggleArrow(v, isExpanded);
+        if (isExpanded) {
+            Animations.expand(layoutExpand);
+        } else {
+            Animations.collapse(layoutExpand);
+        }
+        return isExpanded;
+
     }
 
 }
