@@ -9,18 +9,18 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.webond.chemicals.R;
 import com.webond.chemicals.admin.activity.AdminUpdateProductActivity;
+import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.pojo.GetProductListPojo;
 import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.IntentConstants;
 
 import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AdminProductListAdapter extends RecyclerView.Adapter<AdminProductListAdapter.MyViewHolder> {
 
@@ -54,6 +54,34 @@ public class AdminProductListAdapter extends RecyclerView.Adapter<AdminProductLi
                     .into(holder.imgProduct);
         }
 
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductName())){
+            holder.tvProductName.setText(getProductListPojo.getProductName());
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductCode())){
+            holder.tvProductCode.setText(getProductListPojo.getProductCode());
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductTotalPoint())){
+            holder.tvPoints.setText(getProductListPojo.getProductTotalPoint()+"");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getDistPer())){
+            holder.tvDistPer.setText(getProductListPojo.getDistPer()+"%");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getDealerPer())){
+            holder.tvDealerPer.setText(getProductListPojo.getDealerPer()+"%");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getCustomerPer())){
+            holder.tvCustomerPer.setText(getProductListPojo.getCustomerPer()+"%");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductPrice())){
+            holder.tvPrice.setText(getProductListPojo.getProductPrice()+"");
+        }
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,11 +105,25 @@ public class AdminProductListAdapter extends RecyclerView.Adapter<AdminProductLi
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        CircleImageView imgProduct;
+        AppCompatImageView imgProduct;
+        TextViewMediumFont tvProductName;
+        TextViewMediumFont tvProductCode;
+        TextViewMediumFont tvPoints;
+        TextViewMediumFont tvDistPer;
+        TextViewMediumFont tvDealerPer;
+        TextViewMediumFont tvCustomerPer;
+        TextViewMediumFont tvPrice;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             imgProduct = itemView.findViewById(R.id.imgProduct);
+            tvProductName = itemView.findViewById(R.id.tvProductName);
+            tvProductCode = itemView.findViewById(R.id.tvProductCode);
+            tvPoints = itemView.findViewById(R.id.tvPoints);
+            tvDistPer = itemView.findViewById(R.id.tvDistPer);
+            tvDealerPer = itemView.findViewById(R.id.tvDealerPer);
+            tvCustomerPer = itemView.findViewById(R.id.tvCustomerPer);
+            tvPrice = itemView.findViewById(R.id.tvPrice);
         }
     }
 
