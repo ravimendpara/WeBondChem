@@ -43,6 +43,7 @@ public class CommonUtil {
 //            image,name,code,qty,point
 //
     //below api response changed
+//    distributor registration activity ma dealer nu list nthi avtu atle city id debug krine joy levu
 //1)GetProductList ma distributor,dealer and customer total point param added in response
 //2)GetProductDetailById ma image nu name apididha response
 //3)photo1 required for add product
