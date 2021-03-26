@@ -18,4 +18,6 @@ public class IntentConstants {
     public static final String PRODUCT_ID = "PoductId";
 
 
+    public static final int REQUEST_CODE_ADD_PRODUCT = 1043;
+    public static final int REQUEST_CODE_UPDATE_PRODUCT = 1044;
 }

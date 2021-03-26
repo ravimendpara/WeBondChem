@@ -1,18 +1,22 @@
 package com.webond.chemicals.admin.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.webond.chemicals.R;
 import com.webond.chemicals.admin.adapter.AdminProductListAdapter;
 import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.pojo.GetProductListPojo;
+import com.webond.chemicals.utils.IntentConstants;
 import com.webond.chemicals.utils.MySharedPreferences;
 
 import java.util.ArrayList;
@@ -29,6 +33,7 @@ public class AdminProductListActivity extends AppCompatActivity implements View.
     private LinearLayout llNoDateFound;
     private AppCompatImageView imgBack;
     private TextViewMediumFont tvHeaderTitle;
+    private ExtendedFloatingActionButton btnAddProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,8 @@ public class AdminProductListActivity extends AppCompatActivity implements View.
         rvProductList = findViewById(R.id.rvProductList);
         llLoading = findViewById(R.id.llLoading);
         llNoDateFound = findViewById(R.id.llNoDateFound);
+        btnAddProduct = findViewById(R.id.btnAddProduct);
+        btnAddProduct.setOnClickListener(this);
     }
 
     private void getApproveCustomerListApiCall() {
@@ -91,11 +98,24 @@ public class AdminProductListActivity extends AppCompatActivity implements View.
     public void onClick(View v) {
         if (v.getId() == R.id.imgBack) {
             onBackPressed();
+        } else if (v.getId() == R.id.btnAddProduct) {
+            Intent intent = new Intent(AdminProductListActivity.this, AdminAddProductActivity.class);
+            startActivityForResult(intent, IntentConstants.REQUEST_CODE_ADD_PRODUCT);
         }
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == IntentConstants.REQUEST_CODE_ADD_PRODUCT) {
+            getApproveCustomerListApiCall();
+        } else if (resultCode == RESULT_OK && requestCode == IntentConstants.REQUEST_CODE_UPDATE_PRODUCT) {
+            getApproveCustomerListApiCall();
+        }
     }
 }

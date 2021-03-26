@@ -1,5 +1,6 @@
 package com.webond.chemicals.admin.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -348,6 +349,9 @@ public class AdminAddProductActivity extends AppCompatActivity implements View.O
                             if (response.code() == 200 && response.body() != null) {
                                 if (response.body().size() > 0 && response.body().get(0).getStatus() == 1) {
                                     Toast.makeText(AdminAddProductActivity.this, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(AdminAddProductActivity.this, AdminProductListActivity.class);
+                                    setResult(Activity.RESULT_OK, intent);
+                                    finish();
                                 } else {
                                     Toast.makeText(AdminAddProductActivity.this, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
                                 }
