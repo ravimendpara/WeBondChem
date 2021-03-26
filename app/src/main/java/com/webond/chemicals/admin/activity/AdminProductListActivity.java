@@ -5,11 +5,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.webond.chemicals.R;
 import com.webond.chemicals.admin.adapter.AdminProductListAdapter;
 import com.webond.chemicals.api.ApiImplementer;
+import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.pojo.GetProductListPojo;
 import com.webond.chemicals.utils.MySharedPreferences;
 
@@ -19,12 +21,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AdminProductListActivity extends AppCompatActivity {
+public class AdminProductListActivity extends AppCompatActivity implements View.OnClickListener {
 
     private MySharedPreferences mySharedPreferences;
     private RecyclerView rvProductList;
     private LinearLayout llLoading;
     private LinearLayout llNoDateFound;
+    private AppCompatImageView imgBack;
+    private TextViewMediumFont tvHeaderTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,10 @@ public class AdminProductListActivity extends AppCompatActivity {
 
     private void initView() {
         mySharedPreferences = new MySharedPreferences(AdminProductListActivity.this);
+        imgBack = findViewById(R.id.imgBack);
+        imgBack.setOnClickListener(this);
+        tvHeaderTitle = findViewById(R.id.tvHeaderTitle);
+        tvHeaderTitle.setText("Product List");
         rvProductList = findViewById(R.id.rvProductList);
         llLoading = findViewById(R.id.llLoading);
         llNoDateFound = findViewById(R.id.llNoDateFound);
@@ -79,4 +87,15 @@ public class AdminProductListActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.imgBack) {
+            onBackPressed();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
