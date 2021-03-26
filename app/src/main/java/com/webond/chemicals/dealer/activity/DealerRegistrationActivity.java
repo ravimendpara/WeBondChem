@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
@@ -120,6 +118,12 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dealer_registration);
         initView();
+
+        if (getIntent().hasExtra(IntentConstants.MOBILE_NO)) {
+            String mobileNo = getIntent().getStringExtra(IntentConstants.MOBILE_NO);
+            edtMobileNo.setText(mobileNo);
+        }
+
         getStateApiCall(true, false);
     }
 
@@ -150,25 +154,6 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
         edtDOB.setOnClickListener(this);
         cvSubmit = findViewById(R.id.cvSubmit);
         cvSubmit.setOnClickListener(this);
-
-        edtMobileNo.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (!CommonUtil.checkIsEmptyOrNullCommon(s.toString())) {
-                    edtMobileNo2.setText(s.toString() + "");
-                }
-            }
-        });
 
         spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -330,7 +315,7 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
                 String photo = uploadedPhotoBase64;
                 String photoName = uploadedPhotoName;
                 String dob = edtDOB.getText().toString().trim();
-                addDealerApiCall(true, true, dealerName,pedthiName, distributorId, stateId, districtId, talukaId, cityId, mobileNo, mobileNo2,
+                addDealerApiCall(true, true, dealerName, pedthiName, distributorId, stateId, districtId, talukaId, cityId, mobileNo, mobileNo2,
                         address, pinCode, email, aadharNo, aadharProof, aadharFileName, gstnNo, photo, photoName, dob);
             }
         }
@@ -690,7 +675,7 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
 
 
     private void addDealerApiCall(boolean isPdShow, boolean isPdHide,
-                                  String dealerName,String PethiName,
+                                  String dealerName, String PethiName,
                                   String distributorId, String StateId, String DistrictId, String TalukaId,
                                   String CityId, String MobileNo, String MobileNo2, String Address,
                                   String PinCode, String Email, String AadharNo, String AadharProof,
@@ -699,7 +684,7 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
         if (isPdShow) {
             DialogUtil.showProgressDialogNotCancelable(DealerRegistrationActivity.this, "");
         }
-        ApiImplementer.addDealerImplementer(dealerName,PethiName, distributorId, StateId, DistrictId, TalukaId, CityId,
+        ApiImplementer.addDealerImplementer(dealerName, PethiName, distributorId, StateId, DistrictId, TalukaId, CityId,
                 MobileNo, MobileNo2, Address, PinCode, Email, AadharNo, AadharProof, AadharFileName, GSTNo,
                 Photo, PhotoFileName, DateOfBirth, new Callback<ArrayList<AddDealerPojo>>() {
                     @Override

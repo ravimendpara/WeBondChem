@@ -28,6 +28,7 @@ public class AllDistributorListAdapter extends RecyclerView.Adapter<AllDistribut
     private Context context;
     private ArrayList<GetDistributorListPojo> getDistributorListPojos;
     private LayoutInflater layoutInflater;
+    private boolean isLoaded = false;
 
     public AllDistributorListAdapter(Context context, ArrayList<GetDistributorListPojo> getDistributorListPojos) {
         this.context = context;
@@ -46,6 +47,12 @@ public class AllDistributorListAdapter extends RecyclerView.Adapter<AllDistribut
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         GetDistributorListPojo getDistributorListPojo = getDistributorListPojos.get(position);
+
+        if (!isLoaded && position == 0) {
+            boolean show = toggleLayout(!getDistributorListPojos.get(position).isExpanded(), holder.ivViewMoreBtn, holder.llExpandableLayout);
+            getDistributorListPojos.get(position).setExpanded(show);
+            isLoaded = true;
+        }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getDistributorListPojo.getPhotoPath())) {
             Glide.with(context)

@@ -28,6 +28,7 @@ public class AllDealerListAdapter extends RecyclerView.Adapter<AllDealerListAdap
     private Context context;
     private ArrayList<GetDealerListPojo> getDealerListPojoArrayList;
     private LayoutInflater layoutInflater;
+    private boolean isLoaded = false;
 
     public AllDealerListAdapter(Context context, ArrayList<GetDealerListPojo> getDealerListPojoArrayList) {
         this.context = context;
@@ -45,6 +46,12 @@ public class AllDealerListAdapter extends RecyclerView.Adapter<AllDealerListAdap
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         GetDealerListPojo getDealerListPojo = getDealerListPojoArrayList.get(position);
+
+        if (!isLoaded && position == 0) {
+            boolean show = toggleLayout(!getDealerListPojoArrayList.get(position).isExpanded(), holder.ivViewMoreBtn, holder.llExpandableLayout);
+            getDealerListPojoArrayList.get(position).setExpanded(show);
+            isLoaded = true;
+        }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getDealerListPojo.getPhotoPath())) {
             Glide.with(context)

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -58,6 +59,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private BottomSheetDialogForVerifyOTP bottomSheetDialogForVerifyOTP;
     private String randomSixDigitOTP;
 
+    private LinearLayout llOrRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void initView() {
         mySharedPreferences = new MySharedPreferences(LoginActivity.this);
+        llOrRegister = findViewById(R.id.llOrRegister);
         spUserType = findViewById(R.id.spUserType);
         edtMobileNo = findViewById(R.id.edtMobileNo);
         cvLogin = findViewById(R.id.cvLogin);
@@ -87,7 +90,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 if (position > 0) {
-
+                    String selectedLoginUserType = selectUserTypeArrayList.get(spUserType.getSelectedItemPosition());
+                    if (selectedLoginUserType.equalsIgnoreCase(ADMIN)) {
+                        llOrRegister.setVisibility(View.GONE);
+                    } else {
+                        llOrRegister.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
@@ -165,12 +173,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             String selectedLoginUserType = selectUserTypeArrayList.get(spUserType.getSelectedItemPosition());
                             if (selectedLoginUserType.equalsIgnoreCase(DISTRIBUTOR)) {
                                 Intent intent = new Intent(LoginActivity.this, DistributorRegistrationActivity.class);
+                                intent.putExtra(IntentConstants.MOBILE_NO, mobileNo);
                                 startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_DISTRIBUTOR_REGISTRATION);
                             } else if (selectedLoginUserType.equalsIgnoreCase(DEALER)) {
                                 Intent intent = new Intent(LoginActivity.this, DealerRegistrationActivity.class);
+                                intent.putExtra(IntentConstants.MOBILE_NO, mobileNo);
                                 startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_DEALER_REGISTRATION);
                             } else if (selectedLoginUserType.equalsIgnoreCase(CUSTOMER)) {
                                 Intent intent = new Intent(LoginActivity.this, CustomerRegistrationActivity.class);
+                                intent.putExtra(IntentConstants.MOBILE_NO, mobileNo);
                                 startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_CUSTOMER_REGISTRATION);
                             }
                         } else {

@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
@@ -121,6 +119,13 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_registration);
         initView();
+
+        if (getIntent().hasExtra(IntentConstants.MOBILE_NO)) {
+            String mobileNo = getIntent().getStringExtra(IntentConstants.MOBILE_NO);
+            edtMobileNo.setText(mobileNo);
+        }
+
+
         getStateApiCall(true, false);
     }
 
@@ -150,25 +155,6 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
         edtDOB.setOnClickListener(this);
         cvSubmit = findViewById(R.id.cvSubmit);
         cvSubmit.setOnClickListener(this);
-
-        edtMobileNo.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (!CommonUtil.checkIsEmptyOrNullCommon(s.toString())) {
-                    edtMobileNo2.setText(s.toString() + "");
-                }
-            }
-        });
 
         spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

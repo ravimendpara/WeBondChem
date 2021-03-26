@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
@@ -115,6 +113,11 @@ public class DistributorRegistrationActivity extends AppCompatActivity implement
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_distributor_registration);
         initView();
+        if (getIntent().hasExtra(IntentConstants.MOBILE_NO)) {
+            String mobileNo = getIntent().getStringExtra(IntentConstants.MOBILE_NO);
+            edtMobileNo.setText(mobileNo);
+        }
+
         getStateApiCall(true, false);
     }
 
@@ -144,25 +147,6 @@ public class DistributorRegistrationActivity extends AppCompatActivity implement
         edtDOB.setOnClickListener(this);
         cvSubmit = findViewById(R.id.cvSubmit);
         cvSubmit.setOnClickListener(this);
-
-        edtMobileNo.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (!CommonUtil.checkIsEmptyOrNullCommon(s.toString())) {
-                    edtMobileNo2.setText(s.toString() + "");
-                }
-            }
-        });
 
         spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -321,7 +305,7 @@ public class DistributorRegistrationActivity extends AppCompatActivity implement
                 String photo = uploadedPhotoBase64;
                 String photoName = uploadedPhotoName;
                 String dob = edtDOB.getText().toString().trim();
-                addDistributorApiCall(true, true, distributorName,pedthiName, stateId, districtId, talukaId, cityId, mobileNo, mobileNo2,
+                addDistributorApiCall(true, true, distributorName, pedthiName, stateId, districtId, talukaId, cityId, mobileNo, mobileNo2,
                         address, pinCode, email, aadharNo, aadharProof, aadharFileName, gstnNo, photo, photoName, dob);
             }
         }
@@ -616,14 +600,14 @@ public class DistributorRegistrationActivity extends AppCompatActivity implement
         });
     }
 
-    private void addDistributorApiCall(boolean isPdShow, boolean isPdHide, String DistributerName,String PethiName, String StateId,
+    private void addDistributorApiCall(boolean isPdShow, boolean isPdHide, String DistributerName, String PethiName, String StateId,
                                        String DistrictId, String TalukaId, String CityId, String MobileNo, String MobileNo2,
                                        String Address, String PinCode, String Email, String AadharNo, String AadharProof,
                                        String AadharFileName, String GSTNo, String Photo, String PhotoFileName, String DateOfBith) {
         if (isPdShow) {
             DialogUtil.showProgressDialogNotCancelable(DistributorRegistrationActivity.this, "");
         }
-        ApiImplementer.addDistributorImplementer(DistributerName,PethiName, StateId, DistrictId, TalukaId, CityId, MobileNo, MobileNo2,
+        ApiImplementer.addDistributorImplementer(DistributerName, PethiName, StateId, DistrictId, TalukaId, CityId, MobileNo, MobileNo2,
                 Address, PinCode, Email, AadharNo, AadharProof, AadharFileName, GSTNo, Photo, PhotoFileName, DateOfBith, new Callback<ArrayList<AddDistributerPojo>>() {
                     @Override
                     public void onResponse(Call<ArrayList<AddDistributerPojo>> call, Response<ArrayList<AddDistributerPojo>> response) {

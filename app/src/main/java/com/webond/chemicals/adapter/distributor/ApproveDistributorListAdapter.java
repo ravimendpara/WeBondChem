@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -12,22 +13,30 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.button.MaterialButton;
 import com.webond.chemicals.R;
+import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.custom_class.Animations;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
+import com.webond.chemicals.pojo.ApproveDistributorPojo;
 import com.webond.chemicals.pojo.GetDistributorListPojo;
 import com.webond.chemicals.utils.CommonUtil;
+import com.webond.chemicals.utils.DialogUtil;
 
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ApproveDistributorListAdapter extends RecyclerView.Adapter<ApproveDistributorListAdapter.MyViewHolder> {
 
     private Context context;
     private ArrayList<GetDistributorListPojo> getDistributorListPojos;
     private LayoutInflater layoutInflater;
+    private boolean isLoaded = false;
 
     public ApproveDistributorListAdapter(Context context, ArrayList<GetDistributorListPojo> getDistributorListPojos) {
         this.context = context;
@@ -45,6 +54,13 @@ public class ApproveDistributorListAdapter extends RecyclerView.Adapter<ApproveD
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         GetDistributorListPojo getDistributorListPojo = getDistributorListPojos.get(position);
+
+        if (!isLoaded && position == 0) {
+            boolean show = toggleLayout(!getDistributorListPojos.get(position).isExpanded(), holder.
+                    ivViewMoreBtn, holder.llExpandableLayout);
+            getDistributorListPojos.get(position).setExpanded(show);
+            isLoaded = true;
+        }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getDistributorListPojo.getPhotoPath())) {
             Glide.with(context)
@@ -98,11 +114,19 @@ public class ApproveDistributorListAdapter extends RecyclerView.Adapter<ApproveD
             holder.tvStatusApproveDistributor.setText(getDistributorListPojo.getStatus() + "");
         }
 
+        holder.btnRejectApprovedDistributor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                approveOrRejectDistributorApiCall(getDistributorListPojo.getDistributorId() + "", CommonUtil.REJECT_STATUS, position, getDistributorListPojos);
+            }
+        });
+
 
         holder.llExpandedHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean show = toggleLayout(!getDistributorListPojos.get(position).isExpanded(), holder.ivViewMoreBtn, holder.llExpandableLayout);
+                boolean show = toggleLayout(!getDistributorListPojos.get(position).isExpanded(), holder.
+                        ivViewMoreBtn, holder.llExpandableLayout);
                 getDistributorListPojos.get(position).setExpanded(show);
             }
         });
@@ -131,6 +155,8 @@ public class ApproveDistributorListAdapter extends RecyclerView.Adapter<ApproveD
         LinearLayout llExpandedHeader;
         LinearLayout llExpandableLayout;
 
+        MaterialButton btnRejectApprovedDistributor;
+
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -148,9 +174,39 @@ public class ApproveDistributorListAdapter extends RecyclerView.Adapter<ApproveD
             tvTalukaApproveDistributor = itemView.findViewById(R.id.tvTalukaApproveDistributor);
             tvCityApproveDistributor = itemView.findViewById(R.id.tvCityApproveDistributor);
             tvStatusApproveDistributor = itemView.findViewById(R.id.tvStatusApproveDistributor);
+            btnRejectApprovedDistributor = itemView.findViewById(R.id.btnRejectApprovedDistributor);
         }
     }
 
+    private void approveOrRejectDistributorApiCall(String distributorId, String status, int position, ArrayList<GetDistributorListPojo> getDistributorListPojos) {
+        DialogUtil.showProgressDialogNotCancelable(context, "");
+        ApiImplementer.approveDistributorImplementer(distributorId, status, new Callback<ArrayList<ApproveDistributorPojo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ApproveDistributorPojo>> call, Response<ArrayList<ApproveDistributorPojo>> response) {
+                DialogUtil.hideProgressDialog();
+                try {
+                    if (response.code() == 200 && response.body() != null && response.body().size() > 0) {
+                        if (response.body().get(0).getStatus() == 1) {
+                            getDistributorListPojos.remove(position);
+                            notifyItemRemoved(position);
+                        } else {
+                            Toast.makeText(context, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(context, "Something went wrong,Please try again", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ApproveDistributorPojo>> call, Throwable t) {
+                DialogUtil.hideProgressDialog();
+                Toast.makeText(context, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private boolean toggleLayout(boolean isExpanded, View v, LinearLayout layoutExpand) {
         Animations.toggleArrow(v, isExpanded);

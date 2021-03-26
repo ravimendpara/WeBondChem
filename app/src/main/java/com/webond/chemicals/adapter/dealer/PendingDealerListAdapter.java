@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.webond.chemicals.R;
 import com.webond.chemicals.api.ApiImplementer;
-import com.webond.chemicals.custom_class.Animations;
+import com.webond.chemicals.custom_class.CustomAnimationForDefaultExpandableCard;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
 import com.webond.chemicals.pojo.ApproveDealerPojo;
@@ -122,7 +122,7 @@ public class PendingDealerListAdapter extends RecyclerView.Adapter<PendingDealer
         holder.llExpandedHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean show = toggleLayout(!getDealerListPojoArrayList.get(position).isExpanded(), holder.ivViewMoreBtn, holder.llExpandableLayout);
+                boolean show = toggleLayoutForDefaultOpenCard(!getDealerListPojoArrayList.get(position).isExpanded(), holder.ivViewMoreBtn, holder.llExpandableLayout);
                 getDealerListPojoArrayList.get(position).setExpanded(show);
             }
         });
@@ -151,7 +151,7 @@ public class PendingDealerListAdapter extends RecyclerView.Adapter<PendingDealer
         AppCompatImageView ivViewMoreBtn;
         LinearLayout llExpandedHeader;
         LinearLayout llExpandableLayout;
-        
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             imgPendingDealer = itemView.findViewById(R.id.imgPendingDealer);
@@ -172,15 +172,14 @@ public class PendingDealerListAdapter extends RecyclerView.Adapter<PendingDealer
         }
     }
 
-    private boolean toggleLayout(boolean isExpanded, View v, LinearLayout layoutExpand) {
-        Animations.toggleArrow(v, isExpanded);
+    private boolean toggleLayoutForDefaultOpenCard(boolean isExpanded, View v, LinearLayout layoutExpand) {
+        CustomAnimationForDefaultExpandableCard.toggleArrow(v, isExpanded);
         if (isExpanded) {
-            Animations.expand(layoutExpand);
+            CustomAnimationForDefaultExpandableCard.expand(layoutExpand);
         } else {
-            Animations.collapse(layoutExpand);
+            CustomAnimationForDefaultExpandableCard.collapse(layoutExpand);
         }
         return isExpanded;
-
     }
 
     private void approveOrRejectDealerApiCall(String DealerId, String status, int position, ArrayList<GetDealerListPojo> getDealerListPojoArrayList) {

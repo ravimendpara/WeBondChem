@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.webond.chemicals.R;
 import com.webond.chemicals.api.ApiImplementer;
-import com.webond.chemicals.custom_class.Animations;
+import com.webond.chemicals.custom_class.CustomAnimationForDefaultExpandableCard;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
 import com.webond.chemicals.pojo.ApproveDistributorPojo;
@@ -62,7 +62,7 @@ public class PendingDistributorListAdapter extends RecyclerView.Adapter<PendingD
                     .into(holder.imgPendingDistributor);
         }
 
-         if (!CommonUtil.checkIsEmptyOrNullCommon(getDistributorListPojo.getPethiName())) {
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDistributorListPojo.getPethiName())) {
             holder.tvPedthiName.setText(getDistributorListPojo.getPethiName() + "");
         }
 
@@ -122,7 +122,7 @@ public class PendingDistributorListAdapter extends RecyclerView.Adapter<PendingD
         holder.llExpandedHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean show = toggleLayout(!getDistributorArrayList.get(position).isExpanded(), holder.ivViewMoreBtn, holder.llExpandableLayout);
+                boolean show = toggleLayoutForDefaultOpenCard(!getDistributorArrayList.get(position).isExpanded(), holder.ivViewMoreBtn, holder.llExpandableLayout);
                 getDistributorArrayList.get(position).setExpanded(show);
             }
         });
@@ -174,15 +174,14 @@ public class PendingDistributorListAdapter extends RecyclerView.Adapter<PendingD
         }
     }
 
-    private boolean toggleLayout(boolean isExpanded, View v, LinearLayout layoutExpand) {
-        Animations.toggleArrow(v, isExpanded);
+    private boolean toggleLayoutForDefaultOpenCard(boolean isExpanded, View v, LinearLayout layoutExpand) {
+        CustomAnimationForDefaultExpandableCard.toggleArrow(v, isExpanded);
         if (isExpanded) {
-            Animations.expand(layoutExpand);
+            CustomAnimationForDefaultExpandableCard.expand(layoutExpand);
         } else {
-            Animations.collapse(layoutExpand);
+            CustomAnimationForDefaultExpandableCard.collapse(layoutExpand);
         }
         return isExpanded;
-
     }
 
     private void approveOrRejectDistributorApiCall(String distributorId, String status, int position, ArrayList<GetDistributorListPojo> getDistributorListPojos) {
