@@ -7,12 +7,15 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.card.MaterialCardView;
 import com.webond.chemicals.R;
 import com.webond.chemicals.api.ApiImplementer;
+import com.webond.chemicals.common_activity.LoginActivity;
 import com.webond.chemicals.pojo.GetBannerListPojo;
+import com.webond.chemicals.utils.IntentConstants;
 import com.webond.chemicals.utils.MySharedPreferences;
 
 import net.seifhadjhassen.recyclerviewpager.PagerModel;
@@ -61,7 +64,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements View
                 @Override
                 public void run() {
                     Intent intent = new Intent(CustomerDashboardActivity.this, CustomerProfileActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_LOGOUT);
                 }
             }, 400);
         } else if (v.getId() == R.id.cvProductList) {
@@ -110,4 +113,13 @@ public class CustomerDashboardActivity extends AppCompatActivity implements View
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == IntentConstants.REQUEST_CODE_FOR_LOGOUT) {
+            Intent intent = new Intent(CustomerDashboardActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
 }

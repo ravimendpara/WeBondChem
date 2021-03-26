@@ -20,5 +20,9 @@ public class IntentConstants {
 
     public static final int REQUEST_CODE_ADD_PRODUCT = 1043;
     public static final int REQUEST_CODE_UPDATE_PRODUCT = 1044;
+    public static final int REQUEST_CODE_FOR_LOGOUT = 1045;
     public static final String MOBILE_NO = "mobileNo";
+
+
+
 }

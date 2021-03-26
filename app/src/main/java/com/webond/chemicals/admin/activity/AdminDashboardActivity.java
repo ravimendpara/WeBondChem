@@ -7,13 +7,15 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.card.MaterialCardView;
 import com.webond.chemicals.R;
-import com.webond.chemicals.admin.adapter.AdminProductListAdapter;
 import com.webond.chemicals.api.ApiImplementer;
+import com.webond.chemicals.common_activity.LoginActivity;
 import com.webond.chemicals.pojo.GetBannerListPojo;
+import com.webond.chemicals.utils.IntentConstants;
 import com.webond.chemicals.utils.MySharedPreferences;
 
 import net.seifhadjhassen.recyclerviewpager.PagerModel;
@@ -69,6 +71,8 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    Intent intent = new Intent(AdminDashboardActivity.this, AdminProfileActivity.class);
+                    startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_LOGOUT);
                 }
             }, 400);
         } else if (v.getId() == R.id.cvManageDistributor) {
@@ -140,6 +144,16 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == IntentConstants.REQUEST_CODE_FOR_LOGOUT) {
+            Intent intent = new Intent(AdminDashboardActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
 }
