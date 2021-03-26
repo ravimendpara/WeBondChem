@@ -106,27 +106,27 @@ public interface IApiInterface {
             @Field("DateOfBith") String DateOfBith
     );
 
-
-    @GET("AddProduct")
+    @FormUrlEncoded
+    @POST("AddProduct")
     Call<ArrayList<AddProductPojo>> addProduct(
-            @Query("ProductCode") String ProductCode,
-            @Query("ProductName") String ProductName,
-            @Query("ProductPhoto1") String ProductPhoto1,
-            @Query("ProductPhotoName1") String ProductPhotoName1,
-            @Query("ProductPhoto2") String ProductPhoto2,
-            @Query("ProductPhotoName2") String ProductPhotoName2,
-            @Query("ProductPhoto3") String ProductPhoto3,
-            @Query("ProductPhotoName3") String ProductPhotoName3,
-            @Query("ProductPhoto4") String ProductPhoto4,
-            @Query("ProductPhotoName4") String ProductPhotoName4,
-            @Query("ProductPhoto5") String ProductPhoto5,
-            @Query("ProductPhotoName5") String ProductPhotoName5,
-            @Query("ProductPrice") String ProductPrice,
-            @Query("ProductTotalPoint") String ProductTotalPoint,
-            @Query("DistPer") String DistPer,
-            @Query("DealerPer") String DealerPer,
-            @Query("CustomerPer") String CustomerPer,
-            @Query("ProductDescription") String ProductDescription
+            @Field("ProductCode") String ProductCode,
+            @Field("ProductName") String ProductName,
+            @Field("ProductPhoto1") String ProductPhoto1,
+            @Field("ProductPhotoName1") String ProductPhotoName1,
+            @Field("ProductPhoto2") String ProductPhoto2,
+            @Field("ProductPhotoName2") String ProductPhotoName2,
+            @Field("ProductPhoto3") String ProductPhoto3,
+            @Field("ProductPhotoName3") String ProductPhotoName3,
+            @Field("ProductPhoto4") String ProductPhoto4,
+            @Field("ProductPhotoName4") String ProductPhotoName4,
+            @Field("ProductPhoto5") String ProductPhoto5,
+            @Field("ProductPhotoName5") String ProductPhotoName5,
+            @Field("ProductPrice") String ProductPrice,
+            @Field("ProductTotalPoint") String ProductTotalPoint,
+            @Field("DistPer") String DistPer,
+            @Field("DealerPer") String DealerPer,
+            @Field("CustomerPer") String CustomerPer,
+            @Field("ProductDescription") String ProductDescription
     );
 
     @GET("ApproveCustomer")
