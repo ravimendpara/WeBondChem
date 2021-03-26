@@ -1,5 +1,6 @@
 package com.webond.chemicals.customer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -59,6 +60,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements View
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    Intent intent = new Intent(CustomerDashboardActivity.this, CustomerProfileActivity.class);
+                    startActivity(intent);
                 }
             }, 400);
         } else if (v.getId() == R.id.cvProductList) {

@@ -356,7 +356,7 @@ public class AdminUpdateProductActivity extends AppCompatActivity implements Vie
             edtProductCode.setText(getProductDetailByIdPojo.getProductCode() + "");
         }
         if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getProductName())) {
-            edtProductCode.setText(getProductDetailByIdPojo.getProductName() + "");
+            edtProductName.setText(getProductDetailByIdPojo.getProductName() + "");
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getProductPhoto1())) {

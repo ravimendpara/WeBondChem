@@ -61,6 +61,8 @@ public class DistributorDashboardActivity extends AppCompatActivity implements V
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    Intent intent = new Intent(DistributorDashboardActivity.this, DistributorProfileActivity.class);
+                    startActivity(intent);
                 }
             }, 400);
         } else if (v.getId() == R.id.cvManageDealer) {

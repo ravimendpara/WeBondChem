@@ -24,7 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DealerDashboardActivity extends AppCompatActivity implements View.OnClickListener{
+public class DealerDashboardActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     private MySharedPreferences mySharedPreferences;
@@ -32,7 +32,7 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
     private MaterialCardView cvManageCustomer;
     private Animation animation;
     RecyclerViewPager recyclerViewPagerStudentSideBanner;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +59,8 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    Intent intent = new Intent(DealerDashboardActivity.this, DealerProfileActivity.class);
+                    startActivity(intent);
                 }
             }, 400);
         } else if (v.getId() == R.id.cvManageCustomer) {
@@ -100,5 +102,5 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
             }
         });
     }
-    
+
 }

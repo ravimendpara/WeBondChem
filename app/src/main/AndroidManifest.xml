@@ -29,6 +29,17 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".dealer.activity.DealerProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".distributor.activity.DistributorProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".customer.CustomerProfileActivity"
+            android:screenOrientation="portrait" >
+
+        </activity>
+        <activity
             android:name=".admin.activity.AdminUpdateProductActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -84,7 +95,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

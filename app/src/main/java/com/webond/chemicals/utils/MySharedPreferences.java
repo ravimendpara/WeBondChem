@@ -29,6 +29,14 @@ public class MySharedPreferences {
         editorForFirebaseFcmToken.apply();
     }
 
+    public boolean isLogin() {
+        return sharedPreferencesForUserDetails.contains(CommonPreferencesConstants.LOGIN_TYPE) &&
+                (sharedPreferencesForUserDetails.contains(CommonPreferencesConstants.ADMIN_COMPANY_ID) ||
+                        sharedPreferencesForUserDetails.contains(CommonPreferencesConstants.DISTRIBUTOR_ID) ||
+                        sharedPreferencesForUserDetails.contains(CommonPreferencesConstants.DEALER_ID) ||
+                        sharedPreferencesForUserDetails.contains(CommonPreferencesConstants.CUSTOMER_ID));
+    }
+
 
     public void logOutUser() {
         editorForUserDetails.clear();
