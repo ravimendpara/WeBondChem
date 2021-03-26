@@ -21,10 +21,12 @@ import com.webond.chemicals.pojo.GetDetailsForLoginUserDistributorPojo;
 import com.webond.chemicals.pojo.GetDistributorListByCityIdPojo;
 import com.webond.chemicals.pojo.GetDistributorListPojo;
 import com.webond.chemicals.pojo.GetDistrictListPojo;
+import com.webond.chemicals.pojo.GetProductDetailByIdPojo;
 import com.webond.chemicals.pojo.GetProductListPojo;
 import com.webond.chemicals.pojo.GetStateListPojo;
 import com.webond.chemicals.pojo.GetTalukaListPojo;
 import com.webond.chemicals.pojo.SendOtpPojo;
+import com.webond.chemicals.pojo.UpdateProductPojo;
 
 import java.util.ArrayList;
 
@@ -130,6 +132,30 @@ public interface IApiInterface {
             @Field("ProductDescription") String ProductDescription
     );
 
+    @FormUrlEncoded
+    @POST("UpdateProduct")
+    Call<ArrayList<UpdateProductPojo>> updateProduct(
+            @Field("ProductId") String ProductId,
+            @Field("ProductCode") String ProductCode,
+            @Field("ProductName") String ProductName,
+            @Field("ProductPhoto1") String ProductPhoto1,
+            @Field("ProductPhotoName1") String ProductPhotoName1,
+            @Field("ProductPhoto2") String ProductPhoto2,
+            @Field("ProductPhotoName2") String ProductPhotoName2,
+            @Field("ProductPhoto3") String ProductPhoto3,
+            @Field("ProductPhotoName3") String ProductPhotoName3,
+            @Field("ProductPhoto4") String ProductPhoto4,
+            @Field("ProductPhotoName4") String ProductPhotoName4,
+            @Field("ProductPhoto5") String ProductPhoto5,
+            @Field("ProductPhotoName5") String ProductPhotoName5,
+            @Field("ProductPrice") String ProductPrice,
+            @Field("ProductTotalPoint") String ProductTotalPoint,
+            @Field("DistPer") String DistPer,
+            @Field("DealerPer") String DealerPer,
+            @Field("CustomerPer") String CustomerPer,
+            @Field("ProductDescription") String ProductDescription
+    );
+
     @GET("ApproveCustomer")
     Call<ArrayList<ApproveCustomerPojo>> approveCustomer(@Query("CustomerId") String CustomerId,
                                                          @Query("Status") String Status);
@@ -198,4 +224,8 @@ public interface IApiInterface {
 
     @GET("GetBannerList")
     Call<ArrayList<GetBannerListPojo>> getBannerList();
+
+
+    @GET("GetProductDetailById")
+    Call<ArrayList<GetProductDetailByIdPojo>> getProductDetailsById(@Query("ProductId") String ProductId);
 }

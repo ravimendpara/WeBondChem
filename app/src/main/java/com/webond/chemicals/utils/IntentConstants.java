@@ -15,5 +15,7 @@ public class IntentConstants {
     public static final int REQUEST_CODE_FOR_PHOTO_UPLOAD_4 = 1041;
     public static final int REQUEST_CODE_FOR_PHOTO_UPLOAD_5 = 1042;
 
+    public static final String PRODUCT_ID = "PoductId";
+
 
 }

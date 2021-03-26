@@ -270,7 +270,7 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cvAddProduct"
+                    android:id="@+id/cvManageProduct"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -311,7 +311,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:gravity="center"
-                            android:text="Add\nProduct"
+                            android:text="Manage\nProduct"
                             android:textColor="@color/darker_grey_color"
                             android:textSize="@dimen/dashboard_text_size" />
 

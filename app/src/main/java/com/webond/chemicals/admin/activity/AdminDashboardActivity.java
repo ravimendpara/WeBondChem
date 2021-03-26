@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.card.MaterialCardView;
 import com.webond.chemicals.R;
+import com.webond.chemicals.admin.adapter.AdminProductListAdapter;
 import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.pojo.GetBannerListPojo;
 import com.webond.chemicals.utils.MySharedPreferences;
@@ -32,7 +33,7 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
     private MaterialCardView cvManageDistributor;
     private MaterialCardView cvManageDealer;
     private MaterialCardView cvManageCustomer;
-    private MaterialCardView cvAddProduct;
+    private MaterialCardView cvManageProduct;
     private Animation animation;
     RecyclerViewPager recyclerViewPagerStudentSideBanner;
 
@@ -56,8 +57,8 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         cvManageDealer.setOnClickListener(this);
         cvManageCustomer = findViewById(R.id.cvManageCustomer);
         cvManageCustomer.setOnClickListener(this);
-        cvAddProduct = findViewById(R.id.cvAddProduct);
-        cvAddProduct.setOnClickListener(this);
+        cvManageProduct = findViewById(R.id.cvManageProduct);
+        cvManageProduct.setOnClickListener(this);
     }
 
     @Override
@@ -100,13 +101,13 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
                     startActivity(intent);
                 }
             }, 400);
-        } else if (v.getId() == R.id.cvAddProduct) {
+        } else if (v.getId() == R.id.cvManageProduct) {
             animation = AnimationUtils.loadAnimation(AdminDashboardActivity.this, R.anim.bounce);
-            cvAddProduct.startAnimation(animation);
+            cvManageProduct.startAnimation(animation);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(AdminDashboardActivity.this, AdminAddProductActivity.class);
+                    Intent intent = new Intent(AdminDashboardActivity.this, AdminProductListActivity.class);
                     startActivity(intent);
                 }
             }, 400);

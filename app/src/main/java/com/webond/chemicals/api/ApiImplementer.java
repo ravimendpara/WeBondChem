@@ -21,10 +21,12 @@ import com.webond.chemicals.pojo.GetDetailsForLoginUserDistributorPojo;
 import com.webond.chemicals.pojo.GetDistributorListByCityIdPojo;
 import com.webond.chemicals.pojo.GetDistributorListPojo;
 import com.webond.chemicals.pojo.GetDistrictListPojo;
+import com.webond.chemicals.pojo.GetProductDetailByIdPojo;
 import com.webond.chemicals.pojo.GetProductListPojo;
 import com.webond.chemicals.pojo.GetStateListPojo;
 import com.webond.chemicals.pojo.GetTalukaListPojo;
 import com.webond.chemicals.pojo.SendOtpPojo;
+import com.webond.chemicals.pojo.UpdateProductPojo;
 
 import java.util.ArrayList;
 
@@ -206,6 +208,55 @@ public class ApiImplementer {
         call.enqueue(cb);
     }
 
+
+
+    public static void updateProductImplementer(
+            String ProductId,
+            String ProductCode,
+            String ProductName,
+            String ProductPhoto1,
+            String ProductPhotoName1,
+            String ProductPhoto2,
+            String ProductPhotoName2,
+            String ProductPhoto3,
+            String ProductPhotoName3,
+            String ProductPhoto4,
+            String ProductPhotoName4,
+            String ProductPhoto5,
+            String ProductPhotoName5,
+            String ProductPrice,
+            String ProductTotalPoint,
+            String DistPer,
+            String DealerPer,
+            String CustomerPer,
+            String ProductDescription,
+            Callback<ArrayList<UpdateProductPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<UpdateProductPojo>> call = apiService.updateProduct(
+                ProductId,
+                ProductCode,
+                ProductName,
+                ProductPhoto1,
+                ProductPhotoName1,
+                ProductPhoto2,
+                ProductPhotoName2,
+                ProductPhoto3,
+                ProductPhotoName3,
+                ProductPhoto4,
+                ProductPhotoName4,
+                ProductPhoto5,
+                ProductPhotoName5,
+                ProductPrice,
+                ProductTotalPoint,
+                DistPer,
+                DealerPer,
+                CustomerPer,
+                ProductDescription);
+        call.enqueue(cb);
+    }
+
+
+
     public static void approveCustomerImplementer(String CustomerId, String status, Callback<ArrayList<ApproveCustomerPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<ApproveCustomerPojo>> call = apiService.approveCustomer(CustomerId, status);
@@ -323,6 +374,12 @@ public class ApiImplementer {
     public static void getDistributorListByCityIdApiImplementer(String cityId, Callback<ArrayList<GetDistributorListByCityIdPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<GetDistributorListByCityIdPojo>> call = apiService.getDistributorListByCityId(cityId);
+        call.enqueue(cb);
+    }
+
+    public static void getProductDetailsByIdApiImplementer(String productId, Callback<ArrayList<GetProductDetailByIdPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<GetProductDetailByIdPojo>> call = apiService.getProductDetailsById(productId);
         call.enqueue(cb);
     }
 
