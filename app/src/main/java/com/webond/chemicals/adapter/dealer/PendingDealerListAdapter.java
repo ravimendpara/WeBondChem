@@ -192,7 +192,7 @@ public class PendingDealerListAdapter extends RecyclerView.Adapter<PendingDealer
                     if (response.code() == 200 && response.body() != null && response.body().size() > 0) {
                         if (response.body().get(0).getStatus() == 1) {
                             getDealerListPojoArrayList.remove(position);
-                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, getDealerListPojoArrayList.size());
                         } else {
                             Toast.makeText(context, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
                         }
