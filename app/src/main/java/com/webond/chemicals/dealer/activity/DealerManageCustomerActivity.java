@@ -1,4 +1,4 @@
-package com.webond.chemicals.distributor.activity;
+package com.webond.chemicals.dealer.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -11,11 +11,14 @@ import com.google.android.material.tabs.TabLayout;
 import com.webond.chemicals.R;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.ViewPagerAdapter;
+import com.webond.chemicals.dealer.fragments.DealerAllCustomerFragment;
+import com.webond.chemicals.dealer.fragments.DealerApproveCustomerFragment;
+import com.webond.chemicals.dealer.fragments.DealerPendingCustomerFragment;
 import com.webond.chemicals.distributor.fragments.customer.DistributorAllCustomerFragment;
 import com.webond.chemicals.distributor.fragments.customer.DistributorApproveCustomerFragment;
 import com.webond.chemicals.distributor.fragments.customer.DistributorPendingCustomerFragment;
 
-public class DistributorManageCustomerActivity extends AppCompatActivity implements View.OnClickListener {
+public class DealerManageCustomerActivity extends AppCompatActivity implements View.OnClickListener{
 
     private AppCompatImageView imgBack;
     private TextViewMediumFont tvHeaderTitle;
@@ -26,7 +29,7 @@ public class DistributorManageCustomerActivity extends AppCompatActivity impleme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_distributor_manage_customer);
+        setContentView(R.layout.activity_dealer_manage_customer);
         initView();
     }
 
@@ -43,9 +46,9 @@ public class DistributorManageCustomerActivity extends AppCompatActivity impleme
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragment(new DistributorPendingCustomerFragment(), "Pending");
-        viewPagerAdapter.addFragment(new DistributorApproveCustomerFragment(), "Approve");
-        viewPagerAdapter.addFragment(new DistributorAllCustomerFragment(), "All");
+        viewPagerAdapter.addFragment(new DealerPendingCustomerFragment(), "Pending");
+        viewPagerAdapter.addFragment(new DealerApproveCustomerFragment(), "Approve");
+        viewPagerAdapter.addFragment(new DealerAllCustomerFragment(), "All");
         viewPager.setAdapter(viewPagerAdapter);
     }
 
@@ -60,6 +63,5 @@ public class DistributorManageCustomerActivity extends AppCompatActivity impleme
     public void onBackPressed() {
         super.onBackPressed();
     }
-
 
 }
