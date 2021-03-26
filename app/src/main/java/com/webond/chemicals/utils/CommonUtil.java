@@ -55,7 +55,7 @@ public class CommonUtil {
     //10)get distributor by taluka id api pending
 //    11)place order api pending
 //            12)approve order api pending
-    
+
 
 
     public static final String FOLDER_NAME = "WeBond";
