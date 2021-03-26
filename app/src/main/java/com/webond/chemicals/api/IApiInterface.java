@@ -9,6 +9,7 @@ import com.webond.chemicals.pojo.ApproveCustomerPojo;
 import com.webond.chemicals.pojo.ApproveDealerPojo;
 import com.webond.chemicals.pojo.ApproveDistributorPojo;
 import com.webond.chemicals.pojo.CheckMobileNoExitstOrNoPojo;
+import com.webond.chemicals.pojo.GetBannerListPojo;
 import com.webond.chemicals.pojo.GetCityListPojo;
 import com.webond.chemicals.pojo.GetCustomerListPojo;
 import com.webond.chemicals.pojo.GetDealerListByCityIdPojo;
@@ -195,5 +196,6 @@ public interface IApiInterface {
     @GET("GetDistributorListByCityId")
     Call<ArrayList<GetDistributorListByCityIdPojo>> getDistributorListByCityId(@Query("cityid") String cityid);
 
-
+    @GET("GetBannerList")
+    Call<ArrayList<GetBannerListPojo>> getBannerList();
 }

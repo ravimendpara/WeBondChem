@@ -9,6 +9,7 @@ import com.webond.chemicals.pojo.ApproveCustomerPojo;
 import com.webond.chemicals.pojo.ApproveDealerPojo;
 import com.webond.chemicals.pojo.ApproveDistributorPojo;
 import com.webond.chemicals.pojo.CheckMobileNoExitstOrNoPojo;
+import com.webond.chemicals.pojo.GetBannerListPojo;
 import com.webond.chemicals.pojo.GetCityListPojo;
 import com.webond.chemicals.pojo.GetCustomerListPojo;
 import com.webond.chemicals.pojo.GetDealerListByCityIdPojo;
@@ -205,15 +206,15 @@ public class ApiImplementer {
         call.enqueue(cb);
     }
 
-    public static void approveCustomerImplementer(String CustomerId,String status, Callback<ArrayList<ApproveCustomerPojo>> cb) {
+    public static void approveCustomerImplementer(String CustomerId, String status, Callback<ArrayList<ApproveCustomerPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
-        Call<ArrayList<ApproveCustomerPojo>> call = apiService.approveCustomer(CustomerId,status);
+        Call<ArrayList<ApproveCustomerPojo>> call = apiService.approveCustomer(CustomerId, status);
         call.enqueue(cb);
     }
 
-    public static void approveDealerImplementer(String DealerId,String Status, Callback<ArrayList<ApproveDealerPojo>> cb) {
+    public static void approveDealerImplementer(String DealerId, String Status, Callback<ArrayList<ApproveDealerPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
-        Call<ArrayList<ApproveDealerPojo>> call = apiService.approveDealer(DealerId,Status);
+        Call<ArrayList<ApproveDealerPojo>> call = apiService.approveDealer(DealerId, Status);
         call.enqueue(cb);
     }
 
@@ -292,6 +293,12 @@ public class ApiImplementer {
     public static void getStateListApiImplementer(Callback<ArrayList<GetStateListPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<GetStateListPojo>> call = apiService.getStateList();
+        call.enqueue(cb);
+    }
+
+    public static void getBannerListApiImplementer(Callback<ArrayList<GetBannerListPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<GetBannerListPojo>> call = apiService.getBannerList();
         call.enqueue(cb);
     }
 

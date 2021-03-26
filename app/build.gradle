@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.webond.chemicals"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -67,6 +67,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.7.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-crashlytics'
+    implementation project(path: ':recyclerviewpager')
 //    implementation 'com.google.firebase:firebase-crashlytics'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
