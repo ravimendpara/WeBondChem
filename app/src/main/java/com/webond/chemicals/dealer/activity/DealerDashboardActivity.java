@@ -82,7 +82,9 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        animation.cancel();
+        if (animation != null) {
+            animation.cancel();
+        }
     }
 
     private void getBannerList() {

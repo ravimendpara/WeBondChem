@@ -3,6 +3,8 @@ package com.webond.chemicals.admin.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
@@ -114,6 +116,74 @@ public class AdminUpdateProductActivity extends AppCompatActivity implements Vie
         edtProductDescription = findViewById(R.id.edtProductDescription);
         cvUpdate = findViewById(R.id.cvUpdate);
         cvUpdate.setOnClickListener(this);
+
+
+        edtDistributorPercentage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!CommonUtil.checkIsEmptyOrNullCommon(s.toString().trim())) {
+                    if (Integer.parseInt(s.toString().trim()) > 100) {
+                        edtDistributorPercentage.setText("100");
+                        Toast.makeText(AdminUpdateProductActivity.this, "You can't enter more than 100%", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+        edtDealerPercentage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!CommonUtil.checkIsEmptyOrNullCommon(s.toString().trim())) {
+                    if (Integer.parseInt(s.toString().trim()) > 100) {
+                        edtDealerPercentage.setText("100");
+                        Toast.makeText(AdminUpdateProductActivity.this, "You can't enter more than 100%", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+        edtCustomerPercentage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!CommonUtil.checkIsEmptyOrNullCommon(s.toString().trim())) {
+                    if (Integer.parseInt(s.toString().trim()) > 100) {
+                        edtCustomerPercentage.setText("100");
+                        Toast.makeText(AdminUpdateProductActivity.this, "You can't enter more than 100%", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
     }
 
     private boolean isValid() {

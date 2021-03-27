@@ -54,24 +54,36 @@ public class AdminProductListAdapter extends RecyclerView.Adapter<AdminProductLi
                     .into(holder.imgProduct);
         }
 
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductName())){
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductName())) {
             holder.tvProductName.setText(getProductListPojo.getProductName());
         }
 
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductCode())){
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductCode())) {
             holder.tvProductCode.setText(getProductListPojo.getProductCode());
         }
 
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductDescription())){
-            holder.tvDescription.setText(getProductListPojo.getProductDescription()+"");
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductDescription())) {
+            holder.tvDescription.setText(getProductListPojo.getProductDescription() + "");
         }
 
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductTotalPoint())){
-            holder.tvTotalPoints.setText(getProductListPojo.getProductTotalPoint()+"");
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductTotalPoint())) {
+            holder.tvTotalPoints.setText(getProductListPojo.getProductTotalPoint() + "");
         }
 
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductPrice())){
-            holder.tvPrice.setText(getProductListPojo.getProductPrice()+"");
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductPrice())) {
+            holder.tvPrice.setText(" " +context.getString(R.string.rupee_symbol) + getProductListPojo.getProductPrice() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getDistPer())) {
+            holder.tvDistributorPer.setText(getProductListPojo.getDistPer() + "%");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getDealerPer())) {
+            holder.tvDealerPer.setText(getProductListPojo.getDealerPer() + "%");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getCustomerPer())) {
+            holder.tvCustomerPer.setText(getProductListPojo.getCustomerPer() + "%");
         }
 
 
@@ -103,6 +115,9 @@ public class AdminProductListAdapter extends RecyclerView.Adapter<AdminProductLi
         TextViewMediumFont tvDescription;
         TextViewMediumFont tvTotalPoints;
         TextViewMediumFont tvPrice;
+        TextViewMediumFont tvDistributorPer;
+        TextViewMediumFont tvDealerPer;
+        TextViewMediumFont tvCustomerPer;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -112,6 +127,9 @@ public class AdminProductListAdapter extends RecyclerView.Adapter<AdminProductLi
             tvTotalPoints = itemView.findViewById(R.id.tvTotalPoints);
             tvDescription = itemView.findViewById(R.id.tvDescription);
             tvPrice = itemView.findViewById(R.id.tvPrice);
+            tvDistributorPer = itemView.findViewById(R.id.tvDistributorPer);
+            tvDealerPer = itemView.findViewById(R.id.tvDealerPer);
+            tvCustomerPer = itemView.findViewById(R.id.tvCustomerPer);
         }
     }
 

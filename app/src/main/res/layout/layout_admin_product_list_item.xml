@@ -6,157 +6,250 @@
     android:layout_margin="12dp"
     android:clickable="true"
     android:orientation="vertical"
-    app:cardElevation="8dp"
     app:cardCornerRadius="10dp"
+    app:cardElevation="8dp"
     app:contentPadding="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="visible">
+            android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgProduct"
-                android:layout_width="116dp"
-                android:layout_height="142dp"
-                android:adjustViewBounds="true"
-                android:fitsSystemWindows="true"
-                app:srcCompat="@drawable/default_product" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="visible">
 
-            <View
-                android:layout_width="0.8dp"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgProduct"
+                    android:layout_width="112dp"
+                    android:layout_height="130dp"
+                    android:adjustViewBounds="true"
+                    android:fitsSystemWindows="true"
+                    app:srcCompat="@drawable/default_product" />
+
+                <View
+                    android:layout_width="0.8dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    android:background="@color/darker_grey_color"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/darker_grey_color"
-                android:visibility="visible" />
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <com.webond.chemicals.custom_class.TextViewMediumFont
+                    android:id="@+id/tvProductName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="-"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.webond.chemicals.custom_class.TextViewRegularFont
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Code: "
+                        android:textSize="12sp" />
+
+                    <com.webond.chemicals.custom_class.TextViewMediumFont
+                        android:id="@+id/tvProductCode"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:singleLine="true"
+                        android:text="-"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.webond.chemicals.custom_class.TextViewRegularFont
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total Point: "
+                        android:textSize="12sp" />
+
+                    <com.webond.chemicals.custom_class.TextViewMediumFont
+                        android:id="@+id/tvTotalPoints"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:singleLine="true"
+                        android:text="-"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@color/darker_grey_color"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                   <LinearLayout
+                       android:layout_width="0dp"
+                       android:layout_weight="1"
+                       android:gravity="center"
+                       android:layout_height="match_parent"
+                       android:orientation="vertical">
+
+                       <com.webond.chemicals.custom_class.TextViewRegularFont
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="Dist. Per"
+                           android:textSize="11sp"/>
+
+                       <com.webond.chemicals.custom_class.TextViewMediumFont
+                           android:id="@+id/tvDistributorPer"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="80%"
+                           android:textColor="@color/colorAccent"
+                           android:textSize="12sp"/>
+
+                   </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <com.webond.chemicals.custom_class.TextViewRegularFont
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Dealer Per"
+                            android:textSize="11sp"/>
+
+                        <com.webond.chemicals.custom_class.TextViewMediumFont
+                            android:id="@+id/tvDealerPer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="80%"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="12sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <com.webond.chemicals.custom_class.TextViewRegularFont
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cust. Per"
+                            android:textSize="11sp"/>
+
+                        <com.webond.chemicals.custom_class.TextViewMediumFont
+                            android:id="@+id/tvCustomerPer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="80%"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="12sp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.webond.chemicals.custom_class.TextViewRegularFont
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Price: "
+                android:textSize="12sp" />
 
             <com.webond.chemicals.custom_class.TextViewMediumFont
-                android:id="@+id/tvProductName"
-                android:layout_width="match_parent"
+                android:id="@+id/tvPrice"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:singleLine="true"
                 android:text="-"
                 android:textColor="@color/colorAccent"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.webond.chemicals.custom_class.TextViewRegularFont
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:text="Desc: "
+                android:textSize="12sp" />
+
+            <com.webond.chemicals.custom_class.TextViewMediumFont
+                android:id="@+id/tvDescription"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <com.webond.chemicals.custom_class.TextViewRegularFont
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Product Code: "
-                    android:textSize="12sp"/>
-
-                <com.webond.chemicals.custom_class.TextViewMediumFont
-                    android:id="@+id/tvProductCode"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:textSize="13sp"
-                    android:singleLine="true"
-                    android:textColor="@color/colorAccent"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <com.webond.chemicals.custom_class.TextViewRegularFont
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Product Total Point: "
-                    android:textSize="12sp"/>
-
-                <com.webond.chemicals.custom_class.TextViewMediumFont
-                    android:id="@+id/tvTotalPoints"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:textSize="13sp"
-                    android:singleLine="true"
-                    android:textColor="@color/colorAccent"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <com.webond.chemicals.custom_class.TextViewRegularFont
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Product Price: "
-                    android:textSize="12sp"/>
-
-                <com.webond.chemicals.custom_class.TextViewMediumFont
-                    android:id="@+id/tvPrice"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:textSize="13sp"
-                    android:singleLine="true"
-                    android:textColor="@color/colorAccent"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <com.webond.chemicals.custom_class.TextViewRegularFont
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Description: "
-                    android:layout_gravity="top"
-                    android:textSize="12sp"/>
-
-                <com.webond.chemicals.custom_class.TextViewMediumFont
-                    android:id="@+id/tvDescription"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:text="-"
-                    android:textSize="12sp"
-                    android:maxLines="2"
-                    android:textColor="@color/colorAccent"/>
-
-            </LinearLayout>
+                android:maxLines="2"
+                android:text="-"
+                android:textColor="@color/colorAccent"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
     </LinearLayout>
+
 
 </com.google.android.material.card.MaterialCardView>

@@ -33,6 +33,8 @@ public class DistributorDashboardActivity extends AppCompatActivity implements V
     private MaterialCardView cvProfile;
     private MaterialCardView cvManageDealer;
     private MaterialCardView cvManageCustomer;
+    private MaterialCardView cvManageOrder;
+    private MaterialCardView cvAddOrder;
     private Animation animation;
     RecyclerViewPager recyclerViewPagerStudentSideBanner;
 
@@ -54,6 +56,10 @@ public class DistributorDashboardActivity extends AppCompatActivity implements V
         cvManageDealer.setOnClickListener(this);
         cvManageCustomer = findViewById(R.id.cvManageCustomer);
         cvManageCustomer.setOnClickListener(this);
+        cvManageOrder = findViewById(R.id.cvManageOrder);
+        cvManageOrder.setOnClickListener(this);
+        cvAddOrder = findViewById(R.id.cvAddOrder);
+        cvAddOrder.setOnClickListener(this);
     }
 
     @Override
@@ -88,13 +94,33 @@ public class DistributorDashboardActivity extends AppCompatActivity implements V
                     startActivity(intent);
                 }
             }, 400);
+        } else if (v.getId() == R.id.cvManageOrder) {
+            animation = AnimationUtils.loadAnimation(DistributorDashboardActivity.this, R.anim.bounce);
+            cvManageOrder.startAnimation(animation);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                }
+            }, 400);
+        } else if (v.getId() == R.id.cvAddOrder) {
+            animation = AnimationUtils.loadAnimation(DistributorDashboardActivity.this, R.anim.bounce);
+            cvAddOrder.startAnimation(animation);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                }
+            }, 400);
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        animation.cancel();
+        if (animation != null) {
+            animation.cancel();
+        }
     }
 
     private void getBannerList() {

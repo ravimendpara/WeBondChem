@@ -121,7 +121,9 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        animation.cancel();
+        if (animation != null) {
+            animation.cancel();
+        }
     }
 
 

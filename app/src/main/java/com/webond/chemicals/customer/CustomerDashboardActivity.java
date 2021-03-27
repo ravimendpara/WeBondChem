@@ -89,7 +89,9 @@ public class CustomerDashboardActivity extends AppCompatActivity implements View
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        animation.cancel();
+        if (animation != null) {
+            animation.cancel();
+        }
     }
 
     private void getBannerList() {
