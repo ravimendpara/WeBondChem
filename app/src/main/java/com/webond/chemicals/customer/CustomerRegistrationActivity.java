@@ -392,8 +392,8 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                             spState.setAdapter(spinnerAdapterState);
 
 //                            spState.setSelection(1);
-                            String stateId = stateHashMap.get(stateArrayList.get(1));
-                            getDistrictApiCall(false, false, stateId);
+//                            String stateId = stateHashMap.get(stateArrayList.get(1));
+                            getDistrictApiCall(false, false, "0");
 
                         } else {
                             if (!isPdHide) {
@@ -453,8 +453,8 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                             spDistrict.setAdapter(spinnerAdapterDistrict);
 
 //                            spDistrict.setSelection(1);
-                            String districtId = districtHashMap.get(districtArrayList.get(1));
-                            getTalukaApiCall(false, false, districtId);
+//                            String districtId = districtHashMap.get(districtArrayList.get(1));
+                            getTalukaApiCall(false, false, "0");
 
                         } else {
                             if (!isPdHide) {
@@ -518,8 +518,8 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                             spTaluka.setAdapter(spinnerAdapterUserTaluka);
 
 //                            spTaluka.setSelection(1);
-                            String talukaId = talukaHashMap.get(talukaArrayList.get(1));
-                            getCityApiCall(false, false, talukaId);
+//                            String talukaId = talukaHashMap.get(talukaArrayList.get(1));
+                            getCityApiCall(false, false, "0");
                         } else {
                             if (!isPdHide) {
                                 DialogUtil.hideProgressDialog();
@@ -581,8 +581,8 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                             spinnerAdapterUserCity = new SpinnerSimpleAdapter(CustomerRegistrationActivity.this, cityArrayList);
                             spCity.setAdapter(spinnerAdapterUserCity);
 //                            spCity.setSelection(1);
-                            String cityId = cityHashMap.get(cityArrayList.get(1));
-                            getDealerListByCityIdApiCall(false, true, cityId);
+//                            String cityId = cityHashMap.get(cityArrayList.get(1));
+                            getDealerListByCityIdApiCall(false, true, "0");
                         } else {
                             if (!isPdHide) {
                                 DialogUtil.hideProgressDialog();

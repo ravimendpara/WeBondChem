@@ -384,8 +384,8 @@ public class DistributorRegistrationActivity extends AppCompatActivity implement
                             spState.setAdapter(spinnerAdapterState);
 
 //                            spState.setSelection(1);
-                            String stateId = stateHashMap.get(stateArrayList.get(1));
-                            getDistrictApiCall(false, false, stateId);
+//                            String stateId = stateHashMap.get(stateArrayList.get(1));
+                            getDistrictApiCall(false, false, "0");
 
                         } else {
                             if (!isPdHide) {
@@ -445,8 +445,8 @@ public class DistributorRegistrationActivity extends AppCompatActivity implement
                             spDistrict.setAdapter(spinnerAdapterDistrict);
 
 //                            spDistrict.setSelection(1);
-                            String districtId = districtHashMap.get(districtArrayList.get(1));
-                            getTalukaApiCall(false, false, districtId);
+//                            String districtId = districtHashMap.get(districtArrayList.get(1));
+                            getTalukaApiCall(false, false, "0");
 
                         } else {
                             if (!isPdHide) {
@@ -510,8 +510,8 @@ public class DistributorRegistrationActivity extends AppCompatActivity implement
                             spTaluka.setAdapter(spinnerAdapterUserTaluka);
 
 //                            spTaluka.setSelection(1);
-                            String talukaId = talukaHashMap.get(talukaArrayList.get(1));
-                            getCityApiCall(false, true, talukaId);
+//                            String talukaId = talukaHashMap.get(talukaArrayList.get(1));
+                            getCityApiCall(false, true, "0");
                         } else {
                             if (!isPdHide) {
                                 DialogUtil.hideProgressDialog();

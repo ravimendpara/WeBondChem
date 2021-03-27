@@ -2,8 +2,10 @@ package com.webond.chemicals.api;
 
 
 import com.webond.chemicals.pojo.AddCustomerPojo;
+import com.webond.chemicals.pojo.AddDealerOrderDataPojo;
 import com.webond.chemicals.pojo.AddDealerPojo;
 import com.webond.chemicals.pojo.AddDistributerPojo;
+import com.webond.chemicals.pojo.AddDistributorOrderDataPojo;
 import com.webond.chemicals.pojo.AddProductPojo;
 import com.webond.chemicals.pojo.ApproveCustomerPojo;
 import com.webond.chemicals.pojo.ApproveDealerPojo;
@@ -38,6 +40,36 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface IApiInterface {
+
+
+    @FormUrlEncoded
+    @POST("AddDistributorOrderData")
+    Call<ArrayList<AddDistributorOrderDataPojo>> addDistributorOrderData(
+            @Field("OrderDate") String OrderDate,
+            @Field("DistributorId") String DistributorId,
+            @Field("ContactPersonDetail") String ContactPersonDetail,
+            @Field("SiteAddress") String SiteAddress,
+            @Field("ContactNo") String ContactNo,
+            @Field("PinCode") String PinCode,
+            @Field("DistrictId") String DistrictId,
+            @Field("TalukaId") String TalukaId,
+            @Field("ProductList") String ProductList
+    );
+
+    @FormUrlEncoded
+    @POST("AddDealerOrderData")
+    Call<ArrayList<AddDealerOrderDataPojo>> addDealerOrder(
+            @Field("OrderDate") String OrderDate,
+            @Field("DealerId") String DealerId,
+            @Field("DealerDistributorId") String DealerDistributorId,
+            @Field("ContactPersonDetail") String ContactPersonDetail,
+            @Field("SiteAddress") String SiteAddress,
+            @Field("ContactNo") String ContactNo,
+            @Field("PinCode") String PinCode,
+            @Field("DistrictId") String DistrictId,
+            @Field("TalukaId") String TalukaId,
+            @Field("ProductList") String ProductList
+    );
 
     @FormUrlEncoded
     @POST("AddCustomer")

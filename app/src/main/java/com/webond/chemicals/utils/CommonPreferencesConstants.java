@@ -29,6 +29,11 @@ public class CommonPreferencesConstants {
     public static final String DISTRIBUTOR_TALUKA_NAME = "distributor_taluka_name";
     public static final String DISTRIBUTOR_DISTRICT_NAME = "distributor_district_name";
     public static final String DISTRIBUTOR_STATE_NAME = "distributor_state_name";
+    public static final String DISTRIBUTOR_CITY_ID = "distributor_city_id";
+    public static final String DISTRIBUTOR_STATE_ID = "distributor_state_id";
+    public static final String DISTRIBUTOR_DISTRICT_ID = "distributor_district_id";
+    public static final String DISTRIBUTOR_TALUKA_ID = "distributor_taluka_id";
+
 
     //key for dealer preferences
 
@@ -44,6 +49,11 @@ public class CommonPreferencesConstants {
     public static final String DEALER_DISTRICT_NAME = "dealer_district_name";
     public static final String DEALER_STATE_NAME = "dealer_state_name";
     public static final String DEALER_DISTRIBUTOR_NAME = "dealer_distributor_name";
+    public static final String DEALER_CITY_ID = "dealer_city_id";
+    public static final String DEALER_STATE_ID = "dealer_state_id";
+    public static final String DEALER_DISTRICT_ID = "dealer_district_id";
+    public static final String DEALER_TALUKA_ID = "dealer_taluka_id";
+    public static final String DEALER_DISTRIBUTOR_ID = "dealer_distributor_id";
 
     //key for customer preferences
 
@@ -59,4 +69,9 @@ public class CommonPreferencesConstants {
     public static final String CUSTOMER_TALUKA_NAME = "customer_taluka_name";
     public static final String CUSTOMER_DISTRICT_NAME = "customer_district_name";
     public static final String CUSTOMER_STATE_NAME = "customer_state_name";
+    public static final String CUSTOMER_CITY_ID = "customer_city_id";
+    public static final String CUSTOMER_STATE_ID = "customer_state_id";
+    public static final String CUSTOMER_DISTRICT_ID = "customer_district_id";
+    public static final String CUSTOMER_TALUKA_ID = "customer_taluka_id";
+    public static final String CUSTOMER_DEALER_ID = "customer_dealer_id";
 }

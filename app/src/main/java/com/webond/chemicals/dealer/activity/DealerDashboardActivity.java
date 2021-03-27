@@ -33,6 +33,7 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
     private MySharedPreferences mySharedPreferences;
     private MaterialCardView cvProfile;
     private MaterialCardView cvManageCustomer;
+    private MaterialCardView cvAddOrder;
     private Animation animation;
     RecyclerViewPager recyclerViewPagerStudentSideBanner;
 
@@ -52,6 +53,8 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
         cvProfile.setOnClickListener(this);
         cvManageCustomer = findViewById(R.id.cvManageCustomer);
         cvManageCustomer.setOnClickListener(this);
+        cvAddOrder = findViewById(R.id.cvAddOrder);
+        cvAddOrder.setOnClickListener(this);
     }
 
     @Override
@@ -73,6 +76,16 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
                 @Override
                 public void run() {
                     Intent intent = new Intent(DealerDashboardActivity.this, DealerManageCustomerActivity.class);
+                    startActivity(intent);
+                }
+            }, 400);
+        } else if (v.getId() == R.id.cvAddOrder) {
+            animation = AnimationUtils.loadAnimation(DealerDashboardActivity.this, R.anim.bounce);
+            cvManageCustomer.startAnimation(animation);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(DealerDashboardActivity.this, DealerAddOrderActivity.class);
                     startActivity(intent);
                 }
             }, 400);

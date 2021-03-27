@@ -195,6 +195,42 @@ public class MySharedPreferences {
         return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.DISTRIBUTOR_STATE_NAME, "");
     }
 
+    public void setDistributorCityId(String distributorCityId) {
+        editorForUserDetails.putString(CommonPreferencesConstants.DISTRIBUTOR_CITY_ID, distributorCityId);
+        editorForUserDetails.apply();
+    }
+
+    public String getDistributorCityId() {
+        return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.DISTRIBUTOR_CITY_ID, "");
+    }
+
+    public void setDistributorStateId(String distributorStateId) {
+        editorForUserDetails.putString(CommonPreferencesConstants.DISTRIBUTOR_STATE_ID, distributorStateId);
+        editorForUserDetails.apply();
+    }
+
+    public String getDistributorStateId() {
+        return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.DISTRIBUTOR_STATE_ID, "");
+    }
+
+    public void setDistributorDistrictId(String distributorDistrictId) {
+        editorForUserDetails.putString(CommonPreferencesConstants.DISTRIBUTOR_DISTRICT_ID, distributorDistrictId);
+        editorForUserDetails.apply();
+    }
+
+    public String getDistributorDistrictId() {
+        return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.DISTRIBUTOR_DISTRICT_ID, "");
+    }
+
+    public void setDistributorTalukaId(String distributorTalukaId) {
+        editorForUserDetails.putString(CommonPreferencesConstants.DISTRIBUTOR_TALUKA_ID, distributorTalukaId);
+        editorForUserDetails.apply();
+    }
+
+    public String getDistributorTalukaId() {
+        return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.DISTRIBUTOR_TALUKA_ID, "");
+    }
+
 //    --for dealer--
 
 
@@ -295,6 +331,51 @@ public class MySharedPreferences {
 
     public String getDealerDistributorName() {
         return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.DEALER_DISTRIBUTOR_NAME, "");
+    }
+
+    public void setDealerCityId(String dealerCityId) {
+        editorForUserDetails.putString(CommonPreferencesConstants.DEALER_CITY_ID, dealerCityId);
+        editorForUserDetails.apply();
+    }
+
+    public String getDealerCityId() {
+        return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.DEALER_CITY_ID, "");
+    }
+
+    public void setDealerStateId(String dealerStateId) {
+        editorForUserDetails.putString(CommonPreferencesConstants.DEALER_STATE_ID, dealerStateId);
+        editorForUserDetails.apply();
+    }
+
+    public String getDealerStateId() {
+        return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.DEALER_STATE_ID, "");
+    }
+
+    public void setDealerDistrictId(String dealerDistrictId) {
+        editorForUserDetails.putString(CommonPreferencesConstants.DEALER_DISTRICT_ID, dealerDistrictId);
+        editorForUserDetails.apply();
+    }
+
+    public String getDealerDistrictId() {
+        return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.DEALER_DISTRICT_ID, "");
+    }
+
+    public void setDealerTalukaId(String dealerTalukaId) {
+        editorForUserDetails.putString(CommonPreferencesConstants.DEALER_TALUKA_ID, dealerTalukaId);
+        editorForUserDetails.apply();
+    }
+
+    public String getDealerTalukaId() {
+        return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.DEALER_TALUKA_ID, "");
+    }
+
+    public void setDealerDistributorId(String dealerDistributorId) {
+        editorForUserDetails.putString(CommonPreferencesConstants.DEALER_DISTRIBUTOR_ID, dealerDistributorId);
+        editorForUserDetails.apply();
+    }
+
+    public String getDealerDistributorId() {
+        return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.DEALER_DISTRIBUTOR_ID, "");
     }
 
 //    --Customer--
@@ -405,6 +486,51 @@ public class MySharedPreferences {
 
     public String getCustomerStateName() {
         return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.CUSTOMER_STATE_NAME, "");
+    }
+
+    public void setCustomerCityId(String customerCityId) {
+        editorForUserDetails.putString(CommonPreferencesConstants.CUSTOMER_CITY_ID, customerCityId);
+        editorForUserDetails.apply();
+    }
+
+    public String getCustomerCityId() {
+        return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.CUSTOMER_CITY_ID, "");
+    }
+
+    public void setCustomerStateId(String customerStateId) {
+        editorForUserDetails.putString(CommonPreferencesConstants.CUSTOMER_STATE_ID, customerStateId);
+        editorForUserDetails.apply();
+    }
+
+    public String getCustomerStateId() {
+        return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.CUSTOMER_STATE_ID, "");
+    }
+
+    public void setCustomerDistrictId(String customerDistrictId) {
+        editorForUserDetails.putString(CommonPreferencesConstants.CUSTOMER_DISTRICT_ID, customerDistrictId);
+        editorForUserDetails.apply();
+    }
+
+    public String getCustomerDistrictId() {
+        return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.CUSTOMER_DISTRICT_ID, "");
+    }
+
+    public void setCustomerTalukaId(String customerTalukaId) {
+        editorForUserDetails.putString(CommonPreferencesConstants.CUSTOMER_TALUKA_ID, customerTalukaId);
+        editorForUserDetails.apply();
+    }
+
+    public String getCustomerTalukaId() {
+        return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.CUSTOMER_TALUKA_ID, "");
+    }
+
+    public void setCustomerDealerId(String customerDealerId) {
+        editorForUserDetails.putString(CommonPreferencesConstants.CUSTOMER_DEALER_ID, customerDealerId);
+        editorForUserDetails.apply();
+    }
+
+    public String getCustomerDealerId() {
+        return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.CUSTOMER_DEALER_ID, "");
     }
 
 }

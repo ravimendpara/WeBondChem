@@ -109,7 +109,8 @@ public class DistributorDashboardActivity extends AppCompatActivity implements V
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-
+                    Intent intent = new Intent(DistributorDashboardActivity.this, DistributorAddOrderActivity.class);
+                    startActivity(intent);
                 }
             }, 400);
         }

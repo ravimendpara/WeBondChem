@@ -532,6 +532,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDistributorPojo.getStateName())) {
             mySharedPreferences.setDistributorStateName(getDetailsForLoginUserDistributorPojo.getStateName() + "");
         }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDistributorPojo.getCityId())) {
+            mySharedPreferences.setDistributorCityId(getDetailsForLoginUserDistributorPojo.getCityId() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDistributorPojo.getTalukaId())) {
+            mySharedPreferences.setDistributorTalukaId(getDetailsForLoginUserDistributorPojo.getTalukaId() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDistributorPojo.getDistrictId())) {
+            mySharedPreferences.setDistributorDistrictId(getDetailsForLoginUserDistributorPojo.getDistrictId() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDistributorPojo.getStateId())) {
+            mySharedPreferences.setDistributorStateId(getDetailsForLoginUserDistributorPojo.getStateId() + "");
+        }
     }
 
     private void setDataForDealer(GetDetailsForLoginUserDealerPojo getDetailsForLoginUserDealerPojo) {
@@ -581,6 +597,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDealerPojo.getDistributorName())) {
             mySharedPreferences.setDealerDistributorName(getDetailsForLoginUserDealerPojo.getDistributorName() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDealerPojo.getCityId())) {
+            mySharedPreferences.setDealerCityId(getDetailsForLoginUserDealerPojo.getCityId() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDealerPojo.getTalukaId())) {
+            mySharedPreferences.setDealerTalukaId(getDetailsForLoginUserDealerPojo.getTalukaId() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDealerPojo.getDistrictId())) {
+            mySharedPreferences.setDealerDistrictId(getDetailsForLoginUserDealerPojo.getDistrictId() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDealerPojo.getStateId())) {
+            mySharedPreferences.setDealerStateId(getDetailsForLoginUserDealerPojo.getStateId() + "");
         }
 
     }
@@ -636,6 +668,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getStateName())) {
             mySharedPreferences.setCustomerStateName(getDetailsForLoginUserCustomerPojo.getStateName() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getCityId())) {
+            mySharedPreferences.setCustomerCityId(getDetailsForLoginUserCustomerPojo.getCityId() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getTalukaId())) {
+            mySharedPreferences.setCustomerTalukaId(getDetailsForLoginUserCustomerPojo.getTalukaId() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getDistrictId())) {
+            mySharedPreferences.setCustomerDistrictId(getDetailsForLoginUserCustomerPojo.getDistrictId() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getStateId())) {
+            mySharedPreferences.setCustomerStateId(getDetailsForLoginUserCustomerPojo.getStateId() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getDealerId())) {
+            mySharedPreferences.setCustomerDealerId(getDetailsForLoginUserCustomerPojo.getDealerId() + "");
         }
     }
 

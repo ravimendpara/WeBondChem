@@ -20,9 +20,24 @@ public class GetDetailsForLoginUserDealerPojo {
     @SerializedName("Email")
     @Expose
     private String email;
+    @SerializedName("CityId")
+    @Expose
+    private Integer cityId;
+    @SerializedName("DistrictId")
+    @Expose
+    private Integer districtId;
+    @SerializedName("TalukaId")
+    @Expose
+    private Integer talukaId;
+    @SerializedName("StateId")
+    @Expose
+    private Integer stateId;
+    @SerializedName("DistributorId")
+    @Expose
+    private Integer distributorId;
     @SerializedName("PhotoPath")
     @Expose
-    private Object photoPath;
+    private String photoPath;
     @SerializedName("CityName")
     @Expose
     private String cityName;
@@ -82,11 +97,51 @@ public class GetDetailsForLoginUserDealerPojo {
         this.email = email;
     }
 
-    public Object getPhotoPath() {
+    public Integer getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
+    }
+
+    public Integer getDistrictId() {
+        return districtId;
+    }
+
+    public void setDistrictId(Integer districtId) {
+        this.districtId = districtId;
+    }
+
+    public Integer getTalukaId() {
+        return talukaId;
+    }
+
+    public void setTalukaId(Integer talukaId) {
+        this.talukaId = talukaId;
+    }
+
+    public Integer getStateId() {
+        return stateId;
+    }
+
+    public void setStateId(Integer stateId) {
+        this.stateId = stateId;
+    }
+
+    public Integer getDistributorId() {
+        return distributorId;
+    }
+
+    public void setDistributorId(Integer distributorId) {
+        this.distributorId = distributorId;
+    }
+
+    public String getPhotoPath() {
         return photoPath;
     }
 
-    public void setPhotoPath(Object photoPath) {
+    public void setPhotoPath(String photoPath) {
         this.photoPath = photoPath;
     }
 

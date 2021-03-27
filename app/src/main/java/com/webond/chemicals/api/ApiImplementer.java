@@ -2,8 +2,10 @@ package com.webond.chemicals.api;
 
 
 import com.webond.chemicals.pojo.AddCustomerPojo;
+import com.webond.chemicals.pojo.AddDealerOrderDataPojo;
 import com.webond.chemicals.pojo.AddDealerPojo;
 import com.webond.chemicals.pojo.AddDistributerPojo;
+import com.webond.chemicals.pojo.AddDistributorOrderDataPojo;
 import com.webond.chemicals.pojo.AddProductPojo;
 import com.webond.chemicals.pojo.ApproveCustomerPojo;
 import com.webond.chemicals.pojo.ApproveDealerPojo;
@@ -35,7 +37,58 @@ import retrofit2.Callback;
 
 public class ApiImplementer {
 
-    //TODO Student side module implementers
+
+    public static void addDistributorOrderImplementer(String OrderDate,
+                                                      String DistributorId,
+                                                      String ContactPersonDetail,
+                                                      String SiteAddress,
+                                                      String ContactNo,
+                                                      String PinCode,
+                                                      String DistrictId,
+                                                      String TalukaId,
+                                                      String ProductList,
+                                                      Callback<ArrayList<AddDistributorOrderDataPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<AddDistributorOrderDataPojo>> call = apiService.addDistributorOrderData(
+                OrderDate,
+                DistributorId,
+                ContactPersonDetail,
+                SiteAddress,
+                ContactNo,
+                PinCode,
+                DistrictId,
+                TalukaId,
+                ProductList);
+        call.enqueue(cb);
+    }
+
+
+    public static void addDealerOrderImplementer(String OrderDate,
+                                                 String DealerId,
+                                                 String DealerDistributorId,
+                                                 String ContactPersonDetail,
+                                                 String SiteAddress,
+                                                 String ContactNo,
+                                                 String PinCode,
+                                                 String DistrictId,
+                                                 String TalukaId,
+                                                 String ProductList,
+                                                 Callback<ArrayList<AddDealerOrderDataPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<AddDealerOrderDataPojo>> call = apiService.addDealerOrder(
+                OrderDate,
+                DealerId,
+                DealerDistributorId,
+                ContactPersonDetail,
+                SiteAddress,
+                ContactNo,
+                PinCode,
+                DistrictId,
+                TalukaId,
+                ProductList);
+        call.enqueue(cb);
+    }
+
 
     public static void addCustomerImplementer(String CustomerName,
                                               String DealerId,
@@ -209,7 +262,6 @@ public class ApiImplementer {
     }
 
 
-
     public static void updateProductImplementer(
             String ProductId,
             String ProductCode,
@@ -254,7 +306,6 @@ public class ApiImplementer {
                 ProductDescription);
         call.enqueue(cb);
     }
-
 
 
     public static void approveCustomerImplementer(String CustomerId, String status, Callback<ArrayList<ApproveCustomerPojo>> cb) {
