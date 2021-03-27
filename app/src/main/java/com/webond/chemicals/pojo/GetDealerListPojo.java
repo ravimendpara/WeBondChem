@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class GetDealerListPojo {
 
-    boolean isExpanded = false;
+    boolean isExpanded = true;
 
     public boolean isExpanded() {
         return isExpanded;

@@ -49,7 +49,7 @@ public class CommonUtil {
 //3)photo1 required for add product
 //4)GetDetailForLoginUser ma customer,dealer,distributor ma cityid and dealer id add krya che response distributorid cityid,cityid
     //5)approve and reject krya pachi list refresh thavu joi
-    //6)dealer na registration ma distributor nthi avta dropdown ma
+    //6)dealer na registration ma distributor nthi avta dropdown ma //TODO DONE
     //7)product list ni design hibond na product list jevi krvani che
     //8)add order ni screen ma prodcut nu list batavanu and place order na btn per order dispatch no dialog same as hibond
     //9)get dealer by taluka id api pedning,

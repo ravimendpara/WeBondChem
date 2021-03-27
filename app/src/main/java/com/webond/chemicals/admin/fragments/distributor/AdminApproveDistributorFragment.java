@@ -31,6 +31,7 @@ public class AdminApproveDistributorFragment extends Fragment {
     private RecyclerView rvAdminApproveDistributor;
     private LinearLayout llLoading;
     private LinearLayout llNoDateFound;
+    private boolean isNeedToRefresh = false;
 
 
     public AdminApproveDistributorFragment() {
@@ -50,6 +51,14 @@ public class AdminApproveDistributorFragment extends Fragment {
         initView(view);
         getApproveDistributorListApiCall();
         return view;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isNeedToRefresh) {
+            getApproveDistributorListApiCall();
+        }
     }
 
     private void initView(View view) {
@@ -72,7 +81,8 @@ public class AdminApproveDistributorFragment extends Fragment {
                             llLoading.setVisibility(View.GONE);
                             llNoDateFound.setVisibility(View.GONE);
                             rvAdminApproveDistributor.setVisibility(View.VISIBLE);
-                            rvAdminApproveDistributor.setAdapter(new ApproveDistributorListAdapter(context,response.body()));
+                            isNeedToRefresh = true;
+                            rvAdminApproveDistributor.setAdapter(new ApproveDistributorListAdapter(context, response.body()));
                         } else {
                             llLoading.setVisibility(View.GONE);
                             llNoDateFound.setVisibility(View.VISIBLE);

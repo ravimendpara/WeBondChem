@@ -32,6 +32,7 @@ public class AdminApproveCustomerFragment extends Fragment {
     private RecyclerView rvAdminApproveCustomer;
     private LinearLayout llLoading;
     private LinearLayout llNoDateFound;
+    private boolean isNeedToRefresh = false;
 
     public AdminApproveCustomerFragment() {
 
@@ -50,6 +51,14 @@ public class AdminApproveCustomerFragment extends Fragment {
         initView(view);
         getApproveCustomerListApiCall();
         return view;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isNeedToRefresh){
+            getApproveCustomerListApiCall();
+        }
     }
 
     private void initView(View view) {
@@ -72,6 +81,7 @@ public class AdminApproveCustomerFragment extends Fragment {
                             llLoading.setVisibility(View.GONE);
                             llNoDateFound.setVisibility(View.GONE);
                             rvAdminApproveCustomer.setVisibility(View.VISIBLE);
+                            isNeedToRefresh = true;
                             rvAdminApproveCustomer.setAdapter(new ApproveCustomerListAdapter(context, response.body()));
                         } else {
                             llLoading.setVisibility(View.GONE);

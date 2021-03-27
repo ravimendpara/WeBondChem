@@ -107,8 +107,8 @@ public class AdminAddProductActivity extends AppCompatActivity implements View.O
         } else if (CommonUtil.checkIsEmptyOrNullCommon(edtProductName.getText().toString())) {
             Toast.makeText(this, "Please enter product name", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (!isPhotoUploaded1 && !isPhotoUploaded2 && !isPhotoUploaded3 && !isPhotoUploaded4 && !isPhotoUploaded5) {
-            Toast.makeText(this, "Please upload at least one product photo", Toast.LENGTH_SHORT).show();
+        } else if (!isPhotoUploaded1) {
+            Toast.makeText(this, "Please upload product photo1", Toast.LENGTH_SHORT).show();
             return false;
         } else if (CommonUtil.checkIsEmptyOrNullCommon(edtProductPrice.getText().toString())) {
             Toast.makeText(this, "Please enter product price", Toast.LENGTH_SHORT).show();
@@ -233,10 +233,14 @@ public class AdminAddProductActivity extends AppCompatActivity implements View.O
                 if (data != null && data.getData() != null) {
                     String fileUrl = FileUtils.getPath(AdminAddProductActivity.this, data.getData());
                     File uploadedAadharProof = new File(fileUrl);
-                    uploadPhoto1Base64 = CommonUtil.getBase64StringFromFileObj(uploadedAadharProof);
-                    uploadPhoto1Name = uploadedAadharProof.getName();
-                    edtUploadProductPhoto1.setText(uploadPhoto1Name);
-                    isPhotoUploaded1 = true;
+                    if (uploadedAadharProof.length() > 500000) { //500000bytes == 500KB
+                        Toast.makeText(this, "File length must be less than 500KB", Toast.LENGTH_SHORT).show();
+                    } else {
+                        uploadPhoto1Base64 = CommonUtil.getBase64StringFromFileObj(uploadedAadharProof);
+                        uploadPhoto1Name = uploadedAadharProof.getName();
+                        edtUploadProductPhoto1.setText(uploadPhoto1Name);
+                        isPhotoUploaded1 = true;
+                    }
                 }
             } catch (Exception ex) {
                 isPhotoUploaded1 = false;
@@ -248,10 +252,14 @@ public class AdminAddProductActivity extends AppCompatActivity implements View.O
                 if (data != null && data.getData() != null) {
                     String fileUrl = FileUtils.getPath(AdminAddProductActivity.this, data.getData());
                     File uploadedAadharProof = new File(fileUrl);
-                    uploadPhoto2Base64 = CommonUtil.getBase64StringFromFileObj(uploadedAadharProof);
-                    uploadPhoto2Name = uploadedAadharProof.getName();
-                    edtUploadProductPhoto2.setText(uploadPhoto2Name);
-                    isPhotoUploaded2 = true;
+                    if (uploadedAadharProof.length() > 500000) { //500000bytes == 500KB
+                        Toast.makeText(this, "File length must be less than 500KB", Toast.LENGTH_SHORT).show();
+                    } else {
+                        uploadPhoto2Base64 = CommonUtil.getBase64StringFromFileObj(uploadedAadharProof);
+                        uploadPhoto2Name = uploadedAadharProof.getName();
+                        edtUploadProductPhoto2.setText(uploadPhoto2Name);
+                        isPhotoUploaded2 = true;
+                    }
                 }
             } catch (Exception ex) {
                 isPhotoUploaded2 = false;
@@ -263,10 +271,14 @@ public class AdminAddProductActivity extends AppCompatActivity implements View.O
                 if (data != null && data.getData() != null) {
                     String fileUrl = FileUtils.getPath(AdminAddProductActivity.this, data.getData());
                     File uploadedAadharProof = new File(fileUrl);
-                    uploadPhoto3Base64 = CommonUtil.getBase64StringFromFileObj(uploadedAadharProof);
-                    uploadPhoto3Name = uploadedAadharProof.getName();
-                    edtUploadProductPhoto3.setText(uploadPhoto3Name);
-                    isPhotoUploaded3 = true;
+                    if (uploadedAadharProof.length() > 500000) { //500000bytes == 500KB
+                        Toast.makeText(this, "File length must be less than 500KB", Toast.LENGTH_SHORT).show();
+                    } else {
+                        uploadPhoto3Base64 = CommonUtil.getBase64StringFromFileObj(uploadedAadharProof);
+                        uploadPhoto3Name = uploadedAadharProof.getName();
+                        edtUploadProductPhoto3.setText(uploadPhoto3Name);
+                        isPhotoUploaded3 = true;
+                    }
                 }
             } catch (Exception ex) {
                 isPhotoUploaded3 = false;
@@ -278,10 +290,14 @@ public class AdminAddProductActivity extends AppCompatActivity implements View.O
                 if (data != null && data.getData() != null) {
                     String fileUrl = FileUtils.getPath(AdminAddProductActivity.this, data.getData());
                     File uploadedAadharProof = new File(fileUrl);
-                    uploadPhoto4Base64 = CommonUtil.getBase64StringFromFileObj(uploadedAadharProof);
-                    uploadPhoto4Name = uploadedAadharProof.getName();
-                    edtUploadProductPhoto4.setText(uploadPhoto4Name);
-                    isPhotoUploaded4 = true;
+                    if (uploadedAadharProof.length() > 500000) { //500000bytes == 500KB
+                        Toast.makeText(this, "File length must be less than 500KB", Toast.LENGTH_SHORT).show();
+                    } else {
+                        uploadPhoto4Base64 = CommonUtil.getBase64StringFromFileObj(uploadedAadharProof);
+                        uploadPhoto4Name = uploadedAadharProof.getName();
+                        edtUploadProductPhoto4.setText(uploadPhoto4Name);
+                        isPhotoUploaded4 = true;
+                    }
                 }
             } catch (Exception ex) {
                 isPhotoUploaded4 = false;
@@ -293,10 +309,14 @@ public class AdminAddProductActivity extends AppCompatActivity implements View.O
                 if (data != null && data.getData() != null) {
                     String fileUrl = FileUtils.getPath(AdminAddProductActivity.this, data.getData());
                     File uploadedAadharProof = new File(fileUrl);
-                    uploadPhoto5Base64 = CommonUtil.getBase64StringFromFileObj(uploadedAadharProof);
-                    uploadPhoto5Name = uploadedAadharProof.getName();
-                    edtUploadProductPhoto5.setText(uploadPhoto5Name);
-                    isPhotoUploaded5 = true;
+                    if (uploadedAadharProof.length() > 500000) { //500000bytes == 500KB
+                        Toast.makeText(this, "File length must be less than 500KB", Toast.LENGTH_SHORT).show();
+                    } else {
+                        uploadPhoto5Base64 = CommonUtil.getBase64StringFromFileObj(uploadedAadharProof);
+                        uploadPhoto5Name = uploadedAadharProof.getName();
+                        edtUploadProductPhoto5.setText(uploadPhoto5Name);
+                        isPhotoUploaded5 = true;
+                    }
                 }
             } catch (Exception ex) {
                 isPhotoUploaded5 = false;

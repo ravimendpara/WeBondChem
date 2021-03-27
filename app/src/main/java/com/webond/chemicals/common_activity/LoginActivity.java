@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final String DEALER = "Dealer";
     private static final String CUSTOMER = "Customer";
 
-    private HashMap<String,String> userTypeHashMap = new HashMap<>();
+    private HashMap<String, String> userTypeHashMap = new HashMap<>();
 
     private Spinner spUserType;
     private SpinnerSimpleAdapter spinnerAdapterUserType;
@@ -103,13 +103,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         cvRegister.setOnClickListener(this);
         selectUserTypeArrayList.add(SELECT_USER_TYPE);
         selectUserTypeArrayList.add(ADMIN);
-        userTypeHashMap.put(ADMIN,"1");
+        userTypeHashMap.put(ADMIN, "1");
         selectUserTypeArrayList.add(DISTRIBUTOR);
-        userTypeHashMap.put(DISTRIBUTOR,"2");
+        userTypeHashMap.put(DISTRIBUTOR, "2");
         selectUserTypeArrayList.add(DEALER);
-        userTypeHashMap.put(DEALER,"3");
+        userTypeHashMap.put(DEALER, "3");
         selectUserTypeArrayList.add(CUSTOMER);
-        userTypeHashMap.put(CUSTOMER,"4");
+        userTypeHashMap.put(CUSTOMER, "4");
         spinnerAdapterUserType = new SpinnerSimpleAdapter(LoginActivity.this, selectUserTypeArrayList);
         spUserType.setAdapter(spinnerAdapterUserType);
 
@@ -198,7 +198,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             response.body().size() > 0) {
 
                         if (isFromLogin) {
-                            if (response.body().get(0).getStatus().toString().equalsIgnoreCase(userTypeHashMap.get(selectUserTypeArrayList.get(spUserType.getSelectedItemPosition())))) {
+                            if (response.body().get(0).getStatus().toString().equalsIgnoreCase(userTypeHashMap.get(selectUserTypeArrayList.get(spUserType.getSelectedItemPosition()).trim()))) {
                                 Toast.makeText(LoginActivity.this, "sended otp:- " + randomSixDigitOTP, Toast.LENGTH_LONG).show();
                                 sendOTPApiCall(false, true, edtMobileNo.getText().toString().trim(), randomSixDigitOTP);
                             } else {

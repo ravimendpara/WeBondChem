@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Give Header Name Here"
+            android:text="Registration"
             android:textColor="@color/white" />
 
     </FrameLayout>

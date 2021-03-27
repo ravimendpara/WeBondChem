@@ -31,6 +31,7 @@ public class AdminPendingDistributorFragment extends Fragment {
     private RecyclerView rvAdminPendingDistributor;
     private LinearLayout llLoading;
     private LinearLayout llNoDateFound;
+    private boolean isNeedToRefresh = false;
 
     public AdminPendingDistributorFragment() {
         // Required empty public constructor
@@ -52,6 +53,15 @@ public class AdminPendingDistributorFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isNeedToRefresh) {
+            getApproveDistributorListApiCall();
+        }
+    }
+
+
     private void initView(View view) {
         mySharedPreferences = new MySharedPreferences(context);
         rvAdminPendingDistributor = view.findViewById(R.id.rvAdminPendingDistributor);
@@ -72,6 +82,7 @@ public class AdminPendingDistributorFragment extends Fragment {
                             llLoading.setVisibility(View.GONE);
                             llNoDateFound.setVisibility(View.GONE);
                             rvAdminPendingDistributor.setVisibility(View.VISIBLE);
+                            isNeedToRefresh = true;
                             rvAdminPendingDistributor.setAdapter(new PendingDistributorListAdapter(context, response.body()));
                         } else {
                             llLoading.setVisibility(View.GONE);

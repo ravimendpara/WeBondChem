@@ -2,18 +2,14 @@ package com.webond.chemicals.distributor.fragments.dealer;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.webond.chemicals.R;
 import com.webond.chemicals.adapter.dealer.ApproveDealerListAdapter;
@@ -24,6 +20,10 @@ import com.webond.chemicals.utils.MySharedPreferences;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class DistributorApproveDealerFragment extends Fragment {
 
     private Context context;
@@ -31,6 +31,7 @@ public class DistributorApproveDealerFragment extends Fragment {
     private RecyclerView rvDistributorApproveDealer;
     private LinearLayout llLoading;
     private LinearLayout llNoDateFound;
+    private boolean isNeedToRefresh = false;
 
     public DistributorApproveDealerFragment() {
         // Required empty public constructor
@@ -50,6 +51,14 @@ public class DistributorApproveDealerFragment extends Fragment {
         initView(view);
         getApproveDealerListApiCall();
         return view;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isNeedToRefresh){
+            getApproveDealerListApiCall();
+        }
     }
 
     private void initView(View view) {
@@ -72,6 +81,7 @@ public class DistributorApproveDealerFragment extends Fragment {
                             llLoading.setVisibility(View.GONE);
                             llNoDateFound.setVisibility(View.GONE);
                             rvDistributorApproveDealer.setVisibility(View.VISIBLE);
+                            isNeedToRefresh = true;
                             rvDistributorApproveDealer.setAdapter(new ApproveDealerListAdapter(context, response.body()));
                         } else {
                             llLoading.setVisibility(View.GONE);

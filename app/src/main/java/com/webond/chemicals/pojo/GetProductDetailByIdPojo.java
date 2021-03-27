@@ -34,19 +34,34 @@ public class GetProductDetailByIdPojo {
     private String productDescription;
     @SerializedName("ProductPhoto1")
     @Expose
-    private Object productPhoto1;
+    private String productPhoto1;
     @SerializedName("ProductPhoto2")
     @Expose
-    private Object productPhoto2;
+    private String productPhoto2;
     @SerializedName("ProductPhoto3")
     @Expose
-    private Object productPhoto3;
+    private String productPhoto3;
     @SerializedName("ProductPhoto4")
     @Expose
-    private Object productPhoto4;
+    private String productPhoto4;
     @SerializedName("ProductPhoto5")
     @Expose
-    private Object productPhoto5;
+    private String productPhoto5;
+    @SerializedName("ProductPhotoName1")
+    @Expose
+    private String productPhotoName1;
+    @SerializedName("ProductPhotoName2")
+    @Expose
+    private String productPhotoName2;
+    @SerializedName("ProductPhotoName3")
+    @Expose
+    private String productPhotoName3;
+    @SerializedName("ProductPhotoName4")
+    @Expose
+    private String productPhotoName4;
+    @SerializedName("ProductPhotoName5")
+    @Expose
+    private String productPhotoName5;
 
     public Integer getProductId() {
         return productId;
@@ -120,44 +135,83 @@ public class GetProductDetailByIdPojo {
         this.productDescription = productDescription;
     }
 
-    public Object getProductPhoto1() {
+    public String getProductPhoto1() {
         return productPhoto1;
     }
 
-    public void setProductPhoto1(Object productPhoto1) {
+    public void setProductPhoto1(String productPhoto1) {
         this.productPhoto1 = productPhoto1;
     }
 
-    public Object getProductPhoto2() {
+    public String getProductPhoto2() {
         return productPhoto2;
     }
 
-    public void setProductPhoto2(Object productPhoto2) {
+    public void setProductPhoto2(String productPhoto2) {
         this.productPhoto2 = productPhoto2;
     }
 
-    public Object getProductPhoto3() {
+    public String getProductPhoto3() {
         return productPhoto3;
     }
 
-    public void setProductPhoto3(Object productPhoto3) {
+    public void setProductPhoto3(String productPhoto3) {
         this.productPhoto3 = productPhoto3;
     }
 
-    public Object getProductPhoto4() {
+    public String getProductPhoto4() {
         return productPhoto4;
     }
 
-    public void setProductPhoto4(Object productPhoto4) {
+    public void setProductPhoto4(String productPhoto4) {
         this.productPhoto4 = productPhoto4;
     }
 
-    public Object getProductPhoto5() {
+    public String getProductPhoto5() {
         return productPhoto5;
     }
 
-    public void setProductPhoto5(Object productPhoto5) {
+    public void setProductPhoto5(String productPhoto5) {
         this.productPhoto5 = productPhoto5;
     }
 
+    public String getProductPhotoName1() {
+        return productPhotoName1;
+    }
+
+    public void setProductPhotoName1(String productPhotoName1) {
+        this.productPhotoName1 = productPhotoName1;
+    }
+
+    public String getProductPhotoName2() {
+        return productPhotoName2;
+    }
+
+    public void setProductPhotoName2(String productPhotoName2) {
+        this.productPhotoName2 = productPhotoName2;
+    }
+
+    public String getProductPhotoName3() {
+        return productPhotoName3;
+    }
+
+    public void setProductPhotoName3(String productPhotoName3) {
+        this.productPhotoName3 = productPhotoName3;
+    }
+
+    public String getProductPhotoName4() {
+        return productPhotoName4;
+    }
+
+    public void setProductPhotoName4(String productPhotoName4) {
+        this.productPhotoName4 = productPhotoName4;
+    }
+
+    public String getProductPhotoName5() {
+        return productPhotoName5;
+    }
+
+    public void setProductPhotoName5(String productPhotoName5) {
+        this.productPhotoName5 = productPhotoName5;
+    }
 }

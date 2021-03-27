@@ -32,6 +32,7 @@ public class AdminPendingDealerFragment extends Fragment {
     private RecyclerView rvAdminPendingDealer;
     private LinearLayout llLoading;
     private LinearLayout llNoDateFound;
+    private boolean isNeedToRefresh = false;
 
     public AdminPendingDealerFragment() {
         // Required empty public constructor
@@ -49,13 +50,16 @@ public class AdminPendingDealerFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin_pending_dealer, container, false);
         initView(view);
+        getApproveDealerListApiCall();
         return view;
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        getApproveDealerListApiCall();
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isNeedToRefresh) {
+            getApproveDealerListApiCall();
+        }
     }
 
     private void initView(View view) {
@@ -78,6 +82,7 @@ public class AdminPendingDealerFragment extends Fragment {
                             llLoading.setVisibility(View.GONE);
                             llNoDateFound.setVisibility(View.GONE);
                             rvAdminPendingDealer.setVisibility(View.VISIBLE);
+                            isNeedToRefresh = true;
                             rvAdminPendingDealer.setAdapter(new PendingDealerListAdapter(context, response.body()));
                         } else {
                             llLoading.setVisibility(View.GONE);

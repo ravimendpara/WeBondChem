@@ -2,18 +2,14 @@ package com.webond.chemicals.distributor.fragments.customer;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.webond.chemicals.R;
 import com.webond.chemicals.adapter.customer.PendingCustomerListAdapter;
@@ -24,6 +20,10 @@ import com.webond.chemicals.utils.MySharedPreferences;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class DistributorPendingCustomerFragment extends Fragment {
 
     private Context context;
@@ -31,6 +31,7 @@ public class DistributorPendingCustomerFragment extends Fragment {
     private RecyclerView rvDistributorPendingCustomer;
     private LinearLayout llLoading;
     private LinearLayout llNoDateFound;
+    private boolean isNeedToRefresh = false;
 
     public DistributorPendingCustomerFragment() {
         // Required empty public constructor
@@ -53,7 +54,13 @@ public class DistributorPendingCustomerFragment extends Fragment {
         return view;
     }
 
-
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isNeedToRefresh){
+            getApproveCustomerListApiCall();
+        }
+    }
 
     private void initView(View view) {
         mySharedPreferences = new MySharedPreferences(context);
@@ -75,6 +82,7 @@ public class DistributorPendingCustomerFragment extends Fragment {
                             llLoading.setVisibility(View.GONE);
                             llNoDateFound.setVisibility(View.GONE);
                             rvDistributorPendingCustomer.setVisibility(View.VISIBLE);
+                            isNeedToRefresh = true;
                             rvDistributorPendingCustomer.setAdapter(new PendingCustomerListAdapter(context, response.body()));
                         } else {
                             llLoading.setVisibility(View.GONE);

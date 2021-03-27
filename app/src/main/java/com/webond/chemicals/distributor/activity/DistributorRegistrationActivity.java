@@ -322,13 +322,16 @@ public class DistributorRegistrationActivity extends AppCompatActivity implement
 
         if (requestCode == IntentConstants.REQUEST_CODE_FOR_UPLOAD_AADHAR_PROOF && resultCode == RESULT_OK) {
             try {
-
                 if (data != null && data.getData() != null) {
                     String fileUrl = FileUtils.getPath(DistributorRegistrationActivity.this, data.getData());
                     File uploadedAadharProof = new File(fileUrl);
-                    uploadedAadharProofBase64 = CommonUtil.getBase64StringFromFileObj(uploadedAadharProof);
-                    uploadedAadharProofName = uploadedAadharProof.getName();
-                    edtUploadAadharProof.setText(uploadedAadharProofName);
+                    if (uploadedAadharProof.length() > 500000) { //500000bytes == 500KB
+                        Toast.makeText(this, "File length must be less than 500KB", Toast.LENGTH_SHORT).show();
+                    } else {
+                        uploadedAadharProofBase64 = CommonUtil.getBase64StringFromFileObj(uploadedAadharProof);
+                        uploadedAadharProofName = uploadedAadharProof.getName();
+                        edtUploadAadharProof.setText(uploadedAadharProofName);
+                    }
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -338,9 +341,13 @@ public class DistributorRegistrationActivity extends AppCompatActivity implement
                 if (data != null && data.getData() != null) {
                     String fileUrl = FileUtils.getPath(DistributorRegistrationActivity.this, data.getData());
                     File uploadedPhotoFile = new File(fileUrl);
-                    uploadedPhotoBase64 = CommonUtil.getBase64StringFromFileObj(uploadedPhotoFile);
-                    uploadedPhotoName = uploadedPhotoFile.getName();
-                    edtUploadPhoto.setText(uploadedPhotoName);
+                    if (uploadedPhotoFile.length() > 500000) { //500000bytes == 500KB
+                        Toast.makeText(this, "File length must be less than 500KB", Toast.LENGTH_SHORT).show();
+                    } else {
+                        uploadedPhotoBase64 = CommonUtil.getBase64StringFromFileObj(uploadedPhotoFile);
+                        uploadedPhotoName = uploadedPhotoFile.getName();
+                        edtUploadPhoto.setText(uploadedPhotoName);
+                    }
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();

@@ -32,6 +32,7 @@ public class AdminAllDealerFragment extends Fragment {
     private RecyclerView rvAdminAllDealer;
     private LinearLayout llLoading;
     private LinearLayout llNoDateFound;
+    private boolean isNeedToRefresh = false;
 
     public AdminAllDealerFragment() {
 
@@ -49,13 +50,16 @@ public class AdminAllDealerFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin_all_dealer, container, false);
         initView(view);
+        getApproveDealerListApiCall();
         return view;
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        getApproveDealerListApiCall();
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isNeedToRefresh) {
+            getApproveDealerListApiCall();
+        }
     }
 
     private void initView(View view) {
@@ -78,6 +82,7 @@ public class AdminAllDealerFragment extends Fragment {
                             llLoading.setVisibility(View.GONE);
                             llNoDateFound.setVisibility(View.GONE);
                             rvAdminAllDealer.setVisibility(View.VISIBLE);
+                            isNeedToRefresh = true;
                             rvAdminAllDealer.setAdapter(new AllDealerListAdapter(context, response.body()));
                         } else {
                             llLoading.setVisibility(View.GONE);

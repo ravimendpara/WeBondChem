@@ -31,6 +31,7 @@ public class AdminPendingCustomerFragment extends Fragment {
     private RecyclerView rvAdminPendingCustomer;
     private LinearLayout llLoading;
     private LinearLayout llNoDateFound;
+    private boolean isNeedToRefresh = false;
 
     public AdminPendingCustomerFragment() {
         // Required empty public constructor
@@ -52,6 +53,13 @@ public class AdminPendingCustomerFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isNeedToRefresh){
+            getApproveCustomerListApiCall();
+        }
+    }
 
     private void initView(View view) {
         mySharedPreferences = new MySharedPreferences(context);
@@ -73,6 +81,7 @@ public class AdminPendingCustomerFragment extends Fragment {
                             llLoading.setVisibility(View.GONE);
                             llNoDateFound.setVisibility(View.GONE);
                             rvAdminPendingCustomer.setVisibility(View.VISIBLE);
+                            isNeedToRefresh = true;
                             rvAdminPendingCustomer.setAdapter(new PendingCustomerListAdapter(context, response.body()));
                         } else {
                             llLoading.setVisibility(View.GONE);

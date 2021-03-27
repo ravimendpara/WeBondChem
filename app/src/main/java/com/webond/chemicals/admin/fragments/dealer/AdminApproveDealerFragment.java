@@ -32,6 +32,7 @@ public class AdminApproveDealerFragment extends Fragment {
     private RecyclerView rvAdminApproveDealer;
     private LinearLayout llLoading;
     private LinearLayout llNoDateFound;
+    private boolean isNeedToRefresh = false;
 
     public AdminApproveDealerFragment() {
         // Required empty public constructor
@@ -50,13 +51,16 @@ public class AdminApproveDealerFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_admin_approve_dealer, container, false);
         initView(view);
+        getApproveDealerListApiCall();
         return view;
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        getApproveDealerListApiCall();
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isNeedToRefresh){
+            getApproveDealerListApiCall();
+        }
     }
 
     private void initView(View view) {
@@ -79,6 +83,7 @@ public class AdminApproveDealerFragment extends Fragment {
                             llLoading.setVisibility(View.GONE);
                             llNoDateFound.setVisibility(View.GONE);
                             rvAdminApproveDealer.setVisibility(View.VISIBLE);
+                            isNeedToRefresh = true;
                             rvAdminApproveDealer.setAdapter(new ApproveDealerListAdapter(context, response.body()));
                         } else {
                             llLoading.setVisibility(View.GONE);

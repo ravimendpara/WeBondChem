@@ -50,7 +50,7 @@ public class AdminProductListAdapter extends RecyclerView.Adapter<AdminProductLi
             Glide.with(context)
                     .load(getProductListPojo.getProductPhoto1())
                     .centerCrop()
-                    .placeholder(R.drawable.person_img)
+                    .placeholder(R.drawable.default_product)
                     .into(holder.imgProduct);
         }
 
@@ -62,20 +62,12 @@ public class AdminProductListAdapter extends RecyclerView.Adapter<AdminProductLi
             holder.tvProductCode.setText(getProductListPojo.getProductCode());
         }
 
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductDescription())){
+            holder.tvDescription.setText(getProductListPojo.getProductDescription()+"");
+        }
+
         if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductTotalPoint())){
-            holder.tvPoints.setText(getProductListPojo.getProductTotalPoint()+"");
-        }
-
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getDistPer())){
-            holder.tvDistPer.setText(getProductListPojo.getDistPer()+"%");
-        }
-
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getDealerPer())){
-            holder.tvDealerPer.setText(getProductListPojo.getDealerPer()+"%");
-        }
-
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getCustomerPer())){
-            holder.tvCustomerPer.setText(getProductListPojo.getCustomerPer()+"%");
+            holder.tvTotalPoints.setText(getProductListPojo.getProductTotalPoint()+"");
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductPrice())){
@@ -108,10 +100,8 @@ public class AdminProductListAdapter extends RecyclerView.Adapter<AdminProductLi
         AppCompatImageView imgProduct;
         TextViewMediumFont tvProductName;
         TextViewMediumFont tvProductCode;
-        TextViewMediumFont tvPoints;
-        TextViewMediumFont tvDistPer;
-        TextViewMediumFont tvDealerPer;
-        TextViewMediumFont tvCustomerPer;
+        TextViewMediumFont tvDescription;
+        TextViewMediumFont tvTotalPoints;
         TextViewMediumFont tvPrice;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -119,10 +109,8 @@ public class AdminProductListAdapter extends RecyclerView.Adapter<AdminProductLi
             imgProduct = itemView.findViewById(R.id.imgProduct);
             tvProductName = itemView.findViewById(R.id.tvProductName);
             tvProductCode = itemView.findViewById(R.id.tvProductCode);
-            tvPoints = itemView.findViewById(R.id.tvPoints);
-            tvDistPer = itemView.findViewById(R.id.tvDistPer);
-            tvDealerPer = itemView.findViewById(R.id.tvDealerPer);
-            tvCustomerPer = itemView.findViewById(R.id.tvCustomerPer);
+            tvTotalPoints = itemView.findViewById(R.id.tvTotalPoints);
+            tvDescription = itemView.findViewById(R.id.tvDescription);
             tvPrice = itemView.findViewById(R.id.tvPrice);
         }
     }
