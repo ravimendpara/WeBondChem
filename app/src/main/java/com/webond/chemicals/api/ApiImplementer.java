@@ -30,6 +30,9 @@ import com.webond.chemicals.pojo.GetDistributorListByTalukaIdPojo;
 import com.webond.chemicals.pojo.GetDistributorListPojo;
 import com.webond.chemicals.pojo.GetDistributorOrderListPojo;
 import com.webond.chemicals.pojo.GetDistrictListPojo;
+import com.webond.chemicals.pojo.GetLoginOrderListForCustomerPojo;
+import com.webond.chemicals.pojo.GetLoginOrderListForDealerPojo;
+import com.webond.chemicals.pojo.GetLoginOrderListForDistributorPojo;
 import com.webond.chemicals.pojo.GetProductDetailByIdPojo;
 import com.webond.chemicals.pojo.GetProductListPojo;
 import com.webond.chemicals.pojo.GetStateListPojo;
@@ -515,6 +518,31 @@ public class ApiImplementer {
     public static void getVersionInfoApiImplementer(String VersionCode,Callback<ArrayList<GetVersionInfoPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<GetVersionInfoPojo>> call = apiService.getVersionInfo(VersionCode);
+        call.enqueue(cb);
+    }
+
+    public static void getLoginOrderListForCustomerApiImplementer(String LoginType, String LoginId,
+                                                      String FilterValue,Callback<ArrayList<GetLoginOrderListForCustomerPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<GetLoginOrderListForCustomerPojo>> call = apiService.getLoginOrderListForCustomer(LoginType,
+                LoginId,FilterValue);
+        call.enqueue(cb);
+    }
+
+
+    public static void getLoginOrderListForDealerApiImplementer(String LoginType, String LoginId,
+                                                                  String FilterValue,Callback<ArrayList<GetLoginOrderListForDealerPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<GetLoginOrderListForDealerPojo>> call = apiService.getLoginOrderListForDealer(LoginType,
+                LoginId,FilterValue);
+        call.enqueue(cb);
+    }
+
+    public static void getLoginOrderListForDistributorApiImplementer(String LoginType, String LoginId,
+                                                                String FilterValue,Callback<ArrayList<GetLoginOrderListForDistributorPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<GetLoginOrderListForDistributorPojo>> call = apiService.getLoginOrderListForDistributor(LoginType,
+                LoginId,FilterValue);
         call.enqueue(cb);
     }
 

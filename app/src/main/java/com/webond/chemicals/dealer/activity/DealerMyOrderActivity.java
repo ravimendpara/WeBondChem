@@ -18,7 +18,7 @@ import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.customer.adapter.CustomerMyOrderListAdapter;
 import com.webond.chemicals.dealer.adapter.DealerMyOrderListAdapter;
 import com.webond.chemicals.pojo.GetCustomerOrderListPojo;
-import com.webond.chemicals.pojo.GetDealerOrderListPojo;
+import com.webond.chemicals.pojo.GetLoginOrderListForDealerPojo;
 import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.MySharedPreferences;
 
@@ -69,9 +69,10 @@ public class DealerMyOrderActivity extends AppCompatActivity implements View.OnC
         llLoading.setVisibility(View.VISIBLE);
         llNoDateFound.setVisibility(View.GONE);
         rvDealerMyOrder.setVisibility(View.GONE);
-        ApiImplementer.getDealerOrderApiImplementer("2", mySharedPreferences.getDealerId(), CommonUtil.FILTER_VALUE_ALL, new Callback<ArrayList<GetDealerOrderListPojo>>() {
+        ApiImplementer.getLoginOrderListForDealerApiImplementer(CommonUtil.LOGIN_TYPE_DEALER, mySharedPreferences.getDealerId(), CommonUtil.FILTER_VALUE_ALL, 
+                new Callback<ArrayList<GetLoginOrderListForDealerPojo>>() {
             @Override
-            public void onResponse(Call<ArrayList<GetDealerOrderListPojo>> call, Response<ArrayList<GetDealerOrderListPojo>> response) {
+            public void onResponse(Call<ArrayList<GetLoginOrderListForDealerPojo>> call, Response<ArrayList<GetLoginOrderListForDealerPojo>> response) {
                 try {
                     if (response.code() == 200 && response.body() != null) {
                         if (response.body().size() > 0) {
@@ -96,7 +97,7 @@ public class DealerMyOrderActivity extends AppCompatActivity implements View.OnC
             }
 
             @Override
-            public void onFailure(Call<ArrayList<GetDealerOrderListPojo>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<GetLoginOrderListForDealerPojo>> call, Throwable t) {
                 llLoading.setVisibility(View.GONE);
                 llNoDateFound.setVisibility(View.VISIBLE);
                 rvDealerMyOrder.setVisibility(View.GONE);

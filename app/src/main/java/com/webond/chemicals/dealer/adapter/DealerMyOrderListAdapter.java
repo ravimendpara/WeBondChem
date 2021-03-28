@@ -9,6 +9,7 @@ import com.webond.chemicals.R;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.distributor.adapter.DistributorAllDealerOrderAdapter;
 import com.webond.chemicals.pojo.GetDealerOrderListPojo;
+import com.webond.chemicals.pojo.GetLoginOrderListForDealerPojo;
 import com.webond.chemicals.utils.CommonUtil;
 
 import java.util.ArrayList;
@@ -19,10 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 public class DealerMyOrderListAdapter extends RecyclerView.Adapter<DealerMyOrderListAdapter.MyViewHolder>{
 
     private Context context;
-    private ArrayList<GetDealerOrderListPojo> getDealerOrderListPojoArrayList;
+    private ArrayList<GetLoginOrderListForDealerPojo> getDealerOrderListPojoArrayList;
     private LayoutInflater layoutInflater;
 
-    public DealerMyOrderListAdapter(Context context, ArrayList<GetDealerOrderListPojo> getDealerOrderListPojoArrayList) {
+    public DealerMyOrderListAdapter(Context context, ArrayList<GetLoginOrderListForDealerPojo> getDealerOrderListPojoArrayList) {
         this.context = context;
         this.getDealerOrderListPojoArrayList = getDealerOrderListPojoArrayList;
         layoutInflater = LayoutInflater.from(context);
@@ -37,7 +38,7 @@ public class DealerMyOrderListAdapter extends RecyclerView.Adapter<DealerMyOrder
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        GetDealerOrderListPojo getDealerOrderListPojo = getDealerOrderListPojoArrayList.get(position);
+        GetLoginOrderListForDealerPojo getDealerOrderListPojo = getDealerOrderListPojoArrayList.get(position);
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getDealerOrderListPojo.getDealerName())) {
             holder.tvDealerName.setText(getDealerOrderListPojo.getDealerName());

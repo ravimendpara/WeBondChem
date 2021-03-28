@@ -18,6 +18,7 @@ import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.customer.adapter.CustomerMyOrderListAdapter;
 import com.webond.chemicals.dealer.adapter.DealerCustomerAllOrderAdapter;
 import com.webond.chemicals.pojo.GetCustomerOrderListPojo;
+import com.webond.chemicals.pojo.GetLoginOrderListForCustomerPojo;
 import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.MySharedPreferences;
 
@@ -67,9 +68,9 @@ public class CustomerMyOrdersActivity extends AppCompatActivity implements View.
         llLoading.setVisibility(View.VISIBLE);
         llNoDateFound.setVisibility(View.GONE);
         rvCustomerMyOrder.setVisibility(View.GONE);
-        ApiImplementer.getCustomerOrderApiImplementer("3", mySharedPreferences.getCustomerId(), CommonUtil.FILTER_VALUE_ALL, new Callback<ArrayList<GetCustomerOrderListPojo>>() {
+        ApiImplementer.getLoginOrderListForCustomerApiImplementer(CommonUtil.LOGIN_TYPE_CUSTOMER, mySharedPreferences.getCustomerId(), CommonUtil.FILTER_VALUE_ALL, new Callback<ArrayList<GetLoginOrderListForCustomerPojo>>() {
             @Override
-            public void onResponse(Call<ArrayList<GetCustomerOrderListPojo>> call, Response<ArrayList<GetCustomerOrderListPojo>> response) {
+            public void onResponse(Call<ArrayList<GetLoginOrderListForCustomerPojo>> call, Response<ArrayList<GetLoginOrderListForCustomerPojo>> response) {
                 try {
                     if (response.code() == 200 && response.body() != null) {
                         if (response.body().size() > 0) {
@@ -94,7 +95,7 @@ public class CustomerMyOrdersActivity extends AppCompatActivity implements View.
             }
 
             @Override
-            public void onFailure(Call<ArrayList<GetCustomerOrderListPojo>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<GetLoginOrderListForCustomerPojo>> call, Throwable t) {
                 llLoading.setVisibility(View.GONE);
                 llNoDateFound.setVisibility(View.VISIBLE);
                 rvCustomerMyOrder.setVisibility(View.GONE);

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.webond.chemicals.R;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.pojo.GetCustomerOrderListPojo;
+import com.webond.chemicals.pojo.GetLoginOrderListForCustomerPojo;
 import com.webond.chemicals.utils.CommonUtil;
 
 import java.util.ArrayList;
@@ -18,10 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 public class CustomerMyOrderListAdapter extends RecyclerView.Adapter<CustomerMyOrderListAdapter.MyViewHolder>{
 
     private Context context;
-    private ArrayList<GetCustomerOrderListPojo> getCustomerOrderListPojoArrayList;
+    private ArrayList<GetLoginOrderListForCustomerPojo> getCustomerOrderListPojoArrayList;
     private LayoutInflater layoutInflater;
 
-    public CustomerMyOrderListAdapter(Context context, ArrayList<GetCustomerOrderListPojo> getCustomerOrderListPojoArrayList) {
+    public CustomerMyOrderListAdapter(Context context, ArrayList<GetLoginOrderListForCustomerPojo> getCustomerOrderListPojoArrayList) {
         this.context = context;
         this.getCustomerOrderListPojoArrayList = getCustomerOrderListPojoArrayList;
         layoutInflater = LayoutInflater.from(context);
@@ -36,7 +37,7 @@ public class CustomerMyOrderListAdapter extends RecyclerView.Adapter<CustomerMyO
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        GetCustomerOrderListPojo getCustomerOrderListPojo = getCustomerOrderListPojoArrayList.get(position);
+        GetLoginOrderListForCustomerPojo getCustomerOrderListPojo = getCustomerOrderListPojoArrayList.get(position);
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getCustomerOrderListPojo.getCustomerName())) {
             holder.tvCustomerName.setText(getCustomerOrderListPojo.getCustomerName());

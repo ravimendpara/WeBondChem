@@ -30,6 +30,9 @@ import com.webond.chemicals.pojo.GetDistributorListByTalukaIdPojo;
 import com.webond.chemicals.pojo.GetDistributorListPojo;
 import com.webond.chemicals.pojo.GetDistributorOrderListPojo;
 import com.webond.chemicals.pojo.GetDistrictListPojo;
+import com.webond.chemicals.pojo.GetLoginOrderListForCustomerPojo;
+import com.webond.chemicals.pojo.GetLoginOrderListForDealerPojo;
+import com.webond.chemicals.pojo.GetLoginOrderListForDistributorPojo;
 import com.webond.chemicals.pojo.GetProductDetailByIdPojo;
 import com.webond.chemicals.pojo.GetProductListPojo;
 import com.webond.chemicals.pojo.GetStateListPojo;
@@ -312,5 +315,21 @@ public interface IApiInterface {
 
     @GET("GetVersionInfo")
     Call<ArrayList<GetVersionInfoPojo>> getVersionInfo(@Query("VersionCode") String VersionCode);
+
+    @GET("GetLoginOrderList")
+    Call<ArrayList<GetLoginOrderListForCustomerPojo>> getLoginOrderListForCustomer(@Query("LoginType") String LoginType,
+                                                                                   @Query("LoginId") String LoginId,
+                                                                                   @Query("FilterValue") String FilterValue);
+
+    @GET("GetLoginOrderList")
+    Call<ArrayList<GetLoginOrderListForDealerPojo>> getLoginOrderListForDealer(@Query("LoginType") String LoginType,
+                                                                               @Query("LoginId") String LoginId,
+                                                                               @Query("FilterValue") String FilterValue);
+
+    @GET("GetLoginOrderList")
+    Call<ArrayList<GetLoginOrderListForDistributorPojo>> getLoginOrderListForDistributor(@Query("LoginType") String LoginType,
+                                                                                         @Query("LoginId") String LoginId,
+                                                                                         @Query("FilterValue") String FilterValue);
+
 
 }
