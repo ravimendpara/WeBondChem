@@ -34,6 +34,7 @@ import com.webond.chemicals.pojo.GetProductDetailByIdPojo;
 import com.webond.chemicals.pojo.GetProductListPojo;
 import com.webond.chemicals.pojo.GetStateListPojo;
 import com.webond.chemicals.pojo.GetTalukaListPojo;
+import com.webond.chemicals.pojo.GetVersionInfoPojo;
 import com.webond.chemicals.pojo.SendOtpPojo;
 import com.webond.chemicals.pojo.UpdateProductPojo;
 
@@ -309,5 +310,7 @@ public interface IApiInterface {
                                                                @Query("LoginId") String LoginId,
                                                                @Query("FilterValue") String FilterValue);
 
+    @GET("GetVersionInfo")
+    Call<ArrayList<GetVersionInfoPojo>> getVersionInfo(@Query("VersionCode") String VersionCode);
 
 }

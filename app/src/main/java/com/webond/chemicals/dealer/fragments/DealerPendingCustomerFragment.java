@@ -50,7 +50,7 @@ public class DealerPendingCustomerFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dealer_pending_customer, container, false);
         initView(view);
-        getApproveCustomerListApiCall();
+        getPendingCustomerListApiCall();
         return view;
     }
 
@@ -58,7 +58,7 @@ public class DealerPendingCustomerFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isNeedToRefresh) {
-            getApproveCustomerListApiCall();
+            getPendingCustomerListApiCall();
         }
     }
 
@@ -69,7 +69,7 @@ public class DealerPendingCustomerFragment extends Fragment {
         llNoDateFound = view.findViewById(R.id.llNoDateFound);
     }
 
-    private void getApproveCustomerListApiCall() {
+    private void getPendingCustomerListApiCall() {
         llLoading.setVisibility(View.VISIBLE);
         llNoDateFound.setVisibility(View.GONE);
         rvDealerPendingCustomer.setVisibility(View.GONE);

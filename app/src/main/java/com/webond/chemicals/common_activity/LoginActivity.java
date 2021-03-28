@@ -198,7 +198,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             response.body().size() > 0) {
 
                         if (isFromLogin) {
-                            if (response.body().get(0).getStatus().toString().equalsIgnoreCase(userTypeHashMap.get(selectUserTypeArrayList.get(spUserType.getSelectedItemPosition()).trim()))) {
+                            if (response.body().get(0).getStatus().toString().equalsIgnoreCase(userTypeHashMap.get(selectUserTypeArrayList.get(spUserType.getSelectedItemPosition()).trim())) &&
+                                    response.body().get(0).getApproveStatus() == 1) {
                                 Toast.makeText(LoginActivity.this, "sended otp:- " + randomSixDigitOTP, Toast.LENGTH_LONG).show();
                                 sendOTPApiCall(false, true, edtMobileNo.getText().toString().trim(), randomSixDigitOTP);
                             } else {

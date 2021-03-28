@@ -34,6 +34,7 @@ import com.webond.chemicals.pojo.GetProductDetailByIdPojo;
 import com.webond.chemicals.pojo.GetProductListPojo;
 import com.webond.chemicals.pojo.GetStateListPojo;
 import com.webond.chemicals.pojo.GetTalukaListPojo;
+import com.webond.chemicals.pojo.GetVersionInfoPojo;
 import com.webond.chemicals.pojo.SendOtpPojo;
 import com.webond.chemicals.pojo.UpdateProductPojo;
 
@@ -507,6 +508,13 @@ public class ApiImplementer {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<GetCustomerOrderListPojo>> call = apiService.getCustomerOrder(LoginType,
                 LoginId,FilterValue);
+        call.enqueue(cb);
+    }
+
+
+    public static void getVersionInfoApiImplementer(String VersionCode,Callback<ArrayList<GetVersionInfoPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<GetVersionInfoPojo>> call = apiService.getVersionInfo(VersionCode);
         call.enqueue(cb);
     }
 

@@ -48,7 +48,7 @@ public class DealerAllCustomerFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dealer_all_customer, container, false);
         initView(view);
-        getApproveCustomerListApiCall();
+        getAllCustomerListApiCall();
         return view;
     }
 
@@ -56,7 +56,7 @@ public class DealerAllCustomerFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isNeedToRefresh){
-            getApproveCustomerListApiCall();
+            getAllCustomerListApiCall();
         }
     }
 
@@ -67,7 +67,7 @@ public class DealerAllCustomerFragment extends Fragment {
         llNoDateFound = view.findViewById(R.id.llNoDateFound);
     }
 
-    private void getApproveCustomerListApiCall() {
+    private void getAllCustomerListApiCall() {
         llLoading.setVisibility(View.VISIBLE);
         llNoDateFound.setVisibility(View.GONE);
         rvDealerAllCustomer.setVisibility(View.GONE);

@@ -51,7 +51,7 @@ public class DistributorPendingDealerFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_distributor_pending_dealer, container, false);
         initView(view);
-        getApproveDealerListApiCall();
+        getPendingDealerListApiCall();
         return view;
     }
 
@@ -59,7 +59,7 @@ public class DistributorPendingDealerFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isNeedToRefresh){
-            getApproveDealerListApiCall();
+            getPendingDealerListApiCall();
         }
     }
 
@@ -70,7 +70,7 @@ public class DistributorPendingDealerFragment extends Fragment {
         llNoDateFound = view.findViewById(R.id.llNoDateFound);
     }
 
-    private void getApproveDealerListApiCall() {
+    private void getPendingDealerListApiCall() {
         llLoading.setVisibility(View.VISIBLE);
         llNoDateFound.setVisibility(View.GONE);
         rvDistributorPendingDealer.setVisibility(View.GONE);
