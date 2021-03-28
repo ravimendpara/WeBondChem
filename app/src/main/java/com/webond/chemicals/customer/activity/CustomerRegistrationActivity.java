@@ -1,4 +1,4 @@
-package com.webond.chemicals.customer;
+package com.webond.chemicals.customer.activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;

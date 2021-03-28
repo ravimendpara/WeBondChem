@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+    tools:context=".distributor.fragments.manage_dealer_order.DistributorAllDealerOrderFragment">
+
+
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/rvDistributorAllDealerOrder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    android:visibility="gone"
+    android:layoutAnimation="@anim/layout_animation_from_bottom_for_list"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+<include
+    android:visibility="visible"
+    android:id="@+id/llLoading"
+    layout="@layout/loading_layout" />
+
+<include
+    android:visibility="gone"
+    android:id="@+id/llNoDateFound"
+    layout="@layout/layout_no_data_found" />
+
+
+</LinearLayout>

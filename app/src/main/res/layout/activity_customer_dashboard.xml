@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".customer.CustomerDashboardActivity">
+    tools:context=".customer.activity.CustomerDashboardActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -211,6 +211,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvAddOrder"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -221,7 +222,7 @@
                     android:layout_weight="1"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="8dp"
                     app:contentPadding="18dp">
@@ -242,7 +243,7 @@
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_shop"
+                                android:src="@drawable/ic_add_order"
                                 android:tint="@color/white" />
 
                         </LinearLayout>
@@ -251,7 +252,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Product List"
+                            android:text="Add Order"
                             android:textColor="@color/darker_grey_color"
                             android:textSize="@dimen/dashboard_text_size" />
 

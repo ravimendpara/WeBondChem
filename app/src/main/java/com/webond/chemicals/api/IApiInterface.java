@@ -1,6 +1,7 @@
 package com.webond.chemicals.api;
 
 
+import com.webond.chemicals.pojo.AddCustomerOrderDataPojo;
 import com.webond.chemicals.pojo.AddCustomerPojo;
 import com.webond.chemicals.pojo.AddDealerOrderDataPojo;
 import com.webond.chemicals.pojo.AddDealerPojo;
@@ -10,18 +11,24 @@ import com.webond.chemicals.pojo.AddProductPojo;
 import com.webond.chemicals.pojo.ApproveCustomerPojo;
 import com.webond.chemicals.pojo.ApproveDealerPojo;
 import com.webond.chemicals.pojo.ApproveDistributorPojo;
+import com.webond.chemicals.pojo.ApproveOrderPojo;
 import com.webond.chemicals.pojo.CheckMobileNoExitstOrNoPojo;
 import com.webond.chemicals.pojo.GetBannerListPojo;
 import com.webond.chemicals.pojo.GetCityListPojo;
 import com.webond.chemicals.pojo.GetCustomerListPojo;
+import com.webond.chemicals.pojo.GetCustomerOrderListPojo;
 import com.webond.chemicals.pojo.GetDealerListByCityIdPojo;
+import com.webond.chemicals.pojo.GetDealerListByTalukaIdPojo;
 import com.webond.chemicals.pojo.GetDealerListPojo;
+import com.webond.chemicals.pojo.GetDealerOrderListPojo;
 import com.webond.chemicals.pojo.GetDetailForLoginUserAdminPojo;
 import com.webond.chemicals.pojo.GetDetailsForLoginUserCustomerPojo;
 import com.webond.chemicals.pojo.GetDetailsForLoginUserDealerPojo;
 import com.webond.chemicals.pojo.GetDetailsForLoginUserDistributorPojo;
 import com.webond.chemicals.pojo.GetDistributorListByCityIdPojo;
+import com.webond.chemicals.pojo.GetDistributorListByTalukaIdPojo;
 import com.webond.chemicals.pojo.GetDistributorListPojo;
+import com.webond.chemicals.pojo.GetDistributorOrderListPojo;
 import com.webond.chemicals.pojo.GetDistrictListPojo;
 import com.webond.chemicals.pojo.GetProductDetailByIdPojo;
 import com.webond.chemicals.pojo.GetProductListPojo;
@@ -62,6 +69,21 @@ public interface IApiInterface {
             @Field("OrderDate") String OrderDate,
             @Field("DealerId") String DealerId,
             @Field("DealerDistributorId") String DealerDistributorId,
+            @Field("ContactPersonDetail") String ContactPersonDetail,
+            @Field("SiteAddress") String SiteAddress,
+            @Field("ContactNo") String ContactNo,
+            @Field("PinCode") String PinCode,
+            @Field("DistrictId") String DistrictId,
+            @Field("TalukaId") String TalukaId,
+            @Field("ProductList") String ProductList
+    );
+
+    @FormUrlEncoded
+    @POST("AddCustomerOrderData")
+    Call<ArrayList<AddCustomerOrderDataPojo>> addCustomerOrderData(
+            @Field("OrderDate") String OrderDate,
+            @Field("CustomerId") String CustomerId,
+            @Field("CustomerDealerId") String CustomerDealerId,
             @Field("ContactPersonDetail") String ContactPersonDetail,
             @Field("SiteAddress") String SiteAddress,
             @Field("ContactNo") String ContactNo,
@@ -260,4 +282,32 @@ public interface IApiInterface {
 
     @GET("GetProductDetailById")
     Call<ArrayList<GetProductDetailByIdPojo>> getProductDetailsById(@Query("ProductId") String ProductId);
+
+
+    @GET("GetDealerListByTalukaId")
+    Call<ArrayList<GetDealerListByTalukaIdPojo>> getDealerListByTalukaId(@Query("TalukaId") String TalukaId);
+
+    @GET("GetDistributorListByTalukaId")
+    Call<ArrayList<GetDistributorListByTalukaIdPojo>> getDistributorListByTalukaId(@Query("TalukaId") String TalukaId);
+
+    @GET("ApproveOrder")
+    Call<ArrayList<ApproveOrderPojo>> approveOrder(@Query("OrderId") String OrderId,
+                                                   @Query("Status") String Status);
+
+    @GET("GetOrderList")
+    Call<ArrayList<GetDistributorOrderListPojo>> getDistributorsOrder(@Query("LoginType") String LoginType,
+                                                                      @Query("LoginId") String LoginId,
+                                                                      @Query("FilterValue") String FilterValue);
+
+    @GET("GetOrderList")
+    Call<ArrayList<GetDealerOrderListPojo>> getDealerOrder(@Query("LoginType") String LoginType,
+                                                           @Query("LoginId") String LoginId,
+                                                           @Query("FilterValue") String FilterValue);
+
+    @GET("GetOrderList")
+    Call<ArrayList<GetCustomerOrderListPojo>> getCustomerOrder(@Query("LoginType") String LoginType,
+                                                               @Query("LoginId") String LoginId,
+                                                               @Query("FilterValue") String FilterValue);
+
+
 }

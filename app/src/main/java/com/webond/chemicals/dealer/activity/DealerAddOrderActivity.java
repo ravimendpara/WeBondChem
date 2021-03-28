@@ -14,12 +14,17 @@ import retrofit2.Response;
 
 import com.webond.chemicals.R;
 import com.webond.chemicals.api.ApiImplementer;
+import com.webond.chemicals.custom_class.SpinnerSimpleAdapter;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
+import com.webond.chemicals.dealer.adapter.DealerAddOrderAdapter;
 import com.webond.chemicals.distributor.adapter.DistributorAddOrderAdapter;
+import com.webond.chemicals.pojo.GetDistributorListByCityIdPojo;
+import com.webond.chemicals.pojo.GetDistributorListByTalukaIdPojo;
 import com.webond.chemicals.pojo.GetDistrictListPojo;
 import com.webond.chemicals.pojo.GetProductListPojo;
 import com.webond.chemicals.pojo.GetTalukaListPojo;
 import com.webond.chemicals.utils.CommonUtil;
+import com.webond.chemicals.utils.DialogUtil;
 import com.webond.chemicals.utils.MySharedPreferences;
 
 import java.util.ArrayList;
@@ -29,6 +34,7 @@ public class DealerAddOrderActivity extends AppCompatActivity implements View.On
 
     public static final String SELECT_DISTRICT = "Select District";
     public static final String SELECT_TALUKA = "Select Taluka";
+    public static final String SELECT_DISTRIBUTOR = "Select Distributor";
 
     private MySharedPreferences mySharedPreferences;
     private RecyclerView rvProductList;
@@ -41,6 +47,8 @@ public class DealerAddOrderActivity extends AppCompatActivity implements View.On
     private HashMap<String,String> districtHashMap;
     private ArrayList<String> talukaArrayList;
     private HashMap<String,String> talukaHashMap;
+    private ArrayList<String> distributorArrayList;
+    private HashMap<String,String> distributorHashMap;
 
 
 
@@ -76,8 +84,9 @@ public class DealerAddOrderActivity extends AppCompatActivity implements View.On
                             llLoading.setVisibility(View.GONE);
                             llNoDateFound.setVisibility(View.GONE);
                             rvProductList.setVisibility(View.VISIBLE);
-                            rvProductList.setAdapter(new DistributorAddOrderAdapter(DealerAddOrderActivity.this,
-                                    response.body(),districtArrayList,districtHashMap,talukaArrayList,talukaHashMap));
+                            rvProductList.setAdapter(new DealerAddOrderAdapter(DealerAddOrderActivity.this,
+                                    response.body(),districtArrayList,districtHashMap,talukaArrayList,talukaHashMap,
+                                    distributorArrayList,distributorHashMap));
                         } else {
                             llLoading.setVisibility(View.GONE);
                             llNoDateFound.setVisibility(View.VISIBLE);
@@ -179,7 +188,7 @@ public class DealerAddOrderActivity extends AppCompatActivity implements View.On
                                     talukaHashMap.put(districtName, getTalukaListPojoArrayList.get(i).getTalukaId().toString());
                                 }
                             }
-                            getProductListApiCall();
+                            getDistributorApiCall();
                         } else {
                             getProductListApiCall();
                             talukaArrayList = new ArrayList<>();
@@ -205,6 +214,47 @@ public class DealerAddOrderActivity extends AppCompatActivity implements View.On
         });
     }
 
+    private void getDistributorApiCall() {
+        ApiImplementer.getDistributorListByTalukaIdApiImplementer("0", new Callback<ArrayList<GetDistributorListByTalukaIdPojo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<GetDistributorListByTalukaIdPojo>> call, Response<ArrayList<GetDistributorListByTalukaIdPojo>> response) {
+                try {
+                    if (response.code() == 200 && response.body() != null) {
+                        if (response.body().size() > 0) {
+                            ArrayList<GetDistributorListByTalukaIdPojo> getDistributorListByCityIdPojoArrayList = response.body();
+                            distributorArrayList = new ArrayList<>();
+                            distributorArrayList.add(SELECT_DISTRIBUTOR);
+                            distributorHashMap = new HashMap<>();
+                            for (int i = 0; i < getDistributorListByCityIdPojoArrayList.size(); i++) {
+                                if (!CommonUtil.checkIsEmptyOrNullCommon(getDistributorListByCityIdPojoArrayList.get(i).getDistributorName())) {
+                                    String distributorName = getDistributorListByCityIdPojoArrayList.get(i).getDistributorName().trim();
+                                    distributorArrayList.add(distributorName);
+                                    distributorHashMap.put(distributorName, getDistributorListByCityIdPojoArrayList.get(i).getDistributorId().toString());
+                                }
+                            }
+                            getProductListApiCall();
+                        } else {
+                            distributorArrayList = new ArrayList<>();
+                            distributorArrayList.add(SELECT_DISTRIBUTOR);
+                            distributorHashMap = new HashMap<>();
+                            getProductListApiCall();
+                            Toast.makeText(DealerAddOrderActivity.this, "Distributors Not Found!", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        getProductListApiCall();
+                        Toast.makeText(DealerAddOrderActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<ArrayList<GetDistributorListByTalukaIdPojo>> call, Throwable t) {
+                DialogUtil.hideProgressDialog();
+                Toast.makeText(DealerAddOrderActivity.this, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 }

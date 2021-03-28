@@ -21,7 +21,6 @@ import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.custom_class.SpinnerSimpleAdapter;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
-import com.webond.chemicals.customer.CustomerRegistrationActivity;
 import com.webond.chemicals.distributor.activity.DistributorAddOrderActivity;
 import com.webond.chemicals.pojo.AddDistributorOrderDataPojo;
 import com.webond.chemicals.pojo.GetProductListPojo;
@@ -99,8 +98,8 @@ public class DistributorAddOrderAdapter extends RecyclerView.Adapter<Distributor
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         GetProductListPojo getProductListPojo = getProductListPojoArrayList.get(position);
 
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductTotalPoint())) {
-            holder.tvTotalPoint.setText(getProductListPojo.getProductTotalPoint() + "");
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getDistributorPoint())) {
+            holder.tvTotalPoint.setText(((int)Double.parseDouble(getProductListPojo.getDistributorPoint().toString()))+"");
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductName())) {
@@ -111,8 +110,8 @@ public class DistributorAddOrderAdapter extends RecyclerView.Adapter<Distributor
             holder.tvProductPrice.setText(" " + context.getString(R.string.rupee_symbol) + getProductListPojo.getProductPrice() + "");
         }
 
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductTotalPoint())) {
-            holder.tvProductPoint.setText(getProductListPojo.getProductTotalPoint() + "");
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getDistributorPoint())) {
+            holder.tvProductPoint.setText(((int)Double.parseDouble(getProductListPojo.getDistributorPoint().toString()))+"");
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductPhoto1())) {
@@ -185,15 +184,13 @@ public class DistributorAddOrderAdapter extends RecyclerView.Adapter<Distributor
                             Integer.parseInt(holder.etQty.getText().toString()) > 0) {
                         if (Integer.parseInt(holder.etQty.getText().toString()) <= MAX_ORDER_QUANTITY) {
                             int points = calculatePoints(
-                                    Integer.parseInt(holder.etQty.getText().toString()),
-                                    Integer.parseInt(getProductListPojo.getProductTotalPoint().toString()),
+                                    (int)Double.parseDouble(getProductListPojo.getDistributorPoint().toString()),
                                     Integer.parseInt(holder.etQty.getText().toString()));
                             holder.tvTotalPoint.setText(String.valueOf(points));
                         } else {
                             holder.etQty.setText(String.valueOf(MAX_ORDER_QUANTITY));
                             int points = calculatePoints(
-                                    Integer.parseInt(holder.etQty.getText().toString()),
-                                    Integer.parseInt(getProductListPojo.getProductTotalPoint().toString()),
+                                    (int)Double.parseDouble(getProductListPojo.getDistributorPoint().toString()),
                                     MAX_ORDER_QUANTITY);
                             holder.tvTotalPoint.setText(String.valueOf(points));
                             Toast.makeText(context, "You can not enter more than " + MAX_ORDER_QUANTITY + " quantity", Toast.LENGTH_SHORT).show();
@@ -201,7 +198,7 @@ public class DistributorAddOrderAdapter extends RecyclerView.Adapter<Distributor
                     } else {
                         holder.etQty.setText("1");
                         if (!CommonUtil.checkIsEmptyOrNullCommon(holder.etQty.getText().toString())) {
-                            int pointPerQuantity = Integer.parseInt(getProductListPojo.getProductTotalPoint().toString()) / Integer.parseInt(holder.etQty.getText().toString());
+                            int pointPerQuantity = (int)Double.parseDouble(getProductListPojo.getDistributorPoint().toString()) / Integer.parseInt(holder.etQty.getText().toString());
                             holder.tvTotalPoint.setText(String.valueOf(pointPerQuantity));
                         }
                     }
@@ -230,13 +227,13 @@ public class DistributorAddOrderAdapter extends RecyclerView.Adapter<Distributor
         return getProductListPojoArrayList.size();
     }
 
-    private int calculatePoints(int initQty, int initPoints, int newQty) {
+    private int calculatePoints(int initPoints, int newQty) {
 
-        if (initQty > 0) {
-            return newQty * initPoints / initQty;
+        if (newQty > 0) {
+            return newQty * initPoints;
         }
 
-        return 0;
+        return initPoints;
     }
 
     void addQuantity(int addBy, AppCompatEditText etQty) {
@@ -500,7 +497,11 @@ public class DistributorAddOrderAdapter extends RecyclerView.Adapter<Distributor
                                 }
                                 Toast.makeText(context, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(context, "Something went,Wrong Please try again later.", Toast.LENGTH_SHORT).show();
+                                if (!CommonUtil.checkIsEmptyOrNullCommon(response.body().get(0).getMsg())) {
+                                    Toast.makeText(context, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         } catch (Exception ex) {
                             ex.printStackTrace();

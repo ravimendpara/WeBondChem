@@ -1,4 +1,4 @@
-package com.webond.chemicals.customer;
+package com.webond.chemicals.customer.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,6 +33,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements View
     private MaterialCardView cvProfile;
     private MaterialCardView cvProductList;
     private MaterialCardView cvManageOrder;
+    private MaterialCardView cvAddOrder;
     private Animation animation;
     RecyclerViewPager recyclerViewPagerStudentSideBanner;
 
@@ -53,6 +54,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements View
         cvProductList.setOnClickListener(this);
         cvManageOrder = findViewById(R.id.cvManageOrder);
         cvManageOrder.setOnClickListener(this);
+        cvAddOrder = findViewById(R.id.cvAddOrder);
+        cvAddOrder.setOnClickListener(this);
     }
 
     @Override
@@ -81,6 +84,16 @@ public class CustomerDashboardActivity extends AppCompatActivity implements View
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                }
+            }, 400);
+        } else if (v.getId() == R.id.cvAddOrder) {
+            animation = AnimationUtils.loadAnimation(CustomerDashboardActivity.this, R.anim.bounce);
+            cvAddOrder.startAnimation(animation);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(CustomerDashboardActivity.this, CustomerAddOrderActivity.class);
+                    startActivity(intent);
                 }
             }, 400);
         }

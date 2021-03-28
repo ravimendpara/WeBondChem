@@ -33,7 +33,7 @@ public class DistributorDashboardActivity extends AppCompatActivity implements V
     private MaterialCardView cvProfile;
     private MaterialCardView cvManageDealer;
     private MaterialCardView cvManageCustomer;
-    private MaterialCardView cvManageOrder;
+    private MaterialCardView cvManageDealerOrder;
     private MaterialCardView cvAddOrder;
     private Animation animation;
     RecyclerViewPager recyclerViewPagerStudentSideBanner;
@@ -56,8 +56,8 @@ public class DistributorDashboardActivity extends AppCompatActivity implements V
         cvManageDealer.setOnClickListener(this);
         cvManageCustomer = findViewById(R.id.cvManageCustomer);
         cvManageCustomer.setOnClickListener(this);
-        cvManageOrder = findViewById(R.id.cvManageOrder);
-        cvManageOrder.setOnClickListener(this);
+        cvManageDealerOrder = findViewById(R.id.cvManageDealerOrder);
+        cvManageDealerOrder.setOnClickListener(this);
         cvAddOrder = findViewById(R.id.cvAddOrder);
         cvAddOrder.setOnClickListener(this);
     }
@@ -94,13 +94,14 @@ public class DistributorDashboardActivity extends AppCompatActivity implements V
                     startActivity(intent);
                 }
             }, 400);
-        } else if (v.getId() == R.id.cvManageOrder) {
+        } else if (v.getId() == R.id.cvManageDealerOrder) {
             animation = AnimationUtils.loadAnimation(DistributorDashboardActivity.this, R.anim.bounce);
-            cvManageOrder.startAnimation(animation);
+            cvManageDealerOrder.startAnimation(animation);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-
+                    Intent intent = new Intent(DistributorDashboardActivity.this, DistributorManageDealerOrderActivity.class);
+                    startActivity(intent);
                 }
             }, 400);
         } else if (v.getId() == R.id.cvAddOrder) {

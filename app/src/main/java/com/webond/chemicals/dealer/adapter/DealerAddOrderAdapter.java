@@ -10,14 +10,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import com.webond.chemicals.R;
 import com.webond.chemicals.api.ApiImplementer;
+import com.webond.chemicals.custom_class.SpinnerSimpleAdapter;
+import com.webond.chemicals.custom_class.TextViewMediumFont;
+import com.webond.chemicals.custom_class.TextViewRegularFont;
+import com.webond.chemicals.dealer.activity.DealerRegistrationActivity;
 import com.webond.chemicals.distributor.adapter.DistributorAddOrderAdapter;
+import com.webond.chemicals.pojo.AddDealerOrderDataPojo;
 import com.webond.chemicals.pojo.AddDistributorOrderDataPojo;
+import com.webond.chemicals.pojo.GetDealerListByTalukaIdPojo;
+import com.webond.chemicals.pojo.GetDistributorListByCityIdPojo;
+import com.webond.chemicals.pojo.GetDistributorListByTalukaIdPojo;
 import com.webond.chemicals.pojo.GetProductListPojo;
 import com.webond.chemicals.pojo.GetTalukaListPojo;
 import com.webond.chemicals.utils.CommonUtil;
@@ -38,16 +48,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAdapter.MyViewHolder>{
+public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAdapter.MyViewHolder> {
 
     public static final String SELECT_DISTRICT = "Select District";
     public static final String SELECT_TALUKA = "Select Taluka";
+    public static final String SELECT_DISTRIBUTOR = "Select Distributor";
     private Context context;
     private ArrayList<GetProductListPojo> getProductListPojoArrayList;
     private LayoutInflater layoutInflater;
@@ -58,19 +70,23 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
     private HashMap<String, String> districtHashMap;
     private ArrayList<String> talukaArrayList;
     private HashMap<String, String> talukaHashMap;
+    private ArrayList<String> distributorArrayList;
+    private HashMap<String, String> distributorHashMap;
 
     AppCompatEditText etContactPersonAtSite,
             etSiteAddress, etContactNo, etPinCode;
-    SearchableSpinner spDistrict, spTaluka;
+    SearchableSpinner spDistrict, spTaluka, spDistributor;
     AppCompatButton btnSubmit;
     AlertDialog orderDialog;
     private Calendar myCalendar = Calendar.getInstance();
 
     public DealerAddOrderAdapter(Context context, ArrayList<GetProductListPojo> getProductListPojoArrayList,
-                                      ArrayList<String> districtArrayList,
-                                      HashMap<String, String> districtHashMap,
-                                      ArrayList<String> talukaArrayList,
-                                      HashMap<String, String> talukaHashMap) {
+                                 ArrayList<String> districtArrayList,
+                                 HashMap<String, String> districtHashMap,
+                                 ArrayList<String> talukaArrayList,
+                                 HashMap<String, String> talukaHashMap,
+                                 ArrayList<String> distributorArrayList,
+                                 HashMap<String, String> distributorHashMap) {
         this.context = context;
         this.getProductListPojoArrayList = getProductListPojoArrayList;
         layoutInflater = LayoutInflater.from(context);
@@ -79,6 +95,8 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
         this.districtHashMap = districtHashMap;
         this.talukaArrayList = talukaArrayList;
         this.talukaHashMap = talukaHashMap;
+        this.distributorArrayList = distributorArrayList;
+        this.distributorHashMap = distributorHashMap;
     }
 
     @NonNull
@@ -92,8 +110,8 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         GetProductListPojo getProductListPojo = getProductListPojoArrayList.get(position);
 
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductTotalPoint())) {
-            holder.tvTotalPoint.setText(getProductListPojo.getProductTotalPoint() + "");
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getDealerPoint())) {
+            holder.tvTotalPoint.setText(((int) Double.parseDouble(getProductListPojo.getDealerPoint().toString())) + "");
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductName())) {
@@ -104,8 +122,8 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
             holder.tvProductPrice.setText(" " + context.getString(R.string.rupee_symbol) + getProductListPojo.getProductPrice() + "");
         }
 
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductTotalPoint())) {
-            holder.tvProductPoint.setText(getProductListPojo.getProductTotalPoint() + "");
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getDealerPoint())) {
+            holder.tvProductPoint.setText(((int) Double.parseDouble(getProductListPojo.getDealerPoint().toString())) + "");
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductPhoto1())) {
@@ -178,15 +196,13 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
                             Integer.parseInt(holder.etQty.getText().toString()) > 0) {
                         if (Integer.parseInt(holder.etQty.getText().toString()) <= MAX_ORDER_QUANTITY) {
                             int points = calculatePoints(
-                                    Integer.parseInt(holder.etQty.getText().toString()),
-                                    Integer.parseInt(getProductListPojo.getProductTotalPoint().toString()),
+                                    (int) Double.parseDouble(getProductListPojo.getDealerPoint().toString()),
                                     Integer.parseInt(holder.etQty.getText().toString()));
                             holder.tvTotalPoint.setText(String.valueOf(points));
                         } else {
                             holder.etQty.setText(String.valueOf(MAX_ORDER_QUANTITY));
                             int points = calculatePoints(
-                                    Integer.parseInt(holder.etQty.getText().toString()),
-                                    Integer.parseInt(getProductListPojo.getProductTotalPoint().toString()),
+                                    (int) Double.parseDouble(getProductListPojo.getDealerPoint().toString()),
                                     MAX_ORDER_QUANTITY);
                             holder.tvTotalPoint.setText(String.valueOf(points));
                             Toast.makeText(context, "You can not enter more than " + MAX_ORDER_QUANTITY + " quantity", Toast.LENGTH_SHORT).show();
@@ -194,7 +210,7 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
                     } else {
                         holder.etQty.setText("1");
                         if (!CommonUtil.checkIsEmptyOrNullCommon(holder.etQty.getText().toString())) {
-                            int pointPerQuantity = Integer.parseInt(getProductListPojo.getProductTotalPoint().toString()) / Integer.parseInt(holder.etQty.getText().toString());
+                            int pointPerQuantity = (int) Double.parseDouble(getProductListPojo.getDealerPoint().toString()) / Integer.parseInt(holder.etQty.getText().toString());
                             holder.tvTotalPoint.setText(String.valueOf(pointPerQuantity));
                         }
                     }
@@ -219,17 +235,17 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
 
     @Override
     public int getItemCount() {
-        return getProductListPojoArrayList.size();;
+        return getProductListPojoArrayList.size();
     }
 
 
-    private int calculatePoints(int initQty, int initPoints, int newQty) {
+    private int calculatePoints(int initPoints, int newQty) {
 
-        if (initQty > 0) {
-            return newQty * initPoints / initQty;
+        if (newQty > 0) {
+            return newQty * initPoints;
         }
 
-        return 0;
+        return initPoints;
     }
 
     void addQuantity(int addBy, AppCompatEditText etQty) {
@@ -255,19 +271,47 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
     }
 
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder {
+
+        LinearLayout llForEven;
+        AppCompatImageView imgProductEven;
+        TextViewMediumFont tvProductName;
+        TextViewMediumFont tvProductPrice;
+        ImageButton btnAddQty;
+        AppCompatEditText etQty;
+        ImageButton btnSubQty;
+        TextViewMediumFont tvProductPoint;
+        TextViewMediumFont tvTotalPoint;
+        LinearLayout llForOdd;
+        AppCompatImageView imgProductForOdd;
+        LinearLayout ll_paceholder;
+        TextViewRegularFont tvPlaceOrder;
+
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            llForEven = itemView.findViewById(R.id.llForEven);
+            imgProductEven = itemView.findViewById(R.id.imgProductEven);
+            tvProductName = itemView.findViewById(R.id.tvProductName);
+            tvProductPrice = itemView.findViewById(R.id.tvProductPrice);
+            btnAddQty = itemView.findViewById(R.id.btnAddQty);
+            etQty = itemView.findViewById(R.id.etQty);
+            btnSubQty = itemView.findViewById(R.id.btnSubQty);
+            tvProductPoint = itemView.findViewById(R.id.tvProductPoint);
+            tvTotalPoint = itemView.findViewById(R.id.tvTotalPoint);
+            llForOdd = itemView.findViewById(R.id.llForOdd);
+            imgProductForOdd = itemView.findViewById(R.id.imgProductForOdd);
+            ll_paceholder = itemView.findViewById(R.id.ll_paceholder);
+            tvPlaceOrder = itemView.findViewById(R.id.tvPlaceOrder);
         }
     }
 
-    private void showOrderDetailsDialog(GetProductListPojo getProductListPojo, final DistributorAddOrderAdapter.MyViewHolder holder) {
+    private void showOrderDetailsDialog(GetProductListPojo getProductListPojo, final MyViewHolder holder) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
         dialogBuilder.setCancelable(true);
         LayoutInflater layoutInflater1 = LayoutInflater.from(context);
-        View dialogView = layoutInflater1.inflate(R.layout.inflater_distributor_order_dialog, null);
+        View dialogView = layoutInflater1.inflate(R.layout.inflater_dealer_order_dialog, null);
 
         initView(dialogView);
 
@@ -280,6 +324,7 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
                     SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
                     String orderDate = sdf.format(myCalendar.getTime()) + "";
+                    String dealerDistributorId = distributorHashMap.get(distributorArrayList.get(spDistributor.getSelectedItemPosition()));
                     String contactPerson = etContactPersonAtSite.getText().toString();
                     String siteAddress = etSiteAddress.getText().toString();
                     String contactNo = etContactNo.getText().toString();
@@ -301,8 +346,8 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
 
                     String productList = jsonArray.toString();
 
-                    addDistributorOrder(orderDate, contactPerson, siteAddress,
-                            contactNo, pincode, districtId, talukaId, productList);
+                    addDealerOrderApiCall(orderDate, dealerDistributorId, contactPerson, siteAddress, contactNo,
+                            pincode, districtId, talukaId, productList);
 
                 }
             }
@@ -323,7 +368,7 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
 
         spDistrict = dialogView.findViewById(R.id.spDistrict);
         spTaluka = dialogView.findViewById(R.id.spTaluka);
-
+        spDistributor = dialogView.findViewById(R.id.spDistributor);
         btnSubmit = dialogView.findViewById(R.id.btnSubmit);
 
         ArrayAdapter<String> districtListAdapter = new ArrayAdapter<String>
@@ -337,6 +382,12 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
                         talukaArrayList);
         talukaListAdapter.setDropDownViewResource(R.layout.custome_textview_for_sp);
         spTaluka.setAdapter(talukaListAdapter);
+
+        ArrayAdapter<String> distributorListAdapter = new ArrayAdapter<String>
+                (context, R.layout.custome_textview_for_sp,
+                        distributorArrayList);
+        distributorListAdapter.setDropDownViewResource(R.layout.custome_textview_for_sp);
+        spDistributor.setAdapter(distributorListAdapter);
 
         spDistrict.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -352,6 +403,23 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
 
             }
         });
+
+
+        spTaluka.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                if (position > 0) {
+                    String talukaId = talukaHashMap.get(talukaArrayList.get(position));
+                    getDistributorApiCall(true, true, talukaId);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
 
     }
 
@@ -377,6 +445,9 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
         } else if (spTaluka.getSelectedItemPosition() == 0) {
             isValid = false;
             Toast.makeText(context, "Please select taluka", Toast.LENGTH_SHORT).show();
+        } else if (spDistributor.getSelectedItemPosition() == 0) {
+            isValid = false;
+            Toast.makeText(context, "Please select distributor", Toast.LENGTH_SHORT).show();
         }
         return isValid;
     }
@@ -448,15 +519,96 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
         });
     }
 
-    private void addDistributorOrder(String orderDate, String contactPersonDetails, String address,
-                                     String contactNo, String pinCode, String districtId, String talukaId,
-                                     String productList) {
+
+    private void getDistributorApiCall(boolean isPdShow, boolean isPdHide, String talukaId) {
+        if (isPdShow) {
+            DialogUtil.showProgressDialogNotCancelable(context, "");
+        }
+        ApiImplementer.getDistributorListByTalukaIdApiImplementer(talukaId, new Callback<ArrayList<GetDistributorListByTalukaIdPojo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<GetDistributorListByTalukaIdPojo>> call, Response<ArrayList<GetDistributorListByTalukaIdPojo>> response) {
+                if (isPdHide) {
+                    DialogUtil.hideProgressDialog();
+                }
+                try {
+                    if (response.code() == 200 && response.body() != null) {
+                        if (response.body().size() > 0) {
+                            ArrayList<GetDistributorListByTalukaIdPojo> getDistributorListByCityIdPojoArrayList = response.body();
+                            distributorArrayList = new ArrayList<>();
+                            distributorArrayList.add(SELECT_DISTRIBUTOR);
+                            distributorHashMap = new HashMap<>();
+                            for (int i = 0; i < getDistributorListByCityIdPojoArrayList.size(); i++) {
+                                if (!CommonUtil.checkIsEmptyOrNullCommon(getDistributorListByCityIdPojoArrayList.get(i).getDistributorName())) {
+                                    String distributorName = getDistributorListByCityIdPojoArrayList.get(i).getDistributorName().trim();
+                                    distributorArrayList.add(distributorName);
+                                    distributorHashMap.put(distributorName, getDistributorListByCityIdPojoArrayList.get(i).getDistributorId().toString());
+                                }
+                            }
+
+                            ArrayAdapter<String> distributorListAdapter = new ArrayAdapter<String>
+                                    (context, R.layout.custome_textview_for_sp,
+                                            distributorArrayList);
+                            distributorListAdapter.setDropDownViewResource(R.layout.custome_textview_for_sp);
+                            spDistributor.setAdapter(distributorListAdapter);
+
+                        } else {
+                            if (!isPdHide) {
+                                DialogUtil.hideProgressDialog();
+                            }
+                            distributorArrayList = new ArrayList<>();
+                            distributorArrayList.add(SELECT_DISTRIBUTOR);
+                            distributorHashMap = new HashMap<>();
+                            ArrayAdapter<String> distributorListAdapter = new ArrayAdapter<String>
+                                    (context, R.layout.custome_textview_for_sp,
+                                            distributorArrayList);
+                            distributorListAdapter.setDropDownViewResource(R.layout.custome_textview_for_sp);
+                            spDistributor.setAdapter(distributorListAdapter);
+                            Toast.makeText(context, "Distributors Not Found!", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        if (!isPdHide) {
+                            DialogUtil.hideProgressDialog();
+                        }
+                        Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception ex) {
+                    if (!isPdHide) {
+                        DialogUtil.hideProgressDialog();
+                    }
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<GetDistributorListByTalukaIdPojo>> call, Throwable t) {
+                DialogUtil.hideProgressDialog();
+                Toast.makeText(context, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void addDealerOrderApiCall(String OrderDate,
+                                       String dealerDistributorId,
+                                       String ContactPersonDetail,
+                                       String SiteAddress,
+                                       String ContactNo,
+                                       String PinCode,
+                                       String DistrictId,
+                                       String TalukaId,
+                                       String ProductList) {
         DialogUtil.showProgressDialogNotCancelable(context, "");
-        ApiImplementer.addDistributorOrderImplementer(orderDate, mySharedPreferences.getDistributorId(),
-                contactPersonDetails, address, contactNo, pinCode, districtId,
-                talukaId, productList, new Callback<ArrayList<AddDistributorOrderDataPojo>>() {
+        ApiImplementer.addDealerOrderImplementer(OrderDate,
+                mySharedPreferences.getDealerId(),
+                dealerDistributorId,
+                ContactPersonDetail,
+                SiteAddress,
+                ContactNo,
+                PinCode,
+                DistrictId,
+                TalukaId,
+                ProductList, new Callback<ArrayList<AddDealerOrderDataPojo>>() {
                     @Override
-                    public void onResponse(Call<ArrayList<AddDistributorOrderDataPojo>> call, Response<ArrayList<AddDistributorOrderDataPojo>> response) {
+                    public void onResponse(Call<ArrayList<AddDealerOrderDataPojo>> call, Response<ArrayList<AddDealerOrderDataPojo>> response) {
                         DialogUtil.hideProgressDialog();
                         try {
                             if (response.code() == 200 && response.body() != null &&
@@ -466,7 +618,11 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
                                 }
                                 Toast.makeText(context, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(context, "Something went,Wrong Please try again later.", Toast.LENGTH_SHORT).show();
+                                if (!CommonUtil.checkIsEmptyOrNullCommon(response.body().get(0).getMsg())) {
+                                    Toast.makeText(context, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         } catch (Exception ex) {
                             ex.printStackTrace();
@@ -474,7 +630,7 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
                     }
 
                     @Override
-                    public void onFailure(Call<ArrayList<AddDistributorOrderDataPojo>> call, Throwable t) {
+                    public void onFailure(Call<ArrayList<AddDealerOrderDataPojo>> call, Throwable t) {
                         DialogUtil.hideProgressDialog();
                         Toast.makeText(context, "Request Failde:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
                     }

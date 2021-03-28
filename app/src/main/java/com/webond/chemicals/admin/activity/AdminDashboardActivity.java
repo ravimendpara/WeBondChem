@@ -36,6 +36,7 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
     private MaterialCardView cvManageDealer;
     private MaterialCardView cvManageCustomer;
     private MaterialCardView cvManageProduct;
+    private MaterialCardView cvManageDistributorOrder;
     private Animation animation;
     RecyclerViewPager recyclerViewPagerStudentSideBanner;
 
@@ -61,6 +62,8 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         cvManageCustomer.setOnClickListener(this);
         cvManageProduct = findViewById(R.id.cvManageProduct);
         cvManageProduct.setOnClickListener(this);
+        cvManageDistributorOrder = findViewById(R.id.cvManageDistributorOrder);
+        cvManageDistributorOrder.setOnClickListener(this);
     }
 
     @Override
@@ -112,6 +115,16 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
                 @Override
                 public void run() {
                     Intent intent = new Intent(AdminDashboardActivity.this, AdminProductListActivity.class);
+                    startActivity(intent);
+                }
+            }, 400);
+        }else if (v.getId() == R.id.cvManageDistributorOrder) {
+            animation = AnimationUtils.loadAnimation(AdminDashboardActivity.this, R.anim.bounce);
+            cvManageDistributorOrder.startAnimation(animation);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(AdminDashboardActivity.this, AdminManageDistributorOrderActivity.class);
                     startActivity(intent);
                 }
             }, 400);
