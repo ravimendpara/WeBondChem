@@ -294,7 +294,7 @@
                         android:fontFamily="@font/montserrat_medium"
                         android:gravity="center_vertical"
                         android:hint="Product Total Point"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:imeOptions="actionNext"
                         android:textSize="@dimen/registration_form_text_size"
                         app:errorIconDrawable="@null" />
@@ -323,8 +323,7 @@
                         android:gravity="center_vertical"
                         android:hint="Distributor Percentage"
                         android:imeOptions="actionNext"
-                        android:inputType="number"
-                        android:maxLength="3"
+                        android:inputType="numberDecimal"
                         android:textSize="@dimen/registration_form_text_size"
                         app:errorIconDrawable="@null" />
 
@@ -351,8 +350,7 @@
                         android:fontFamily="@font/montserrat_medium"
                         android:gravity="center_vertical"
                         android:hint="Dealer Percentage"
-                        android:inputType="number"
-                        android:maxLength="3"
+                        android:inputType="numberDecimal"
                         android:imeOptions="actionNext"
                         android:textSize="@dimen/registration_form_text_size"
                         app:errorIconDrawable="@null" />
@@ -381,8 +379,7 @@
                         android:gravity="center_vertical"
                         android:hint="Customer Percentage"
                         android:imeOptions="actionNext"
-                        android:inputType="number"
-                        android:maxLength="3"
+                        android:inputType="numberDecimal"
                         android:textSize="@dimen/registration_form_text_size"
                         app:errorIconDrawable="@null" />
 

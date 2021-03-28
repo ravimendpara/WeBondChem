@@ -28,7 +28,7 @@
                 android:orientation="horizontal">
 
                 <com.webond.chemicals.custom_class.TextViewMediumFont
-                    android:id="@+id/tvProductName"
+                    android:id="@+id/tvDistributorName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="-"
@@ -43,6 +43,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.8dp"
                 android:background="@color/darker_grey_color"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
+
+                <com.webond.chemicals.custom_class.TextViewMediumFont
+                    android:id="@+id/tvProductName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="13dp"/>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

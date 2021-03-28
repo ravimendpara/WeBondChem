@@ -46,6 +46,10 @@ public class DistributorApproveDealerOrderAdapter extends RecyclerView.Adapter<D
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         GetDealerOrderListPojo getDealerOrderListPojo = getDealerOrderListPojoArrayList.get(position);
 
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDealerOrderListPojo.getDealerName())) {
+            holder.tvDealerName.setText(getDealerOrderListPojo.getDealerName());
+        }
+
         if (!CommonUtil.checkIsEmptyOrNullCommon(getDealerOrderListPojo.getProductName())) {
             holder.tvProductName.setText(getDealerOrderListPojo.getProductName());
         }
@@ -93,6 +97,7 @@ public class DistributorApproveDealerOrderAdapter extends RecyclerView.Adapter<D
         TextViewMediumFont tvQuantity;
         TextViewMediumFont tvProductPoint;
         TextViewMediumFont tvStatus;
+        TextViewMediumFont tvDealerName;
         MaterialButton btnReject;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -104,6 +109,7 @@ public class DistributorApproveDealerOrderAdapter extends RecyclerView.Adapter<D
             tvProductPoint = itemView.findViewById(R.id.tvProductPoint);
             tvStatus = itemView.findViewById(R.id.tvStatus);
             btnReject = itemView.findViewById(R.id.btnReject);
+            tvDealerName = itemView.findViewById(R.id.tvDealerName);
         }
     }
 

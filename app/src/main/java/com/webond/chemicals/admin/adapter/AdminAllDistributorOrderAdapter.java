@@ -39,6 +39,10 @@ public class AdminAllDistributorOrderAdapter extends RecyclerView.Adapter<AdminA
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         GetDistributorOrderListPojo getDistributorOrderListPojo = getDistributorOrderListPojoArrayList.get(position);
 
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDistributorOrderListPojo.getDistributorName())) {
+            holder.tvDistributorName.setText(getDistributorOrderListPojo.getDistributorName());
+        }
+
         if (!CommonUtil.checkIsEmptyOrNullCommon(getDistributorOrderListPojo.getProductName())) {
             holder.tvProductName.setText(getDistributorOrderListPojo.getProductName());
         }
@@ -78,6 +82,7 @@ public class AdminAllDistributorOrderAdapter extends RecyclerView.Adapter<AdminA
         TextViewMediumFont tvQuantity;
         TextViewMediumFont tvProductPoint;
         TextViewMediumFont tvStatus;
+        TextViewMediumFont tvDistributorName;
         MaterialButton btnApprove;
         MaterialButton btnReject;
 
@@ -91,6 +96,7 @@ public class AdminAllDistributorOrderAdapter extends RecyclerView.Adapter<AdminA
             tvStatus = itemView.findViewById(R.id.tvStatus);
             btnApprove = itemView.findViewById(R.id.btnApprove);
             btnReject = itemView.findViewById(R.id.btnReject);
+            tvDistributorName = itemView.findViewById(R.id.tvDistributorName);
         }
     }
 
