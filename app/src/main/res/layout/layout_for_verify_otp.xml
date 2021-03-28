@@ -73,6 +73,7 @@
 
             <com.mukesh.OtpView
                 android:id="@+id/otp_view"
+                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -80,7 +81,7 @@
                 android:itemBackground="@color/colorPrimary"
                 android:textColor="@color/color_black"
                 app:length="6"
-                app:width="40dp" />
+                app:width="30dp" />
 
         </LinearLayout>
 

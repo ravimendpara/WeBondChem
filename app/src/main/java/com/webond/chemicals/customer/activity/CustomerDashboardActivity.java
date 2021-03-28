@@ -31,8 +31,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements View
 
     private MySharedPreferences mySharedPreferences;
     private MaterialCardView cvProfile;
-    private MaterialCardView cvProductList;
-    private MaterialCardView cvManageOrder;
+    private MaterialCardView cvMyOrders;
     private MaterialCardView cvAddOrder;
     private Animation animation;
     RecyclerViewPager recyclerViewPagerStudentSideBanner;
@@ -50,10 +49,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements View
         mySharedPreferences = new MySharedPreferences(CustomerDashboardActivity.this);
         cvProfile = findViewById(R.id.cvProfile);
         cvProfile.setOnClickListener(this);
-        cvProductList = findViewById(R.id.cvProductList);
-        cvProductList.setOnClickListener(this);
-        cvManageOrder = findViewById(R.id.cvManageOrder);
-        cvManageOrder.setOnClickListener(this);
+        cvMyOrders = findViewById(R.id.cvMyOrders);
+        cvMyOrders.setOnClickListener(this);
         cvAddOrder = findViewById(R.id.cvAddOrder);
         cvAddOrder.setOnClickListener(this);
     }
@@ -70,20 +67,14 @@ public class CustomerDashboardActivity extends AppCompatActivity implements View
                     startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_LOGOUT);
                 }
             }, 400);
-        } else if (v.getId() == R.id.cvProductList) {
+        } else if (v.getId() == R.id.cvMyOrders) {
             animation = AnimationUtils.loadAnimation(CustomerDashboardActivity.this, R.anim.bounce);
-            cvProductList.startAnimation(animation);
+            cvMyOrders.startAnimation(animation);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                }
-            }, 400);
-        } else if (v.getId() == R.id.cvManageOrder) {
-            animation = AnimationUtils.loadAnimation(CustomerDashboardActivity.this, R.anim.bounce);
-            cvManageOrder.startAnimation(animation);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
+                    Intent intent = new Intent(CustomerDashboardActivity.this, CustomerMyOrdersActivity.class);
+                    startActivity(intent);
                 }
             }, 400);
         } else if (v.getId() == R.id.cvAddOrder) {

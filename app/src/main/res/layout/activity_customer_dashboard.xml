@@ -106,7 +106,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cvProductList"
+                    android:id="@+id/cvMyOrders"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -146,7 +146,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Product List"
+                            android:text="My Orders"
                             android:textColor="@color/darker_grey_color"
                             android:textSize="@dimen/dashboard_text_size" />
 
@@ -162,7 +162,7 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cvManageOrder"
+                    android:id="@+id/cvAddOrder"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -193,7 +193,7 @@
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_manage_order"
+                                android:src="@drawable/ic_add_order"
                                 android:tint="@color/white" />
 
                         </LinearLayout>
@@ -202,7 +202,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Manage Order"
+                            android:text="Add Order"
                             android:textColor="@color/darker_grey_color"
                             android:textSize="@dimen/dashboard_text_size" />
 
@@ -211,7 +211,6 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cvAddOrder"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -222,7 +221,7 @@
                     android:layout_weight="1"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
-                    android:visibility="visible"
+                    android:visibility="invisible"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="8dp"
                     app:contentPadding="18dp">

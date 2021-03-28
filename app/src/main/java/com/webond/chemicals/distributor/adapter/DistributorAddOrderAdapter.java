@@ -58,7 +58,7 @@ public class DistributorAddOrderAdapter extends RecyclerView.Adapter<Distributor
     private ArrayList<GetProductListPojo> getProductListPojoArrayList;
     private LayoutInflater layoutInflater;
     private MySharedPreferences mySharedPreferences;
-    private int MAX_ORDER_QUANTITY = 100;
+    private int MAX_ORDER_QUANTITY = 10000000;
 
     private ArrayList<String> districtArrayList;
     private HashMap<String, String> districtHashMap;

@@ -35,6 +35,7 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
     private MaterialCardView cvManageCustomer;
     private MaterialCardView cvAddOrder;
     private MaterialCardView cvManageCustomerOrder;
+    private MaterialCardView cvMyOrders;
     private Animation animation;
     RecyclerViewPager recyclerViewPagerStudentSideBanner;
 
@@ -58,6 +59,8 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
         cvAddOrder.setOnClickListener(this);
         cvManageCustomerOrder = findViewById(R.id.cvManageCustomerOrder);
         cvManageCustomerOrder.setOnClickListener(this);
+        cvMyOrders = findViewById(R.id.cvMyOrders);
+        cvMyOrders.setOnClickListener(this);
     }
 
     @Override
@@ -92,13 +95,23 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
                     startActivity(intent);
                 }
             }, 400);
-        }else if (v.getId() == R.id.cvManageCustomerOrder) {
+        } else if (v.getId() == R.id.cvManageCustomerOrder) {
             animation = AnimationUtils.loadAnimation(DealerDashboardActivity.this, R.anim.bounce);
             cvManageCustomerOrder.startAnimation(animation);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     Intent intent = new Intent(DealerDashboardActivity.this, DealerManageCustomerOrderActivity.class);
+                    startActivity(intent);
+                }
+            }, 400);
+        } else if (v.getId() == R.id.cvMyOrders) {
+            animation = AnimationUtils.loadAnimation(DealerDashboardActivity.this, R.anim.bounce);
+            cvMyOrders.startAnimation(animation);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(DealerDashboardActivity.this, DealerMyOrderActivity.class);
                     startActivity(intent);
                 }
             }, 400);

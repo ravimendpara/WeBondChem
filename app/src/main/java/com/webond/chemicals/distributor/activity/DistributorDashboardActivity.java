@@ -35,6 +35,7 @@ public class DistributorDashboardActivity extends AppCompatActivity implements V
     private MaterialCardView cvManageCustomer;
     private MaterialCardView cvManageDealerOrder;
     private MaterialCardView cvAddOrder;
+    private MaterialCardView cvMyOrders;
     private Animation animation;
     RecyclerViewPager recyclerViewPagerStudentSideBanner;
 
@@ -60,6 +61,8 @@ public class DistributorDashboardActivity extends AppCompatActivity implements V
         cvManageDealerOrder.setOnClickListener(this);
         cvAddOrder = findViewById(R.id.cvAddOrder);
         cvAddOrder.setOnClickListener(this);
+        cvMyOrders = findViewById(R.id.cvMyOrders);
+        cvMyOrders.setOnClickListener(this);
     }
 
     @Override
@@ -111,6 +114,16 @@ public class DistributorDashboardActivity extends AppCompatActivity implements V
                 @Override
                 public void run() {
                     Intent intent = new Intent(DistributorDashboardActivity.this, DistributorAddOrderActivity.class);
+                    startActivity(intent);
+                }
+            }, 400);
+        }else if (v.getId() == R.id.cvMyOrders) {
+            animation = AnimationUtils.loadAnimation(DistributorDashboardActivity.this, R.anim.bounce);
+            cvMyOrders.startAnimation(animation);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(DistributorDashboardActivity.this, DistributorMyOrderActivity.class);
                     startActivity(intent);
                 }
             }, 400);

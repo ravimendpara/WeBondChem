@@ -12,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".dealer.activity.DealerManageCustomerOrderActivity"></activity>
+        <activity android:name=".distributor.activity.DistributorMyOrderActivity"></activity>
+        <activity android:name=".dealer.activity.DealerMyOrderActivity" />
+        <activity android:name=".customer.activity.CustomerMyOrdersActivity" />
+        <activity android:name=".dealer.activity.DealerManageCustomerOrderActivity" />
         <activity
             android:name=".distributor.activity.DistributorManageDealerOrderActivity"
             android:screenOrientation="portrait" />
