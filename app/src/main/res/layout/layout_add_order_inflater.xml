@@ -122,7 +122,7 @@
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/etQty"
                             android:layout_width="match_parent"
-                            android:maxLength="4"
+                            android:maxLength="8"
                             android:hint="Enter Quantity"
                             android:textColorHint="@color/colorAccent"
                             android:inputType="number"
