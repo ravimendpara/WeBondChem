@@ -17,6 +17,7 @@ import com.webond.chemicals.pojo.GetBannerListPojo;
 import com.webond.chemicals.pojo.GetCityListPojo;
 import com.webond.chemicals.pojo.GetCustomerListPojo;
 import com.webond.chemicals.pojo.GetCustomerOrderListPojo;
+import com.webond.chemicals.pojo.GetDashboardDetailsPojo;
 import com.webond.chemicals.pojo.GetDealerListByCityIdPojo;
 import com.webond.chemicals.pojo.GetDealerListByTalukaIdPojo;
 import com.webond.chemicals.pojo.GetDealerListPojo;
@@ -491,58 +492,65 @@ public class ApiImplementer {
     }
 
     public static void getDistributorsOrderApiImplementer(String LoginType, String LoginId,
-                                                  String FilterValue,Callback<ArrayList<GetDistributorOrderListPojo>> cb) {
+                                                          String FilterValue, Callback<ArrayList<GetDistributorOrderListPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<GetDistributorOrderListPojo>> call = apiService.getDistributorsOrder(LoginType,
-                LoginId,FilterValue);
+                LoginId, FilterValue);
         call.enqueue(cb);
     }
 
     public static void getDealerOrderApiImplementer(String LoginType, String LoginId,
-                                                          String FilterValue,Callback<ArrayList<GetDealerOrderListPojo>> cb) {
+                                                    String FilterValue, Callback<ArrayList<GetDealerOrderListPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<GetDealerOrderListPojo>> call = apiService.getDealerOrder(LoginType,
-                LoginId,FilterValue);
+                LoginId, FilterValue);
         call.enqueue(cb);
     }
 
     public static void getCustomerOrderApiImplementer(String LoginType, String LoginId,
-                                                    String FilterValue,Callback<ArrayList<GetCustomerOrderListPojo>> cb) {
+                                                      String FilterValue, Callback<ArrayList<GetCustomerOrderListPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<GetCustomerOrderListPojo>> call = apiService.getCustomerOrder(LoginType,
-                LoginId,FilterValue);
+                LoginId, FilterValue);
         call.enqueue(cb);
     }
 
 
-    public static void getVersionInfoApiImplementer(String VersionCode,Callback<ArrayList<GetVersionInfoPojo>> cb) {
+    public static void getVersionInfoApiImplementer(String VersionCode, Callback<ArrayList<GetVersionInfoPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<GetVersionInfoPojo>> call = apiService.getVersionInfo(VersionCode);
         call.enqueue(cb);
     }
 
     public static void getLoginOrderListForCustomerApiImplementer(String LoginType, String LoginId,
-                                                      String FilterValue,Callback<ArrayList<GetLoginOrderListForCustomerPojo>> cb) {
+                                                                  String FilterValue, Callback<ArrayList<GetLoginOrderListForCustomerPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<GetLoginOrderListForCustomerPojo>> call = apiService.getLoginOrderListForCustomer(LoginType,
-                LoginId,FilterValue);
+                LoginId, FilterValue);
         call.enqueue(cb);
     }
 
 
     public static void getLoginOrderListForDealerApiImplementer(String LoginType, String LoginId,
-                                                                  String FilterValue,Callback<ArrayList<GetLoginOrderListForDealerPojo>> cb) {
+                                                                String FilterValue, Callback<ArrayList<GetLoginOrderListForDealerPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<GetLoginOrderListForDealerPojo>> call = apiService.getLoginOrderListForDealer(LoginType,
-                LoginId,FilterValue);
+                LoginId, FilterValue);
         call.enqueue(cb);
     }
 
     public static void getLoginOrderListForDistributorApiImplementer(String LoginType, String LoginId,
-                                                                String FilterValue,Callback<ArrayList<GetLoginOrderListForDistributorPojo>> cb) {
+                                                                     String FilterValue, Callback<ArrayList<GetLoginOrderListForDistributorPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<GetLoginOrderListForDistributorPojo>> call = apiService.getLoginOrderListForDistributor(LoginType,
-                LoginId,FilterValue);
+                LoginId, FilterValue);
+        call.enqueue(cb);
+    }
+
+    public static void getDashboardDetailsApiImplementer(String LoginType, String LoginId, Callback<ArrayList<GetDashboardDetailsPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<GetDashboardDetailsPojo>> call = apiService.getDashboardDetails(LoginType,
+                LoginId);
         call.enqueue(cb);
     }
 

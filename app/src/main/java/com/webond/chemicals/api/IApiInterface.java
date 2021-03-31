@@ -17,6 +17,7 @@ import com.webond.chemicals.pojo.GetBannerListPojo;
 import com.webond.chemicals.pojo.GetCityListPojo;
 import com.webond.chemicals.pojo.GetCustomerListPojo;
 import com.webond.chemicals.pojo.GetCustomerOrderListPojo;
+import com.webond.chemicals.pojo.GetDashboardDetailsPojo;
 import com.webond.chemicals.pojo.GetDealerListByCityIdPojo;
 import com.webond.chemicals.pojo.GetDealerListByTalukaIdPojo;
 import com.webond.chemicals.pojo.GetDealerListPojo;
@@ -330,6 +331,10 @@ public interface IApiInterface {
     Call<ArrayList<GetLoginOrderListForDistributorPojo>> getLoginOrderListForDistributor(@Query("LoginType") String LoginType,
                                                                                          @Query("LoginId") String LoginId,
                                                                                          @Query("FilterValue") String FilterValue);
+
+    @GET("DashboardDetail")
+    Call<ArrayList<GetDashboardDetailsPojo>> getDashboardDetails(@Query("LoginType") String LoginType,
+                                                                 @Query("LoginId") String LoginId);
 
 
 }
