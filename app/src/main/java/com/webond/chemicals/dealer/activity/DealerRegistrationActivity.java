@@ -47,11 +47,11 @@ import retrofit2.Response;
 
 public class DealerRegistrationActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String SELECT_STATE = "Select State";
-    private static final String SELECT_DISTRICT = "Select District";
-    private static final String SELECT_TALUKA = "Select Taluka";
-    private static final String SELECT_CITY = "Select City";
-    private static final String SELECT_DISTRIBUTOR = "Select Distributor";
+    private static final String SELECT_STATE = "Select State*";
+    private static final String SELECT_DISTRICT = "Select District*";
+    private static final String SELECT_TALUKA = "Select Taluka*";
+    private static final String SELECT_CITY = "Select City*";
+    private static final String SELECT_DISTRIBUTOR = "Select Distributor*";
 
     private MySharedPreferences mySharedPreferences;
     private AppCompatImageView imgBack;
@@ -249,25 +249,29 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
         } else if (CommonUtil.checkIsEmptyOrNullCommon(edtPincode.getText().toString().trim())) {
             Toast.makeText(this, "Please enter pincode", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (CommonUtil.checkIsEmptyOrNullCommon(edtEMail.getText().toString().trim())) {
-            Toast.makeText(this, "Please enter email", Toast.LENGTH_SHORT).show();
-            return false;
         } else if (CommonUtil.checkIsEmptyOrNullCommon(edtAadharNo.getText().toString().trim())) {
             Toast.makeText(this, "Please enter aadhar no.", Toast.LENGTH_SHORT).show();
             return false;
         } else if (CommonUtil.checkIsEmptyOrNullCommon(uploadedAadharProofBase64)) {
             Toast.makeText(this, "Please upload aadhar proof", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (CommonUtil.checkIsEmptyOrNullCommon(edtGSTNo.getText().toString().trim())) {
-            Toast.makeText(this, "Please enter GST No.", Toast.LENGTH_SHORT).show();
-            return false;
         } else if (CommonUtil.checkIsEmptyOrNullCommon(uploadedPhotoBase64)) {
             Toast.makeText(this, "Please upload photo", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (CommonUtil.checkIsEmptyOrNullCommon(edtDOB.getText().toString().trim())) {
-            Toast.makeText(this, "Please enter date of birth", Toast.LENGTH_SHORT).show();
-            return false;
         }
+
+//        else if (CommonUtil.checkIsEmptyOrNullCommon(edtEMail.getText().toString().trim())) {
+//            Toast.makeText(this, "Please enter email", Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
+//        else if (CommonUtil.checkIsEmptyOrNullCommon(edtDOB.getText().toString().trim())) {
+//            Toast.makeText(this, "Please enter date of birth", Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
+//        else if (CommonUtil.checkIsEmptyOrNullCommon(edtGSTNo.getText().toString().trim())) {
+//            Toast.makeText(this, "Please enter GST No.", Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
         return true;
     }
 
