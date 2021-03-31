@@ -1,13 +1,5 @@
 package com.webond.chemicals.common_activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.core.app.ActivityCompat;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
@@ -23,18 +15,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.Toast;
 
-import com.webond.chemicals.R;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.app.ActivityCompat;
+
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.webond.chemicals.R;
 import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.pojo.GetVersionInfoPojo;
-import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.DialogUtil;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -123,6 +123,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == MY_PERMISSIONS_REQUEST_READ_WRITE_STATE) {
 
             if (grantResults.length == 3 &&
@@ -140,11 +141,21 @@ public class SplashActivity extends AppCompatActivity {
         try {
             PackageInfo pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
             int versionCode = pinfo.versionCode;
-            DialogUtil.showProgressDialogNotCancelable(SplashActivity.this, "");
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    DialogUtil.showProgressDialogNotCancelable(SplashActivity.this, "");
+                }
+            });
             ApiImplementer.getVersionInfoApiImplementer(versionCode + "", new Callback<ArrayList<GetVersionInfoPojo>>() {
                 @Override
                 public void onResponse(Call<ArrayList<GetVersionInfoPojo>> call, Response<ArrayList<GetVersionInfoPojo>> response) {
-                    DialogUtil.hideProgressDialog();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            DialogUtil.hideProgressDialog();
+                        }
+                    });
                     try {
                         if (response.code() == 200 &&
                                 response.body() != null) {
@@ -168,7 +179,12 @@ public class SplashActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<ArrayList<GetVersionInfoPojo>> call, Throwable t) {
-                    DialogUtil.hideProgressDialog();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            DialogUtil.hideProgressDialog();
+                        }
+                    });
                     redirectToLoginActivity();
                 }
             });
@@ -186,7 +202,7 @@ public class SplashActivity extends AppCompatActivity {
         updateDialog.setCancelable(false);
         View customProgressDialog = LayoutInflater.from(SplashActivity.this).inflate(R.layout.custom_layout_for_update_app_dialog, null);
         TextViewMediumFont tvNoThanks = customProgressDialog.findViewById(R.id.tvNoThanks);
-        Button btnUpdate = customProgressDialog.findViewById(R.id.btnUpdate);
+        MaterialButton btnUpdate = customProgressDialog.findViewById(R.id.btnUpdate);
         if (isForceUpdate) {
             tvNoThanks.setVisibility(View.GONE);
         } else {

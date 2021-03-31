@@ -17,8 +17,8 @@ import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.common_activity.LoginActivity;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
-import com.webond.chemicals.dealer.activity.DealerDashboardActivity;
 import com.webond.chemicals.pojo.GetBannerListPojo;
+import com.webond.chemicals.pojo.GetDashboardDetailsPojo;
 import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.IntentConstants;
 import com.webond.chemicals.utils.MySharedPreferences;
@@ -49,12 +49,17 @@ public class DistributorDashboardActivity extends AppCompatActivity implements V
     private TextViewMediumFont tvName;
     private TextViewRegularFont tvEmail;
 
+    TextViewMediumFont tvNameCard;
+    TextViewMediumFont tvCode;
+    TextViewMediumFont tvTotalPoints;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_distributor_dashboard);
         initView();
         getBannerList();
+        getUserDetails();
     }
 
 
@@ -78,6 +83,10 @@ public class DistributorDashboardActivity extends AppCompatActivity implements V
         imgProfile.setOnClickListener(this);
         tvName = findViewById(R.id.tvName);
         tvEmail = findViewById(R.id.tvEmail);
+
+        tvNameCard = findViewById(R.id.tvNameCard);
+        tvCode = findViewById(R.id.tvCode);
+        tvTotalPoints = findViewById(R.id.tvTotalPoints);
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(mySharedPreferences.getDistributorPhotoPath())) {
             Glide.with(DistributorDashboardActivity.this)
@@ -202,5 +211,36 @@ public class DistributorDashboardActivity extends AppCompatActivity implements V
             startActivity(intent);
             finish();
         }
+    }
+
+    private void getUserDetails() {
+        ApiImplementer.getDashboardDetailsApiImplementer(CommonUtil.LOGIN_TYPE_DISTRIBUTOR, mySharedPreferences.getDistributorId(), new Callback<ArrayList<GetDashboardDetailsPojo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<GetDashboardDetailsPojo>> call, Response<ArrayList<GetDashboardDetailsPojo>> response) {
+                try {
+                    if (response.code() == 200 && response.body() != null &&
+                            response.body().size() > 0) {
+                        if (!CommonUtil.checkIsEmptyOrNullCommon(response.body().get(0).getName())) {
+                            tvNameCard.setText(response.body().get(0).getName() + "");
+                        }
+
+                        if (!CommonUtil.checkIsEmptyOrNullCommon(response.body().get(0).getCode())) {
+                            tvCode.setText(response.body().get(0).getCode() + "");
+                        }
+
+                        if (!CommonUtil.checkIsEmptyOrNullCommon(response.body().get(0).getTotalPoint())) {
+                            tvTotalPoints.setText(response.body().get(0).getTotalPoint() + "");
+                        }
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<GetDashboardDetailsPojo>> call, Throwable t) {
+
+            }
+        });
     }
 }

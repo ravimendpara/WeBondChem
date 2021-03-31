@@ -18,6 +18,7 @@ import com.webond.chemicals.common_activity.LoginActivity;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
 import com.webond.chemicals.pojo.GetBannerListPojo;
+import com.webond.chemicals.pojo.GetDashboardDetailsPojo;
 import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.IntentConstants;
 import com.webond.chemicals.utils.MySharedPreferences;
@@ -45,12 +46,17 @@ public class CustomerDashboardActivity extends AppCompatActivity implements View
     private TextViewMediumFont tvName;
     private TextViewRegularFont tvEmail;
 
+    TextViewMediumFont tvNameCard;
+    TextViewMediumFont tvCode;
+    TextViewMediumFont tvTotalPoints;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_dashboard);
         initView();
         getBannerList();
+        getUserDetails();
     }
 
     private void initView() {
@@ -66,6 +72,11 @@ public class CustomerDashboardActivity extends AppCompatActivity implements View
         imgProfile.setOnClickListener(this);
         tvName = findViewById(R.id.tvName);
         tvEmail = findViewById(R.id.tvEmail);
+
+        tvNameCard = findViewById(R.id.tvNameCard);
+        tvCode = findViewById(R.id.tvCode);
+        tvTotalPoints = findViewById(R.id.tvTotalPoints);
+
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(mySharedPreferences.getCustomerPhotoPath())) {
             Glide.with(CustomerDashboardActivity.this)
@@ -117,7 +128,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements View
                     startActivity(intent);
                 }
             }, 400);
-        }else if (v.getId() == R.id.imgProfile){
+        } else if (v.getId() == R.id.imgProfile) {
             Intent intent = new Intent(CustomerDashboardActivity.this, CustomerProfileActivity.class);
             startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_LOGOUT);
         }
@@ -161,4 +172,36 @@ public class CustomerDashboardActivity extends AppCompatActivity implements View
             finish();
         }
     }
+
+    private void getUserDetails() {
+        ApiImplementer.getDashboardDetailsApiImplementer(CommonUtil.LOGIN_TYPE_CUSTOMER, mySharedPreferences.getCustomerId(), new Callback<ArrayList<GetDashboardDetailsPojo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<GetDashboardDetailsPojo>> call, Response<ArrayList<GetDashboardDetailsPojo>> response) {
+                try {
+                    if (response.code() == 200 && response.body() != null &&
+                            response.body().size() > 0) {
+                        if (!CommonUtil.checkIsEmptyOrNullCommon(response.body().get(0).getName())) {
+                            tvNameCard.setText(response.body().get(0).getName() + "");
+                        }
+
+                        if (!CommonUtil.checkIsEmptyOrNullCommon(response.body().get(0).getCode())) {
+                            tvCode.setText(response.body().get(0).getCode() + "");
+                        }
+
+                        if (!CommonUtil.checkIsEmptyOrNullCommon(response.body().get(0).getTotalPoint())) {
+                            tvTotalPoints.setText(response.body().get(0).getTotalPoint() + "");
+                        }
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<GetDashboardDetailsPojo>> call, Throwable t) {
+
+            }
+        });
+    }
+
 }

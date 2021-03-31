@@ -28,7 +28,7 @@
                 android:orientation="horizontal">
 
                 <com.webond.chemicals.custom_class.TextViewMediumFont
-                    android:id="@+id/tvCustomerName"
+                    android:id="@+id/tvDealerName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="-"
