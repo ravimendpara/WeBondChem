@@ -93,7 +93,7 @@
                                 <com.webond.chemicals.custom_class.TextViewRegularFont
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Customer Code : "
+                                    android:text="Distributor Code : "
                                     android:textColor="@color/colorAccent"
                                     android:textSize="12sp" />
 
