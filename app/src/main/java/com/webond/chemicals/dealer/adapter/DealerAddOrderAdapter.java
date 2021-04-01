@@ -14,19 +14,22 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import com.webond.chemicals.R;
 import com.webond.chemicals.api.ApiImplementer;
-import com.webond.chemicals.custom_class.SpinnerSimpleAdapter;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
-import com.webond.chemicals.dealer.activity.DealerRegistrationActivity;
-import com.webond.chemicals.distributor.adapter.DistributorAddOrderAdapter;
 import com.webond.chemicals.pojo.AddDealerOrderDataPojo;
-import com.webond.chemicals.pojo.AddDistributorOrderDataPojo;
-import com.webond.chemicals.pojo.GetDealerListByTalukaIdPojo;
-import com.webond.chemicals.pojo.GetDistributorListByCityIdPojo;
 import com.webond.chemicals.pojo.GetDistributorListByTalukaIdPojo;
 import com.webond.chemicals.pojo.GetProductListPojo;
 import com.webond.chemicals.pojo.GetTalukaListPojo;
@@ -44,13 +47,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -73,7 +69,7 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
     private ArrayList<String> distributorArrayList;
     private HashMap<String, String> distributorHashMap;
 
-    AppCompatEditText etContactPersonAtSite,
+    TextInputEditText etContactPersonAtSite,
             etSiteAddress, etContactNo, etPinCode;
     SearchableSpinner spDistrict, spTaluka, spDistributor;
     AppCompatButton btnSubmit;
