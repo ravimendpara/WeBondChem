@@ -124,10 +124,11 @@
                             android:layout_width="match_parent"
                             android:maxLength="8"
                             android:hint="Enter Quantity"
+                            android:text="1"
                             android:textColorHint="@color/colorAccent"
                             android:inputType="number"
                             android:gravity="center"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorAccent"
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:textSize="12sp"/>

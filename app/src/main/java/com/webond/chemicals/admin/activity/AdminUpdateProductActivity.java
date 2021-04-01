@@ -131,11 +131,15 @@ public class AdminUpdateProductActivity extends AppCompatActivity implements Vie
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (!CommonUtil.checkIsEmptyOrNullCommon(s.toString().trim())) {
-                    if (Integer.parseInt(s.toString().trim()) > 100) {
-                        edtDistributorPercentage.setText("100");
-                        Toast.makeText(AdminUpdateProductActivity.this, "You can't enter more than 100%", Toast.LENGTH_SHORT).show();
+                try {
+                    if (!CommonUtil.checkIsEmptyOrNullCommon(s.toString().trim())) {
+                        if (Double.parseDouble(s.toString().trim()) > 100) {
+                            edtDistributorPercentage.setText("100");
+                            Toast.makeText(AdminUpdateProductActivity.this, "You can't enter more than 100%", Toast.LENGTH_SHORT).show();
+                        }
                     }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         });
@@ -153,11 +157,15 @@ public class AdminUpdateProductActivity extends AppCompatActivity implements Vie
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (!CommonUtil.checkIsEmptyOrNullCommon(s.toString().trim())) {
-                    if (Integer.parseInt(s.toString().trim()) > 100) {
-                        edtDealerPercentage.setText("100");
-                        Toast.makeText(AdminUpdateProductActivity.this, "You can't enter more than 100%", Toast.LENGTH_SHORT).show();
+                try {
+                    if (!CommonUtil.checkIsEmptyOrNullCommon(s.toString().trim())) {
+                        if (Double.parseDouble(s.toString().trim()) > 100) {
+                            edtDealerPercentage.setText("100");
+                            Toast.makeText(AdminUpdateProductActivity.this, "You can't enter more than 100%", Toast.LENGTH_SHORT).show();
+                        }
                     }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         });
@@ -175,11 +183,15 @@ public class AdminUpdateProductActivity extends AppCompatActivity implements Vie
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (!CommonUtil.checkIsEmptyOrNullCommon(s.toString().trim())) {
-                    if (Integer.parseInt(s.toString().trim()) > 100) {
-                        edtCustomerPercentage.setText("100");
-                        Toast.makeText(AdminUpdateProductActivity.this, "You can't enter more than 100%", Toast.LENGTH_SHORT).show();
+                try {
+                    if (!CommonUtil.checkIsEmptyOrNullCommon(s.toString().trim())) {
+                        if (Double.parseDouble(s.toString().trim()) > 100) {
+                            edtCustomerPercentage.setText("100");
+                            Toast.makeText(AdminUpdateProductActivity.this, "You can't enter more than 100%", Toast.LENGTH_SHORT).show();
+                        }
                     }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         });
@@ -230,14 +242,14 @@ public class AdminUpdateProductActivity extends AppCompatActivity implements Vie
                 String productName = edtProductName.getText().toString().trim();
                 String ProductPhoto1 = uploadPhoto1Base64;
                 String ProductPhotoName1 = uploadPhoto1Name;
-                String ProductPhoto2 = uploadPhoto2Base64;
-                String ProductPhotoName2 = uploadPhoto2Name;
-                String ProductPhoto3 = uploadPhoto3Base64;
-                String ProductPhotoName3 = uploadPhoto3Name;
-                String ProductPhoto4 = uploadPhoto4Base64;
-                String ProductPhotoName4 = uploadPhoto4Name;
-                String ProductPhoto5 = uploadPhoto5Base64;
-                String ProductPhotoName5 = uploadPhoto5Name;
+                String ProductPhoto2 = "";
+                String ProductPhotoName2 = "";
+                String ProductPhoto3 = "";
+                String ProductPhotoName3 = "";
+                String ProductPhoto4 = "";
+                String ProductPhotoName4 = "";
+                String ProductPhoto5 = "";
+                String ProductPhotoName5 = "";
                 String productPrice = edtProductPrice.getText().toString().trim();
                 String productTotalPoints = edtProductTotalPoint.getText().toString().trim();
                 String productDistPer = edtDistributorPercentage.getText().toString().trim();
@@ -459,68 +471,68 @@ public class AdminUpdateProductActivity extends AppCompatActivity implements Vie
             edtUploadProductPhoto1.setText(uploadPhoto1Name);
         }
 
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getProductPhoto2())) {
-            uploadPhoto2Base64 = getProductDetailByIdPojo.getProductPhoto2() + "";
-            isPhotoUploaded2 = true;
-        }
-
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getProductPhotoName2())) {
-            uploadPhoto2Name = getProductDetailByIdPojo.getProductPhotoName2();
-            edtUploadProductPhoto2.setText(uploadPhoto2Name);
-        }
-
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getProductPhoto3())) {
-            uploadPhoto3Base64 = getProductDetailByIdPojo.getProductPhoto3() + "";
-            isPhotoUploaded3 = true;
-        }
-
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getProductPhotoName3())) {
-            uploadPhoto3Name = getProductDetailByIdPojo.getProductPhotoName3();
-            edtUploadProductPhoto3.setText(uploadPhoto3Name);
-        }
-
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getProductPhoto4())) {
-            uploadPhoto4Base64 = getProductDetailByIdPojo.getProductPhoto4() + "";
-            isPhotoUploaded4 = true;
-        }
-
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getProductPhotoName4())) {
-            uploadPhoto4Name = getProductDetailByIdPojo.getProductPhotoName4();
-            edtUploadProductPhoto4.setText(uploadPhoto4Name);
-        }
-
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getProductPhoto5())) {
-            uploadPhoto5Base64 = getProductDetailByIdPojo.getProductPhoto5() + "";
-            isPhotoUploaded5 = true;
-        }
-
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getProductPhotoName5())) {
-            uploadPhoto5Name = getProductDetailByIdPojo.getProductPhotoName5();
-            edtUploadProductPhoto5.setText(uploadPhoto5Name);
-        }
+//        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getProductPhoto2())) {
+//            uploadPhoto2Base64 = getProductDetailByIdPojo.getProductPhoto2() + "";
+//            isPhotoUploaded2 = true;
+//        }
+//
+//        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getProductPhotoName2())) {
+//            uploadPhoto2Name = getProductDetailByIdPojo.getProductPhotoName2();
+//            edtUploadProductPhoto2.setText(uploadPhoto2Name);
+//        }
+//
+//        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getProductPhoto3())) {
+//            uploadPhoto3Base64 = getProductDetailByIdPojo.getProductPhoto3() + "";
+//            isPhotoUploaded3 = true;
+//        }
+//
+//        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getProductPhotoName3())) {
+//            uploadPhoto3Name = getProductDetailByIdPojo.getProductPhotoName3();
+//            edtUploadProductPhoto3.setText(uploadPhoto3Name);
+//        }
+//
+//        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getProductPhoto4())) {
+//            uploadPhoto4Base64 = getProductDetailByIdPojo.getProductPhoto4() + "";
+//            isPhotoUploaded4 = true;
+//        }
+//
+//        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getProductPhotoName4())) {
+//            uploadPhoto4Name = getProductDetailByIdPojo.getProductPhotoName4();
+//            edtUploadProductPhoto4.setText(uploadPhoto4Name);
+//        }
+//
+//        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getProductPhoto5())) {
+//            uploadPhoto5Base64 = getProductDetailByIdPojo.getProductPhoto5() + "";
+//            isPhotoUploaded5 = true;
+//        }
+//
+//        if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getProductPhotoName5())) {
+//            uploadPhoto5Name = getProductDetailByIdPojo.getProductPhotoName5();
+//            edtUploadProductPhoto5.setText(uploadPhoto5Name);
+//        }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getProductPrice())) {
-            edtProductPrice.setText(getProductDetailByIdPojo.getProductPrice() + "");
+            edtProductPrice.setText(String.valueOf(getProductDetailByIdPojo.getProductPrice()));
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getProductTotalPoint())) {
-            edtProductTotalPoint.setText(getProductDetailByIdPojo.getProductTotalPoint() + "");
+            edtProductTotalPoint.setText(String.valueOf(getProductDetailByIdPojo.getProductTotalPoint()));
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getDistPer())) {
-            edtDistributorPercentage.setText(getProductDetailByIdPojo.getDistPer() + "");
+            edtDistributorPercentage.setText(String.valueOf(getProductDetailByIdPojo.getDistPer()));
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getDealerPer())) {
-            edtDealerPercentage.setText(getProductDetailByIdPojo.getDealerPer() + "");
+            edtDealerPercentage.setText(String.valueOf(getProductDetailByIdPojo.getDealerPer()));
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getCustomerPer())) {
-            edtCustomerPercentage.setText(getProductDetailByIdPojo.getCustomerPer() + "");
+            edtCustomerPercentage.setText(String.valueOf(getProductDetailByIdPojo.getCustomerPer()));
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getProductDetailByIdPojo.getProductDescription())) {
-            edtProductDescription.setText(getProductDetailByIdPojo.getProductDescription() + "");
+            edtProductDescription.setText(String.valueOf(getProductDetailByIdPojo.getProductDescription()));
         }
 
     }

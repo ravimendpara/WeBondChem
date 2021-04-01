@@ -8,19 +8,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import com.webond.chemicals.R;
 import com.webond.chemicals.api.ApiImplementer;
-import com.webond.chemicals.custom_class.SpinnerSimpleAdapter;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.customer.adapter.CustomerAddOrderAdapter;
-import com.webond.chemicals.dealer.adapter.DealerAddOrderAdapter;
-import com.webond.chemicals.pojo.GetDealerListByCityIdPojo;
 import com.webond.chemicals.pojo.GetDealerListByTalukaIdPojo;
-import com.webond.chemicals.pojo.GetDistributorListByCityIdPojo;
 import com.webond.chemicals.pojo.GetDistrictListPojo;
 import com.webond.chemicals.pojo.GetProductListPojo;
 import com.webond.chemicals.pojo.GetTalukaListPojo;
@@ -31,12 +24,16 @@ import com.webond.chemicals.utils.MySharedPreferences;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class CustomerAddOrderActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    public static final String SELECT_DISTRICT = "Select District";
-    public static final String SELECT_TALUKA = "Select Taluka";
-    public static final String SELECT_DEALER = "Select Dealer";
+    public static final String SELECT_DISTRICT = "Select District*";
+    public static final String SELECT_TALUKA = "Select Taluka*";
+    public static final String SELECT_DEALER = "Select Dealer*";
 
     private MySharedPreferences mySharedPreferences;
     private RecyclerView rvProductList;

@@ -115,11 +115,15 @@ public class AdminAddProductActivity extends AppCompatActivity implements View.O
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (!CommonUtil.checkIsEmptyOrNullCommon(s.toString().trim())) {
-                    if (Integer.parseInt(s.toString().trim()) > 100) {
-                        edtDistributorPercentage.setText("100");
-                        Toast.makeText(AdminAddProductActivity.this, "You can't enter more than 100%", Toast.LENGTH_SHORT).show();
+                try {
+                    if (!CommonUtil.checkIsEmptyOrNullCommon(s.toString().trim())) {
+                        if (Double.parseDouble(s.toString().trim()) > 100) {
+                            edtDistributorPercentage.setText("100");
+                            Toast.makeText(AdminAddProductActivity.this, "You can't enter more than 100%", Toast.LENGTH_SHORT).show();
+                        }
                     }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         });
@@ -137,11 +141,15 @@ public class AdminAddProductActivity extends AppCompatActivity implements View.O
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (!CommonUtil.checkIsEmptyOrNullCommon(s.toString().trim())) {
-                    if (Integer.parseInt(s.toString().trim()) > 100) {
-                        edtDealerPercentage.setText("100");
-                        Toast.makeText(AdminAddProductActivity.this, "You can't enter more than 100%", Toast.LENGTH_SHORT).show();
+                try {
+                    if (!CommonUtil.checkIsEmptyOrNullCommon(s.toString().trim())) {
+                        if (Double.parseDouble(s.toString().trim()) > 100) {
+                            edtDealerPercentage.setText("100");
+                            Toast.makeText(AdminAddProductActivity.this, "You can't enter more than 100%", Toast.LENGTH_SHORT).show();
+                        }
                     }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         });
@@ -159,11 +167,15 @@ public class AdminAddProductActivity extends AppCompatActivity implements View.O
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (!CommonUtil.checkIsEmptyOrNullCommon(s.toString().trim())) {
-                    if (Integer.parseInt(s.toString().trim()) > 100) {
-                        edtCustomerPercentage.setText("100");
-                        Toast.makeText(AdminAddProductActivity.this, "You can't enter more than 100%", Toast.LENGTH_SHORT).show();
+                try {
+                    if (!CommonUtil.checkIsEmptyOrNullCommon(s.toString().trim())) {
+                        if (Double.parseDouble(s.toString().trim()) > 100) {
+                            edtCustomerPercentage.setText("100");
+                            Toast.makeText(AdminAddProductActivity.this, "You can't enter more than 100%", Toast.LENGTH_SHORT).show();
+                        }
                     }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         });
@@ -213,14 +225,14 @@ public class AdminAddProductActivity extends AppCompatActivity implements View.O
                 String productName = edtProductName.getText().toString().trim();
                 String ProductPhoto1 = uploadPhoto1Base64;
                 String ProductPhotoName1 = uploadPhoto1Name;
-                String ProductPhoto2 = uploadPhoto2Base64;
-                String ProductPhotoName2 = uploadPhoto2Name;
-                String ProductPhoto3 = uploadPhoto3Base64;
-                String ProductPhotoName3 = uploadPhoto3Name;
-                String ProductPhoto4 = uploadPhoto4Base64;
-                String ProductPhotoName4 = uploadPhoto4Name;
-                String ProductPhoto5 = uploadPhoto5Base64;
-                String ProductPhotoName5 = uploadPhoto5Name;
+                String ProductPhoto2 = "";
+                String ProductPhotoName2 = "";
+                String ProductPhoto3 = "";
+                String ProductPhotoName3 = "";
+                String ProductPhoto4 = "";
+                String ProductPhotoName4 = "";
+                String ProductPhoto5 = "";
+                String ProductPhotoName5 = "";
                 String productPrice = edtProductPrice.getText().toString().trim();
                 String productTotalPoints = edtProductTotalPoint.getText().toString().trim();
                 String productDistPer = edtDistributorPercentage.getText().toString().trim();

@@ -4,6 +4,6 @@
     android:layout_height="wrap_content"
     android:hint="Select City"
     android:padding="5dp"
-    android:textColor="@color/colorAccent"
-    android:textColorHint="@color/colorAccent"
-    android:textSize="13sp" />
+    android:textColor="@color/black"
+    android:textColorHint="@color/black"
+    android:textSize="12sp" />

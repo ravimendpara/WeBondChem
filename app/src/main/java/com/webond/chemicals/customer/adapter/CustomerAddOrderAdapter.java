@@ -14,18 +14,22 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import com.webond.chemicals.R;
 import com.webond.chemicals.api.ApiImplementer;
-import com.webond.chemicals.custom_class.SpinnerSimpleAdapter;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
-import com.webond.chemicals.customer.activity.CustomerRegistrationActivity;
-import com.webond.chemicals.dealer.adapter.DealerAddOrderAdapter;
 import com.webond.chemicals.pojo.AddCustomerOrderDataPojo;
-import com.webond.chemicals.pojo.AddDealerOrderDataPojo;
-import com.webond.chemicals.pojo.GetDealerListByCityIdPojo;
 import com.webond.chemicals.pojo.GetDealerListByTalukaIdPojo;
 import com.webond.chemicals.pojo.GetProductListPojo;
 import com.webond.chemicals.pojo.GetTalukaListPojo;
@@ -43,22 +47,15 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CustomerAddOrderAdapter extends RecyclerView.Adapter<CustomerAddOrderAdapter.MyViewHolder>{
 
-    public static final String SELECT_DISTRICT = "Select District";
-    public static final String SELECT_TALUKA = "Select Taluka";
-    public static final String SELECT_DEALER = "Select Dealer";
+    public static final String SELECT_DISTRICT = "Select District*";
+    public static final String SELECT_TALUKA = "Select Taluka*";
+    public static final String SELECT_DEALER = "Select Dealer*";
     private Context context;
     private ArrayList<GetProductListPojo> getProductListPojoArrayList;
     private LayoutInflater layoutInflater;
@@ -72,7 +69,7 @@ public class CustomerAddOrderAdapter extends RecyclerView.Adapter<CustomerAddOrd
     private ArrayList<String> dealerArrayList;
     private HashMap<String, String> dealerHashMap;
 
-    AppCompatEditText etContactPersonAtSite,
+    TextInputEditText etContactPersonAtSite,
             etSiteAddress, etContactNo, etPinCode;
     SearchableSpinner spDistrict, spTaluka, spDealer;
     AppCompatButton btnSubmit;
