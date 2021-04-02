@@ -28,6 +28,12 @@ android {
     }
 }
 
+//key store or certificate path webond project path\app\webond_chemicals_certificate.jks
+//password:- webond_chemicals
+//key store password:- webond_chemicals
+//key alias:- key0
+//key password:- webond_chemicals
+
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
