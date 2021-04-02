@@ -333,7 +333,7 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
                     try {
                         jsonObject.put("ProductId", getProductListPojo.getProductId() + "");
                         jsonObject.put("Qty", holder.etQty.getText().toString());
-                        jsonObject.put("SinglePoint", getProductListPojo.getProductTotalPoint() + "");
+                        jsonObject.put("SinglePoint", ((int) Double.parseDouble(getProductListPojo.getDealerPoint())) + "");
                         jsonObject.put("TotalPoint", holder.tvTotalPoint.getText().toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
