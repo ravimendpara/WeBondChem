@@ -3,9 +3,7 @@
 
     <string name="permissions_has_not_grant">Permissions has not been granted</string>
     <string name="permission_request">Permission Request</string>
-    <string name="download"><u>Download</u></string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="rupee_symbol">\u20B9</string>
 

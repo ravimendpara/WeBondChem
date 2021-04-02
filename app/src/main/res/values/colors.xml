@@ -8,62 +8,14 @@
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="color_black">#000000</color>
-    <color name="color_transparent">#ffffff</color>
     <color name="common_bg_color">#d5e8d5</color>
 
-    <color name="color_black_with_90_opacity">#E6000000</color>
-    <color name="color_black_with_85_opacity">#D9000000</color>
     <color name="color_black_with_75_opacity">#BF000000</color>
-    <color name="color_black_with_70_opacity">#B3000000</color>
 
-    <color name="white_color_with_85_opacity">#26FFFFFF</color>
-    <color name="white_color_with_75_opacity">#BFFFFFFF</color>
     <color name="color_primary_with_75_opacity">#BF039947</color>
-    <color name="color_primary_with_80_opacity">#CC039947</color>
-    <color name="color_primary_with_90_opacity">#E6039947</color>
-    <color name="color_primary_with_60_opacity">#4D039947</color>
-    <color name="color_primary_with_30_opacity">#33039947</color>
-    <color name="color_primary_with_70_opacity">#B3039947</color>
-
-    <color name="color_accent_with_90_opacity">#E6393186</color>
-    <color name="color_accent_with_75_opacity">#66393186</color>
-    <color name="color_accent_with_80_opacity">#CC393186</color>
-
-    <color name="profile_heading_color">@color/colorAccent</color>
-    <color name="profile_heading_value_color">@color/colorPrimary</color>
-
-    <color name="attendance_selected_tab_color">@color/colorAccent</color>
-    <color name="attendance_unselected_tab_color">@color/colorPrimary</color>
-
-    <color name="lightgrey">#E0E0E0</color>
 
     <color name="red">#e53935</color>
-    <color name="pink">#d81b60</color>
-    <color name="deep_purple">#5e35b1</color>
-    <color name="indigo">#3949ab</color>
-    <color name="blue">#1e88e5</color>
-    <color name="deep_oragng">#f4511e</color>
-    <color name="teal">#00897b</color>
-    <color name="amber">#f57f17</color>
 
-    <color name="color_event_details">#ff9d00</color>
-    <color name="color_teams">#e8027e</color>
-    <color name="color_activity">#05a2ff</color>
-    <color name="color_live_chat_and_history">#55208a</color>
-    <color name="color_time_sheet">#ef5350</color>
-    <color name="color_incident">#424242</color>
-    <color name="color_notification">#ff824c</color>
-    <color name="color_feedback">#2980B9</color>
-
-    <color name="slycalendar_defBackgroundColor">#ffffff</color>
-    <color name="slycalendar_defHeaderColor">#2962ff</color>
-    <color name="slycalendar_defHeaderTextColor">#ffffff</color>
-    <color name="slycalendar_defTextColor">#333333</color>
-    <color name="slycalendar_defSelectedColor">#2962ff</color>
-    <color name="slycalendar_defSelectedTextColor">#ffffff</color>
-    <color name="color_header">#14489E</color>
-
-    <color name="slycalendar_defSelectedColor_transparent">#2962ff</color>
     <color name="darker_grey_color">#757575</color>
     <color name="ligh_darker_grey_color">#8d8d8d</color>
 </resources>
