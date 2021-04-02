@@ -7,22 +7,35 @@
     android:orientation="vertical"
     tools:context=".admin.fragments.customer.AdminAllCustomerFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvAdminAllCustomer"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layoutAnimation="@anim/layout_animation_from_bottom_for_list"
-        android:scrollbars="none"
-        android:visibility="gone"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/llLoading"
-        layout="@layout/loading_layout" />
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/llNoDateFound"
-        layout="@layout/layout_no_data_found"
-        android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvAdminAllCustomer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <include
+            android:id="@+id/llLoading"
+            layout="@layout/loading_layout" />
+
+        <include
+            android:id="@+id/llNoDateFound"
+            layout="@layout/layout_no_data_found"
+            android:visibility="gone" />
+
+    </FrameLayout>
 
 </LinearLayout>

@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.webond.chemicals.R;
 import com.webond.chemicals.adapter.dealer.PendingDealerListAdapter;
@@ -25,14 +26,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class AdminPendingDealerFragment extends Fragment {
+public class AdminPendingDealerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private Context context;
     private MySharedPreferences mySharedPreferences;
     private RecyclerView rvAdminPendingDealer;
     private LinearLayout llLoading;
     private LinearLayout llNoDateFound;
-    private boolean isNeedToRefresh = false;
+    //    private boolean isNeedToRefresh = false;
+    SwipeRefreshLayout swipeContainer;
 
     public AdminPendingDealerFragment() {
         // Required empty public constructor
@@ -50,26 +52,32 @@ public class AdminPendingDealerFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin_pending_dealer, container, false);
         initView(view);
-        getApproveDealerListApiCall();
+        getApproveDealerListApiCall(false);
         return view;
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isNeedToRefresh) {
-            getApproveDealerListApiCall();
-        }
-    }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (isNeedToRefresh) {
+//            getApproveDealerListApiCall();
+//        }
+//    }
 
     private void initView(View view) {
         mySharedPreferences = new MySharedPreferences(context);
         rvAdminPendingDealer = view.findViewById(R.id.rvAdminPendingDealer);
         llLoading = view.findViewById(R.id.llLoading);
         llNoDateFound = view.findViewById(R.id.llNoDateFound);
+        swipeContainer = view.findViewById(R.id.swipeContainer);
+        swipeContainer.setEnabled(true);
+        swipeContainer.setOnRefreshListener(this);
     }
 
-    private void getApproveDealerListApiCall() {
+    private void getApproveDealerListApiCall(boolean isPullToRefresh) {
+        if (isPullToRefresh) {
+            swipeContainer.setRefreshing(true);
+        }
         llLoading.setVisibility(View.VISIBLE);
         llNoDateFound.setVisibility(View.GONE);
         rvAdminPendingDealer.setVisibility(View.GONE);
@@ -77,12 +85,15 @@ public class AdminPendingDealerFragment extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<GetDealerListPojo>> call, Response<ArrayList<GetDealerListPojo>> response) {
                 try {
+                    if (isPullToRefresh) {
+                        swipeContainer.setRefreshing(false);
+                    }
                     if (response.code() == 200 && response.body() != null) {
                         if (response.body().size() > 0) {
                             llLoading.setVisibility(View.GONE);
                             llNoDateFound.setVisibility(View.GONE);
                             rvAdminPendingDealer.setVisibility(View.VISIBLE);
-                            isNeedToRefresh = true;
+//                            isNeedToRefresh = true;
                             rvAdminPendingDealer.setAdapter(new PendingDealerListAdapter(context, response.body()));
                         } else {
                             llLoading.setVisibility(View.GONE);
@@ -101,6 +112,9 @@ public class AdminPendingDealerFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ArrayList<GetDealerListPojo>> call, Throwable t) {
+                if (isPullToRefresh) {
+                    swipeContainer.setRefreshing(false);
+                }
                 llLoading.setVisibility(View.GONE);
                 llNoDateFound.setVisibility(View.VISIBLE);
                 rvAdminPendingDealer.setVisibility(View.GONE);
@@ -108,4 +122,8 @@ public class AdminPendingDealerFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onRefresh() {
+        getApproveDealerListApiCall(true);
+    }
 }

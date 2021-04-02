@@ -10,13 +10,12 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.webond.chemicals.R;
 import com.webond.chemicals.adapter.customer.ApproveCustomerListAdapter;
-import com.webond.chemicals.adapter.dealer.ApproveDealerListAdapter;
 import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.pojo.GetCustomerListPojo;
-import com.webond.chemicals.pojo.GetDealerListPojo;
 import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.MySharedPreferences;
 
@@ -26,14 +25,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DealerApproveCustomerFragment extends Fragment {
-    
+public class DealerApproveCustomerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+
     private Context context;
     private MySharedPreferences mySharedPreferences;
     private RecyclerView rvDealerApproveCustomer;
     private LinearLayout llLoading;
     private LinearLayout llNoDateFound;
-    private boolean isNeedToRefresh = false;
+    //    private boolean isNeedToRefresh = false;
+    SwipeRefreshLayout swipeContainer;
 
 
     public DealerApproveCustomerFragment() {
@@ -53,26 +53,32 @@ public class DealerApproveCustomerFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dealer_approve_customer, container, false);
         initView(view);
-        getApproveCustomerListApiCall();
+        getApproveCustomerListApiCall(false);
         return view;
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isNeedToRefresh){
-            getApproveCustomerListApiCall();
-        }
-    }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (isNeedToRefresh){
+//            getApproveCustomerListApiCall();
+//        }
+//    }
 
     private void initView(View view) {
         mySharedPreferences = new MySharedPreferences(context);
         rvDealerApproveCustomer = view.findViewById(R.id.rvDealerApproveCustomer);
         llLoading = view.findViewById(R.id.llLoading);
         llNoDateFound = view.findViewById(R.id.llNoDateFound);
+        swipeContainer = view.findViewById(R.id.swipeContainer);
+        swipeContainer.setEnabled(true);
+        swipeContainer.setOnRefreshListener(this);
     }
 
-    private void getApproveCustomerListApiCall() {
+    private void getApproveCustomerListApiCall(boolean isPullToRefresh) {
+        if (isPullToRefresh) {
+            swipeContainer.setRefreshing(true);
+        }
         llLoading.setVisibility(View.VISIBLE);
         llNoDateFound.setVisibility(View.GONE);
         rvDealerApproveCustomer.setVisibility(View.GONE);
@@ -80,12 +86,15 @@ public class DealerApproveCustomerFragment extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<GetCustomerListPojo>> call, Response<ArrayList<GetCustomerListPojo>> response) {
                 try {
+                    if (isPullToRefresh) {
+                        swipeContainer.setRefreshing(false);
+                    }
                     if (response.code() == 200 && response.body() != null) {
                         if (response.body().size() > 0) {
                             llLoading.setVisibility(View.GONE);
                             llNoDateFound.setVisibility(View.GONE);
                             rvDealerApproveCustomer.setVisibility(View.VISIBLE);
-                            isNeedToRefresh = true;
+//                            isNeedToRefresh = true;
                             rvDealerApproveCustomer.setAdapter(new ApproveCustomerListAdapter(context, response.body()));
                         } else {
                             llLoading.setVisibility(View.GONE);
@@ -104,11 +113,18 @@ public class DealerApproveCustomerFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ArrayList<GetCustomerListPojo>> call, Throwable t) {
+                if (isPullToRefresh) {
+                    swipeContainer.setRefreshing(false);
+                }
                 llLoading.setVisibility(View.GONE);
                 llNoDateFound.setVisibility(View.VISIBLE);
                 rvDealerApproveCustomer.setVisibility(View.GONE);
             }
         });
     }
-    
+
+    @Override
+    public void onRefresh() {
+        getApproveCustomerListApiCall(true);
+    }
 }

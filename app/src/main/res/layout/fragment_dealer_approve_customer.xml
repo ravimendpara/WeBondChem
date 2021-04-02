@@ -1,30 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-    tools:context=".dealer.fragments.DealerApproveCustomerFragment">
-
-
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/rvDealerApproveCustomer"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="none"
-    android:visibility="gone"
-    android:layoutAnimation="@anim/layout_animation_from_bottom_for_list"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    android:orientation="vertical"
+    tools:context=".dealer.fragments.DealerApproveCustomerFragment">
 
-<include
-    android:id="@+id/llLoading"
-    layout="@layout/loading_layout" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-<include
-    android:visibility="gone"
-    android:id="@+id/llNoDateFound"
-    layout="@layout/layout_no_data_found" />
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvDealerApproveCustomer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <include
+            android:id="@+id/llLoading"
+            layout="@layout/loading_layout" />
+
+        <include
+            android:id="@+id/llNoDateFound"
+            layout="@layout/layout_no_data_found"
+            android:visibility="gone" />
+
+    </FrameLayout>
 
 
 </LinearLayout>

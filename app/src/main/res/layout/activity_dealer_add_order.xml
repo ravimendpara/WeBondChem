@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".dealer.activity.DealerAddOrderActivity">
-
 
 
     <include layout="@layout/layout_header" />
@@ -22,7 +20,6 @@
             android:id="@+id/rvProductList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layoutAnimation="@anim/layout_animation_from_bottom_for_list"
             android:scrollbars="none"
             android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
@@ -37,7 +34,6 @@
             android:visibility="gone" />
 
     </LinearLayout>
-
 
 
 </LinearLayout>

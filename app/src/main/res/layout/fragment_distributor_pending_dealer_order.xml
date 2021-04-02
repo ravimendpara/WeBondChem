@@ -1,31 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-    tools:context=".distributor.fragments.manage_dealer_order.DistributorPendingDealerOrderFragment">
-
-
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/rvDistributorPendingDealerOrder"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="none"
-    android:visibility="gone"
-    android:layoutAnimation="@anim/layout_animation_from_bottom_for_list"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    android:orientation="vertical"
+    tools:context=".distributor.fragments.manage_dealer_order.DistributorPendingDealerOrderFragment">
 
-<include
-    android:visibility="visible"
-    android:id="@+id/llLoading"
-    layout="@layout/loading_layout" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-<include
-    android:visibility="gone"
-    android:id="@+id/llNoDateFound"
-    layout="@layout/layout_no_data_found" />
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvDistributorPendingDealerOrder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <include
+            android:id="@+id/llLoading"
+            layout="@layout/loading_layout"
+            android:visibility="visible" />
+
+        <include
+            android:id="@+id/llNoDateFound"
+            layout="@layout/layout_no_data_found"
+            android:visibility="gone" />
+
+    </FrameLayout>
 
 
 </LinearLayout>

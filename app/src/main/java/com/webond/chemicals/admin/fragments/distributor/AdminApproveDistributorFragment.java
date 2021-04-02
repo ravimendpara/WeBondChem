@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.webond.chemicals.R;
 import com.webond.chemicals.adapter.distributor.ApproveDistributorListAdapter;
@@ -24,14 +25,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AdminApproveDistributorFragment extends Fragment {
+public class AdminApproveDistributorFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private Context context;
     private MySharedPreferences mySharedPreferences;
     private RecyclerView rvAdminApproveDistributor;
     private LinearLayout llLoading;
     private LinearLayout llNoDateFound;
-    private boolean isNeedToRefresh = false;
+    //    private boolean isNeedToRefresh = false;
+    SwipeRefreshLayout swipeContainer;
 
 
     public AdminApproveDistributorFragment() {
@@ -49,26 +51,32 @@ public class AdminApproveDistributorFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin_approve_distributor, container, false);
         initView(view);
-        getApproveDistributorListApiCall();
+        getApproveDistributorListApiCall(false);
         return view;
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isNeedToRefresh) {
-            getApproveDistributorListApiCall();
-        }
-    }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (isNeedToRefresh) {
+//            getApproveDistributorListApiCall();
+//        }
+//    }
 
     private void initView(View view) {
         mySharedPreferences = new MySharedPreferences(context);
         rvAdminApproveDistributor = view.findViewById(R.id.rvAdminApproveDistributor);
         llLoading = view.findViewById(R.id.llLoading);
         llNoDateFound = view.findViewById(R.id.llNoDateFound);
+        swipeContainer = view.findViewById(R.id.swipeContainer);
+        swipeContainer.setEnabled(true);
+        swipeContainer.setOnRefreshListener(this);
     }
 
-    private void getApproveDistributorListApiCall() {
+    private void getApproveDistributorListApiCall(boolean isPullToRefresh) {
+        if (isPullToRefresh) {
+            swipeContainer.setRefreshing(true);
+        }
         llLoading.setVisibility(View.VISIBLE);
         llNoDateFound.setVisibility(View.GONE);
         rvAdminApproveDistributor.setVisibility(View.GONE);
@@ -76,12 +84,15 @@ public class AdminApproveDistributorFragment extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<GetDistributorListPojo>> call, Response<ArrayList<GetDistributorListPojo>> response) {
                 try {
+                    if (isPullToRefresh) {
+                        swipeContainer.setRefreshing(false);
+                    }
                     if (response.code() == 200 && response.body() != null) {
                         if (response.body().size() > 0) {
                             llLoading.setVisibility(View.GONE);
                             llNoDateFound.setVisibility(View.GONE);
                             rvAdminApproveDistributor.setVisibility(View.VISIBLE);
-                            isNeedToRefresh = true;
+//                            isNeedToRefresh = true;
                             rvAdminApproveDistributor.setAdapter(new ApproveDistributorListAdapter(context, response.body()));
                         } else {
                             llLoading.setVisibility(View.GONE);
@@ -100,6 +111,9 @@ public class AdminApproveDistributorFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ArrayList<GetDistributorListPojo>> call, Throwable t) {
+                if (isPullToRefresh) {
+                    swipeContainer.setRefreshing(false);
+                }
                 llLoading.setVisibility(View.GONE);
                 llNoDateFound.setVisibility(View.VISIBLE);
                 rvAdminApproveDistributor.setVisibility(View.GONE);
@@ -108,4 +122,8 @@ public class AdminApproveDistributorFragment extends Fragment {
     }
 
 
+    @Override
+    public void onRefresh() {
+        getApproveDistributorListApiCall(true);
+    }
 }
