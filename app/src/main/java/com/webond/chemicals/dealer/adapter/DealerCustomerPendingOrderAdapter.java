@@ -6,11 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.button.MaterialButton;
 import com.webond.chemicals.R;
 import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
-import com.webond.chemicals.distributor.adapter.DistributorPendingDealerOrderAdapter;
 import com.webond.chemicals.pojo.ApproveOrderPojo;
 import com.webond.chemicals.pojo.GetCustomerOrderListPojo;
 import com.webond.chemicals.utils.CommonUtil;
@@ -18,13 +20,11 @@ import com.webond.chemicals.utils.DialogUtil;
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DealerCustomerPendingOrderAdapter extends RecyclerView.Adapter<DealerCustomerPendingOrderAdapter.MyViewHolder>{
+public class DealerCustomerPendingOrderAdapter extends RecyclerView.Adapter<DealerCustomerPendingOrderAdapter.MyViewHolder> {
 
 
     private Context context;
@@ -68,8 +68,8 @@ public class DealerCustomerPendingOrderAdapter extends RecyclerView.Adapter<Deal
             holder.tvQuantity.setText(getCustomerOrderListPojo.getQty() + "");
         }
 
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getCustomerOrderListPojo.getPoint())) {
-            holder.tvProductPoint.setText(getCustomerOrderListPojo.getPoint() + "");
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getCustomerOrderListPojo.getTotalPoint())) {
+            holder.tvTotalPoint.setText(getCustomerOrderListPojo.getTotalPoint() + "");
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getCustomerOrderListPojo.getStatus())) {
@@ -80,7 +80,7 @@ public class DealerCustomerPendingOrderAdapter extends RecyclerView.Adapter<Deal
             @Override
             public void onClick(View view) {
                 approveOrder(getCustomerOrderListPojo.getOrderId() + "", CommonUtil.APPROVE_STATUS,
-                        position,getCustomerOrderListPojoArrayList);
+                        position, getCustomerOrderListPojoArrayList);
             }
         });
 
@@ -88,7 +88,7 @@ public class DealerCustomerPendingOrderAdapter extends RecyclerView.Adapter<Deal
             @Override
             public void onClick(View view) {
                 approveOrder(getCustomerOrderListPojo.getOrderId() + "", CommonUtil.REJECT_STATUS,
-                        position,getCustomerOrderListPojoArrayList);
+                        position, getCustomerOrderListPojoArrayList);
             }
         });
     }
@@ -105,7 +105,7 @@ public class DealerCustomerPendingOrderAdapter extends RecyclerView.Adapter<Deal
         TextViewMediumFont tvOrderNo;
         TextViewMediumFont tvOrderDate;
         TextViewMediumFont tvQuantity;
-        TextViewMediumFont tvProductPoint;
+        TextViewMediumFont tvTotalPoint;
         TextViewMediumFont tvStatus;
         TextViewMediumFont tvCustomerName;
         MaterialButton btnApprove;
@@ -117,7 +117,7 @@ public class DealerCustomerPendingOrderAdapter extends RecyclerView.Adapter<Deal
             tvOrderNo = itemView.findViewById(R.id.tvOrderNo);
             tvOrderDate = itemView.findViewById(R.id.tvOrderDate);
             tvQuantity = itemView.findViewById(R.id.tvQuantity);
-            tvProductPoint = itemView.findViewById(R.id.tvProductPoint);
+            tvTotalPoint = itemView.findViewById(R.id.tvTotalPoint);
             tvStatus = itemView.findViewById(R.id.tvStatus);
             btnApprove = itemView.findViewById(R.id.btnApprove);
             btnReject = itemView.findViewById(R.id.btnReject);
@@ -125,7 +125,7 @@ public class DealerCustomerPendingOrderAdapter extends RecyclerView.Adapter<Deal
         }
     }
 
-    private void approveOrder(String orderId, String status,int pos,ArrayList<GetCustomerOrderListPojo> getCustomerOrderListPojoArrayList) {
+    private void approveOrder(String orderId, String status, int pos, ArrayList<GetCustomerOrderListPojo> getCustomerOrderListPojoArrayList) {
         DialogUtil.showProgressDialogNotCancelable(context, "");
         ApiImplementer.approveOrderApiImplementer(orderId, status, new Callback<ArrayList<ApproveOrderPojo>>() {
             @Override
@@ -133,7 +133,7 @@ public class DealerCustomerPendingOrderAdapter extends RecyclerView.Adapter<Deal
                 DialogUtil.hideProgressDialog();
                 try {
                     if (response.code() == 200 && response.body() != null && response.body().size() > 0 &&
-                            response.body().get(0).getStatus() == 1 ) {
+                            response.body().get(0).getStatus() == 1) {
                         Toast.makeText(context, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
                         getCustomerOrderListPojoArrayList.remove(pos);
                         notifyDataSetChanged();
@@ -156,5 +156,5 @@ public class DealerCustomerPendingOrderAdapter extends RecyclerView.Adapter<Deal
             }
         });
     }
-    
+
 }

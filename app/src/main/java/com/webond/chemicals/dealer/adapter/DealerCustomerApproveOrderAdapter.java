@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.button.MaterialButton;
 import com.webond.chemicals.R;
 import com.webond.chemicals.api.ApiImplementer;
@@ -17,8 +20,6 @@ import com.webond.chemicals.utils.DialogUtil;
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,8 +67,8 @@ public class DealerCustomerApproveOrderAdapter extends RecyclerView.Adapter<Deal
             holder.tvQuantity.setText(getCustomerOrderListPojo.getQty() + "");
         }
 
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getCustomerOrderListPojo.getPoint())) {
-            holder.tvProductPoint.setText(getCustomerOrderListPojo.getPoint() + "");
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getCustomerOrderListPojo.getTotalPoint())) {
+            holder.tvTotalPoint.setText(getCustomerOrderListPojo.getTotalPoint() + "");
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getCustomerOrderListPojo.getStatus())) {
@@ -95,7 +96,7 @@ public class DealerCustomerApproveOrderAdapter extends RecyclerView.Adapter<Deal
         TextViewMediumFont tvOrderNo;
         TextViewMediumFont tvOrderDate;
         TextViewMediumFont tvQuantity;
-        TextViewMediumFont tvProductPoint;
+        TextViewMediumFont tvTotalPoint;
         TextViewMediumFont tvStatus;
         TextViewMediumFont tvCustomerName;
         MaterialButton btnReject;
@@ -106,7 +107,7 @@ public class DealerCustomerApproveOrderAdapter extends RecyclerView.Adapter<Deal
             tvOrderNo = itemView.findViewById(R.id.tvOrderNo);
             tvOrderDate = itemView.findViewById(R.id.tvOrderDate);
             tvQuantity = itemView.findViewById(R.id.tvQuantity);
-            tvProductPoint = itemView.findViewById(R.id.tvProductPoint);
+            tvTotalPoint = itemView.findViewById(R.id.tvTotalPoint);
             tvStatus = itemView.findViewById(R.id.tvStatus);
             btnReject = itemView.findViewById(R.id.btnReject);
             tvCustomerName = itemView.findViewById(R.id.tvCustomerName);

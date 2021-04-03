@@ -152,11 +152,11 @@
                     <com.webond.chemicals.custom_class.TextViewRegularFont
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Product Point"
+                        android:text="Total Point"
                         android:textSize="12sp" />
 
                     <com.webond.chemicals.custom_class.TextViewMediumFont
-                        android:id="@+id/tvProductPoint"
+                        android:id="@+id/tvTotalPoint"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:singleLine="true"

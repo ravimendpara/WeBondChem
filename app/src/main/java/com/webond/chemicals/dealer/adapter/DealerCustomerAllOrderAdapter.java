@@ -5,16 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.material.button.MaterialButton;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.webond.chemicals.R;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.pojo.GetCustomerOrderListPojo;
 import com.webond.chemicals.utils.CommonUtil;
 
 import java.util.ArrayList;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class DealerCustomerAllOrderAdapter extends RecyclerView.Adapter<DealerCustomerAllOrderAdapter.MyViewHolder>{
 
@@ -60,8 +59,8 @@ public class DealerCustomerAllOrderAdapter extends RecyclerView.Adapter<DealerCu
             holder.tvQuantity.setText(getCustomerOrderListPojo.getQty() + "");
         }
 
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getCustomerOrderListPojo.getPoint())) {
-            holder.tvProductPoint.setText(getCustomerOrderListPojo.getPoint() + "");
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getCustomerOrderListPojo.getTotalPoint())) {
+            holder.tvTotalPoint.setText(getCustomerOrderListPojo.getTotalPoint() + "");
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getCustomerOrderListPojo.getStatus())) {
@@ -81,7 +80,7 @@ public class DealerCustomerAllOrderAdapter extends RecyclerView.Adapter<DealerCu
         TextViewMediumFont tvOrderNo;
         TextViewMediumFont tvOrderDate;
         TextViewMediumFont tvQuantity;
-        TextViewMediumFont tvProductPoint;
+        TextViewMediumFont tvTotalPoint;
         TextViewMediumFont tvStatus;
         TextViewMediumFont tvCustomerName;
 
@@ -91,7 +90,7 @@ public class DealerCustomerAllOrderAdapter extends RecyclerView.Adapter<DealerCu
             tvOrderNo = itemView.findViewById(R.id.tvOrderNo);
             tvOrderDate = itemView.findViewById(R.id.tvOrderDate);
             tvQuantity = itemView.findViewById(R.id.tvQuantity);
-            tvProductPoint = itemView.findViewById(R.id.tvProductPoint);
+            tvTotalPoint = itemView.findViewById(R.id.tvTotalPoint);
             tvStatus = itemView.findViewById(R.id.tvStatus);
             tvCustomerName = itemView.findViewById(R.id.tvCustomerName);
         }

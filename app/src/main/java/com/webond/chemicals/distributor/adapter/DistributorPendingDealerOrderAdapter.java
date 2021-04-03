@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.button.MaterialButton;
 import com.webond.chemicals.R;
-import com.webond.chemicals.admin.adapter.AdminPendingDistributorOrderAdapter;
 import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.pojo.ApproveOrderPojo;
@@ -18,8 +20,6 @@ import com.webond.chemicals.utils.DialogUtil;
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -67,8 +67,8 @@ public class DistributorPendingDealerOrderAdapter extends RecyclerView.Adapter<D
             holder.tvQuantity.setText(getDealerOrderListPojo.getQty() + "");
         }
 
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getDealerOrderListPojo.getPoint())) {
-            holder.tvProductPoint.setText(getDealerOrderListPojo.getPoint() + "");
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDealerOrderListPojo.getTotalPoint())) {
+            holder.tvTotalPoint.setText(getDealerOrderListPojo.getTotalPoint() + "");
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getDealerOrderListPojo.getStatus())) {
@@ -104,7 +104,7 @@ public class DistributorPendingDealerOrderAdapter extends RecyclerView.Adapter<D
         TextViewMediumFont tvOrderNo;
         TextViewMediumFont tvOrderDate;
         TextViewMediumFont tvQuantity;
-        TextViewMediumFont tvProductPoint;
+        TextViewMediumFont tvTotalPoint;
         TextViewMediumFont tvStatus;
         TextViewMediumFont tvDealerName;
         MaterialButton btnApprove;
@@ -116,7 +116,7 @@ public class DistributorPendingDealerOrderAdapter extends RecyclerView.Adapter<D
             tvOrderNo = itemView.findViewById(R.id.tvOrderNo);
             tvOrderDate = itemView.findViewById(R.id.tvOrderDate);
             tvQuantity = itemView.findViewById(R.id.tvQuantity);
-            tvProductPoint = itemView.findViewById(R.id.tvProductPoint);
+            tvTotalPoint = itemView.findViewById(R.id.tvTotalPoint);
             tvStatus = itemView.findViewById(R.id.tvStatus);
             btnApprove = itemView.findViewById(R.id.btnApprove);
             btnReject = itemView.findViewById(R.id.btnReject);
