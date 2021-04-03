@@ -5,19 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.webond.chemicals.R;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
-import com.webond.chemicals.distributor.adapter.DistributorAllDealerOrderAdapter;
-import com.webond.chemicals.pojo.GetDealerOrderListPojo;
 import com.webond.chemicals.pojo.GetLoginOrderListForDealerPojo;
 import com.webond.chemicals.utils.CommonUtil;
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-public class DealerMyOrderListAdapter extends RecyclerView.Adapter<DealerMyOrderListAdapter.MyViewHolder>{
+public class DealerMyOrderListAdapter extends RecyclerView.Adapter<DealerMyOrderListAdapter.MyViewHolder> {
 
     private Context context;
     private ArrayList<GetLoginOrderListForDealerPojo> getDealerOrderListPojoArrayList;
@@ -60,8 +58,8 @@ public class DealerMyOrderListAdapter extends RecyclerView.Adapter<DealerMyOrder
             holder.tvQuantity.setText(getDealerOrderListPojo.getQty() + "");
         }
 
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getDealerOrderListPojo.getPoint())) {
-            holder.tvProductPoint.setText(getDealerOrderListPojo.getPoint() + "");
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDealerOrderListPojo.getTotalPoint())) {
+            holder.tvTotalPoint.setText(getDealerOrderListPojo.getTotalPoint() + "");
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getDealerOrderListPojo.getStatus())) {
@@ -73,21 +71,22 @@ public class DealerMyOrderListAdapter extends RecyclerView.Adapter<DealerMyOrder
         return getDealerOrderListPojoArrayList.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder {
         TextViewMediumFont tvProductName;
         TextViewMediumFont tvOrderNo;
         TextViewMediumFont tvOrderDate;
         TextViewMediumFont tvQuantity;
-        TextViewMediumFont tvProductPoint;
+        TextViewMediumFont tvTotalPoint;
         TextViewMediumFont tvStatus;
         TextViewMediumFont tvDealerName;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tvProductName = itemView.findViewById(R.id.tvProductName);
             tvOrderNo = itemView.findViewById(R.id.tvOrderNo);
             tvOrderDate = itemView.findViewById(R.id.tvOrderDate);
             tvQuantity = itemView.findViewById(R.id.tvQuantity);
-            tvProductPoint = itemView.findViewById(R.id.tvProductPoint);
+            tvTotalPoint = itemView.findViewById(R.id.tvTotalPoint);
             tvStatus = itemView.findViewById(R.id.tvStatus);
             tvDealerName = itemView.findViewById(R.id.tvDealerName);
         }

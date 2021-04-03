@@ -5,20 +5,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.button.MaterialButton;
 import com.webond.chemicals.R;
-import com.webond.chemicals.admin.adapter.AdminAllDistributorOrderAdapter;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
-import com.webond.chemicals.pojo.GetDistributorOrderListPojo;
 import com.webond.chemicals.pojo.GetLoginOrderListForDistributorPojo;
 import com.webond.chemicals.utils.CommonUtil;
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-public class DistributorMyOrderListAdapter extends RecyclerView.Adapter<DistributorMyOrderListAdapter.MyViewHolder>{
+public class DistributorMyOrderListAdapter extends RecyclerView.Adapter<DistributorMyOrderListAdapter.MyViewHolder> {
 
     private Context context;
     private ArrayList<GetLoginOrderListForDistributorPojo> getDistributorOrderListPojoArrayList;
@@ -62,8 +60,8 @@ public class DistributorMyOrderListAdapter extends RecyclerView.Adapter<Distribu
             holder.tvQuantity.setText(getDistributorOrderListPojo.getQty() + "");
         }
 
-        if (!CommonUtil.checkIsEmptyOrNullCommon(getDistributorOrderListPojo.getPoint())) {
-            holder.tvProductPoint.setText(getDistributorOrderListPojo.getPoint() + "");
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDistributorOrderListPojo.getTotalPoint())) {
+            holder.tvTotalPoint.setText(getDistributorOrderListPojo.getTotalPoint() + "");
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getDistributorOrderListPojo.getStatus())) {
@@ -76,13 +74,13 @@ public class DistributorMyOrderListAdapter extends RecyclerView.Adapter<Distribu
         return getDistributorOrderListPojoArrayList.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextViewMediumFont tvProductName;
         TextViewMediumFont tvOrderNo;
         TextViewMediumFont tvOrderDate;
         TextViewMediumFont tvQuantity;
-        TextViewMediumFont tvProductPoint;
+        TextViewMediumFont tvTotalPoint;
         TextViewMediumFont tvStatus;
         TextViewMediumFont tvDistributorName;
         MaterialButton btnApprove;
@@ -94,7 +92,7 @@ public class DistributorMyOrderListAdapter extends RecyclerView.Adapter<Distribu
             tvOrderNo = itemView.findViewById(R.id.tvOrderNo);
             tvOrderDate = itemView.findViewById(R.id.tvOrderDate);
             tvQuantity = itemView.findViewById(R.id.tvQuantity);
-            tvProductPoint = itemView.findViewById(R.id.tvProductPoint);
+            tvTotalPoint = itemView.findViewById(R.id.tvTotalPoint);
             tvStatus = itemView.findViewById(R.id.tvStatus);
             btnApprove = itemView.findViewById(R.id.btnApprove);
             btnReject = itemView.findViewById(R.id.btnReject);
