@@ -50,7 +50,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements View.O
 
     public void initView() {
         mySharedPreferences = new MySharedPreferences(CustomerProfileActivity.this);
-        imgBack = findViewById(R.id.imgBack);desk
+        imgBack = findViewById(R.id.imgBack);
         imgBack.setOnClickListener(this);
         imgLogout = findViewById(R.id.imgLogout);
         imgLogout.setOnClickListener(this);
