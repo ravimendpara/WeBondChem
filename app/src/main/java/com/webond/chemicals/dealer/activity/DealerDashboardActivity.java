@@ -86,6 +86,12 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
         tvCode = findViewById(R.id.tvCode);
         tvTotalPoints = findViewById(R.id.tvTotalPoints);
 
+        if (mySharedPreferences.getDealerUnderRegStatus().equalsIgnoreCase("2")){
+            cvManageCustomer.setVisibility(View.VISIBLE);
+        }else {
+            cvManageCustomer.setVisibility(View.INVISIBLE);
+        }
+
         if (!CommonUtil.checkIsEmptyOrNullCommon(mySharedPreferences.getCustomerPhotoPath())) {
             Glide.with(DealerDashboardActivity.this)
                     .load(mySharedPreferences.getDealerPhotoPath())
