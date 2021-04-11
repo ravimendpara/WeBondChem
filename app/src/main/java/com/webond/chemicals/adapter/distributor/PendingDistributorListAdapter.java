@@ -20,6 +20,7 @@ import com.webond.chemicals.custom_class.CustomAnimationForDefaultExpandableCard
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
 import com.webond.chemicals.pojo.ApproveDistributorPojo;
+import com.webond.chemicals.pojo.DeleteDistributorPojo;
 import com.webond.chemicals.pojo.GetDistributorListPojo;
 import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.DialogUtil;
@@ -119,6 +120,14 @@ public class PendingDistributorListAdapter extends RecyclerView.Adapter<PendingD
             }
         });
 
+        holder.btnDeleteDistributor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteDistributorApiCall(getDistributorListPojo.getDistributorId()+"", position, getDistributorArrayList);
+            }
+        });
+
+
         holder.llExpandedHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,6 +156,7 @@ public class PendingDistributorListAdapter extends RecyclerView.Adapter<PendingD
         TextViewMediumFont tvStatusPendingDistributor;
         MaterialButton btnApprovePendingDistributor;
         MaterialButton btnRejectPendingDistributor;
+        MaterialButton btnDeleteDistributor;
         TextViewMediumFont tvPedthiName;
 
         AppCompatImageView ivViewMoreBtn;
@@ -171,6 +181,7 @@ public class PendingDistributorListAdapter extends RecyclerView.Adapter<PendingD
             tvStatusPendingDistributor = itemView.findViewById(R.id.tvStatusPendingDistributor);
             btnApprovePendingDistributor = itemView.findViewById(R.id.btnApprovePendingDistributor);
             btnRejectPendingDistributor = itemView.findViewById(R.id.btnRejectPendingDistributor);
+            btnDeleteDistributor = itemView.findViewById(R.id.btnDeleteDistributor);
         }
     }
 
@@ -182,6 +193,36 @@ public class PendingDistributorListAdapter extends RecyclerView.Adapter<PendingD
             CustomAnimationForDefaultExpandableCard.collapse(layoutExpand);
         }
         return isExpanded;
+    }
+
+    private void deleteDistributorApiCall(String distributorId, int position, ArrayList<GetDistributorListPojo> getDistributorListPojos) {
+        DialogUtil.showProgressDialogNotCancelable(context, "");
+        ApiImplementer.deleteDistributorApiImplementer(distributorId, new Callback<ArrayList<DeleteDistributorPojo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<DeleteDistributorPojo>> call, Response<ArrayList<DeleteDistributorPojo>> response) {
+                DialogUtil.hideProgressDialog();
+                try {
+                    if (response.code() == 200 && response.body() != null && response.body().size() > 0) {
+                        if (response.body().get(0).getStatus() == 1) {
+                            getDistributorListPojos.remove(position);
+                            notifyDataSetChanged();
+                        } else {
+                            Toast.makeText(context, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(context, "Something went wrong,Please try again", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<DeleteDistributorPojo>> call, Throwable t) {
+                DialogUtil.hideProgressDialog();
+                Toast.makeText(context, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void approveOrRejectDistributorApiCall(String distributorId, String status, int position, ArrayList<GetDistributorListPojo> getDistributorListPojos) {

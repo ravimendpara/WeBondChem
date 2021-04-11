@@ -20,6 +20,7 @@ import com.webond.chemicals.custom_class.CustomAnimationForDefaultExpandableCard
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
 import com.webond.chemicals.pojo.ApproveDealerPojo;
+import com.webond.chemicals.pojo.DeleteDealerPojo;
 import com.webond.chemicals.pojo.GetDealerListPojo;
 import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.DialogUtil;
@@ -119,6 +120,13 @@ public class PendingDealerListAdapter extends RecyclerView.Adapter<PendingDealer
             }
         });
 
+        holder.btnDeleteDealer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteDealerApiCall(getDealerListPojo.getDealerId() + "", position, getDealerListPojoArrayList);
+            }
+        });
+
         holder.llExpandedHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,6 +154,7 @@ public class PendingDealerListAdapter extends RecyclerView.Adapter<PendingDealer
         TextViewMediumFont tvStatusPendingDealer;
         MaterialButton btnApprovePendingDealer;
         MaterialButton btnRejectPendingDealer;
+        MaterialButton btnDeleteDealer;
         TextViewMediumFont tvPedthiName;
 
         AppCompatImageView ivViewMoreBtn;
@@ -165,6 +174,7 @@ public class PendingDealerListAdapter extends RecyclerView.Adapter<PendingDealer
             tvStatusPendingDealer = itemView.findViewById(R.id.tvStatusPendingDealer);
             btnApprovePendingDealer = itemView.findViewById(R.id.btnApprovePendingDealer);
             btnRejectPendingDealer = itemView.findViewById(R.id.btnRejectPendingDealer);
+            btnDeleteDealer = itemView.findViewById(R.id.btnDeleteDealer);
             tvPedthiName = itemView.findViewById(R.id.tvPedthiName);
             ivViewMoreBtn = itemView.findViewById(R.id.ivViewMoreBtn);
             llExpandedHeader = itemView.findViewById(R.id.llExpandedHeader);
@@ -180,6 +190,36 @@ public class PendingDealerListAdapter extends RecyclerView.Adapter<PendingDealer
             CustomAnimationForDefaultExpandableCard.collapse(layoutExpand);
         }
         return isExpanded;
+    }
+
+    private void deleteDealerApiCall(String dealerId, int position, ArrayList<GetDealerListPojo> GetDealerListPojo) {
+        DialogUtil.showProgressDialogNotCancelable(context, "");
+        ApiImplementer.deleteDealerApiImplementer(dealerId, new Callback<ArrayList<DeleteDealerPojo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<DeleteDealerPojo>> call, Response<ArrayList<DeleteDealerPojo>> response) {
+                DialogUtil.hideProgressDialog();
+                try {
+                    if (response.code() == 200 && response.body() != null && response.body().size() > 0) {
+                        if (response.body().get(0).getStatus() == 1) {
+                            GetDealerListPojo.remove(position);
+                            notifyDataSetChanged();
+                        } else {
+                            Toast.makeText(context, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(context, "Something went wrong,Please try again", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<DeleteDealerPojo>> call, Throwable t) {
+                DialogUtil.hideProgressDialog();
+                Toast.makeText(context, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void approveOrRejectDealerApiCall(String DealerId, String status, int position, ArrayList<GetDealerListPojo> getDealerListPojoArrayList) {

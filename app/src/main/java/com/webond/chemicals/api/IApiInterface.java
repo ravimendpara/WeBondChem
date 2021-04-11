@@ -13,8 +13,12 @@ import com.webond.chemicals.pojo.ApproveDealerPojo;
 import com.webond.chemicals.pojo.ApproveDistributorPojo;
 import com.webond.chemicals.pojo.ApproveOrderPojo;
 import com.webond.chemicals.pojo.CheckMobileNoExitstOrNoPojo;
+import com.webond.chemicals.pojo.DeleteCustomerPojo;
+import com.webond.chemicals.pojo.DeleteDealerPojo;
+import com.webond.chemicals.pojo.DeleteDistributorPojo;
 import com.webond.chemicals.pojo.GetBannerListPojo;
 import com.webond.chemicals.pojo.GetCityListPojo;
+import com.webond.chemicals.pojo.GetCustomerListForDistributorPojo;
 import com.webond.chemicals.pojo.GetCustomerListPojo;
 import com.webond.chemicals.pojo.GetCustomerOrderListPojo;
 import com.webond.chemicals.pojo.GetDashboardDetailsPojo;
@@ -341,6 +345,19 @@ public interface IApiInterface {
     @GET("DashboardDetail")
     Call<ArrayList<GetDashboardDetailsPojo>> getDashboardDetails(@Query("LoginType") String LoginType,
                                                                  @Query("LoginId") String LoginId);
+
+    @GET("GetCustomerListForDistributor")
+    Call<ArrayList<GetCustomerListForDistributorPojo>> getCustomerListForDistributor(@Query("DistributorId") String DistributorId,
+                                                                                     @Query("FilterValue") String FilterValue);
+
+    @GET("DeleteCustomer")
+    Call<ArrayList<DeleteCustomerPojo>> deleteCustomer(@Query("CustomerId") String CustomerId);
+
+    @GET("DeleteDealer")
+    Call<ArrayList<DeleteDealerPojo>> deleteDealer(@Query("DealerId") String DealerId);
+
+    @GET("DeleteDistributor")
+    Call<ArrayList<DeleteDistributorPojo>> deleteDistributor(@Query("DistributorId") String DistributorId);
 
 
 }

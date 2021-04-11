@@ -1,4 +1,4 @@
-package com.webond.chemicals.adapter.customer;
+package com.webond.chemicals.distributor.adapter.distributor_customer;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -18,7 +18,7 @@ import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
 import com.webond.chemicals.pojo.ApproveCustomerPojo;
 import com.webond.chemicals.pojo.DeleteCustomerPojo;
-import com.webond.chemicals.pojo.GetCustomerListPojo;
+import com.webond.chemicals.pojo.GetCustomerListForDistributorPojo;
 import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.DialogUtil;
 
@@ -29,13 +29,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PendingCustomerListAdapter extends RecyclerView.Adapter<PendingCustomerListAdapter.MyViewHolder> {
+public class DistributorManagePendingCustomerForDistOnlyAdapter extends RecyclerView.Adapter<DistributorManagePendingCustomerForDistOnlyAdapter.MyViewHolder> {
 
     private Context context;
-    private ArrayList<GetCustomerListPojo> getCustomerListPojoArrayList;
+    private ArrayList<GetCustomerListForDistributorPojo> getCustomerListPojoArrayList;
     private LayoutInflater layoutInflater;
 
-    public PendingCustomerListAdapter(Context context, ArrayList<GetCustomerListPojo> getCustomerListPojoArrayList) {
+    public DistributorManagePendingCustomerForDistOnlyAdapter(Context context, ArrayList<GetCustomerListForDistributorPojo> getCustomerListPojoArrayList) {
         this.context = context;
         this.getCustomerListPojoArrayList = getCustomerListPojoArrayList;
         layoutInflater = LayoutInflater.from(context);
@@ -43,14 +43,14 @@ public class PendingCustomerListAdapter extends RecyclerView.Adapter<PendingCust
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DistributorManagePendingCustomerForDistOnlyAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = layoutInflater.inflate(R.layout.inflater_pending_customer_list_item, parent, false);
-        return new MyViewHolder(view);
+        return new DistributorManagePendingCustomerForDistOnlyAdapter.MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        GetCustomerListPojo getCustomerListPojo = getCustomerListPojoArrayList.get(position);
+    public void onBindViewHolder(@NonNull DistributorManagePendingCustomerForDistOnlyAdapter.MyViewHolder holder, int position) {
+        GetCustomerListForDistributorPojo getCustomerListPojo = getCustomerListPojoArrayList.get(position);
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getCustomerListPojo.getPhotoPath())) {
             Glide.with(context)
@@ -159,7 +159,7 @@ public class PendingCustomerListAdapter extends RecyclerView.Adapter<PendingCust
         }
     }
 
-    private void deleteCustomerApiCall(String customerId, int position, ArrayList<GetCustomerListPojo> GetCustomerListPojo) {
+    private void deleteCustomerApiCall(String customerId, int position, ArrayList<GetCustomerListForDistributorPojo> GetCustomerListPojo) {
         DialogUtil.showProgressDialogNotCancelable(context, "");
         ApiImplementer.deleteCustomerApiImplementer(customerId, new Callback<ArrayList<DeleteCustomerPojo>>() {
             @Override
@@ -189,7 +189,7 @@ public class PendingCustomerListAdapter extends RecyclerView.Adapter<PendingCust
         });
     }
 
-    private void approveOrRejectCustomer(String CustomerId, String status, int position, ArrayList<GetCustomerListPojo> getCustomerListPojoArrayList) {
+    private void approveOrRejectCustomer(String CustomerId, String status, int position, ArrayList<GetCustomerListForDistributorPojo> getCustomerListPojoArrayList) {
         DialogUtil.showProgressDialogNotCancelable(context, "");
         ApiImplementer.approveCustomerImplementer(CustomerId, status, new Callback<ArrayList<ApproveCustomerPojo>>() {
             @Override
@@ -220,3 +220,4 @@ public class PendingCustomerListAdapter extends RecyclerView.Adapter<PendingCust
     }
 
 }
+

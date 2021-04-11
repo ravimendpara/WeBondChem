@@ -416,7 +416,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     android:id="@+id/cvManageCustomer"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"

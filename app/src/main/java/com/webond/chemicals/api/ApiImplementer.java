@@ -13,8 +13,12 @@ import com.webond.chemicals.pojo.ApproveDealerPojo;
 import com.webond.chemicals.pojo.ApproveDistributorPojo;
 import com.webond.chemicals.pojo.ApproveOrderPojo;
 import com.webond.chemicals.pojo.CheckMobileNoExitstOrNoPojo;
+import com.webond.chemicals.pojo.DeleteCustomerPojo;
+import com.webond.chemicals.pojo.DeleteDealerPojo;
+import com.webond.chemicals.pojo.DeleteDistributorPojo;
 import com.webond.chemicals.pojo.GetBannerListPojo;
 import com.webond.chemicals.pojo.GetCityListPojo;
+import com.webond.chemicals.pojo.GetCustomerListForDistributorPojo;
 import com.webond.chemicals.pojo.GetCustomerListPojo;
 import com.webond.chemicals.pojo.GetCustomerOrderListPojo;
 import com.webond.chemicals.pojo.GetDashboardDetailsPojo;
@@ -100,7 +104,7 @@ public class ApiImplementer {
                 TalukaId,
                 ProductList,
                 OrderUnderRegisterStatus
-                );
+        );
         call.enqueue(cb);
     }
 
@@ -565,6 +569,31 @@ public class ApiImplementer {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<GetDashboardDetailsPojo>> call = apiService.getDashboardDetails(LoginType,
                 LoginId);
+        call.enqueue(cb);
+    }
+
+    public static void getCustomerListForDistributorApiImplementer(String DistributorId, String FilterValue, Callback<ArrayList<GetCustomerListForDistributorPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<GetCustomerListForDistributorPojo>> call = apiService.getCustomerListForDistributor(DistributorId,
+                FilterValue);
+        call.enqueue(cb);
+    }
+
+    public static void deleteCustomerApiImplementer(String customerId, Callback<ArrayList<DeleteCustomerPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<DeleteCustomerPojo>> call = apiService.deleteCustomer(customerId);
+        call.enqueue(cb);
+    }
+
+    public static void deleteDealerApiImplementer(String dealerId, Callback<ArrayList<DeleteDealerPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<DeleteDealerPojo>> call = apiService.deleteDealer(dealerId);
+        call.enqueue(cb);
+    }
+
+    public static void deleteDistributorApiImplementer(String DistributorId, Callback<ArrayList<DeleteDistributorPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<DeleteDistributorPojo>> call = apiService.deleteDistributor(DistributorId);
         call.enqueue(cb);
     }
 

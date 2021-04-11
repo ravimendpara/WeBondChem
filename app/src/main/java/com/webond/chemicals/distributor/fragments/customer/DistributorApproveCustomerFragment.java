@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.webond.chemicals.R;
-import com.webond.chemicals.adapter.customer.ApproveCustomerListAdapter;
 import com.webond.chemicals.api.ApiImplementer;
-import com.webond.chemicals.pojo.GetCustomerListPojo;
+import com.webond.chemicals.distributor.adapter.distributor_customer.DistributorManageApproveCustomerForDistOnlyAdapter;
+import com.webond.chemicals.pojo.GetCustomerListForDistributorPojo;
 import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.MySharedPreferences;
 
@@ -83,9 +83,9 @@ public class DistributorApproveCustomerFragment extends Fragment implements Swip
         llLoading.setVisibility(View.VISIBLE);
         llNoDateFound.setVisibility(View.GONE);
         rvDistributorApproveCustomer.setVisibility(View.GONE);
-        ApiImplementer.getCustomerListImplementer("2", mySharedPreferences.getDistributorId(), CommonUtil.FILTER_VALUE_APPROVE, new Callback<ArrayList<GetCustomerListPojo>>() {
+        ApiImplementer.getCustomerListForDistributorApiImplementer(mySharedPreferences.getDistributorId(), CommonUtil.FILTER_VALUE_APPROVE, new Callback<ArrayList<GetCustomerListForDistributorPojo>>() {
             @Override
-            public void onResponse(Call<ArrayList<GetCustomerListPojo>> call, Response<ArrayList<GetCustomerListPojo>> response) {
+            public void onResponse(Call<ArrayList<GetCustomerListForDistributorPojo>> call, Response<ArrayList<GetCustomerListForDistributorPojo>> response) {
                 try {
                     if (isPullToRefresh) {
                         swipeContainer.setRefreshing(false);
@@ -96,7 +96,7 @@ public class DistributorApproveCustomerFragment extends Fragment implements Swip
                             llNoDateFound.setVisibility(View.GONE);
                             rvDistributorApproveCustomer.setVisibility(View.VISIBLE);
 //                            isNeedToRefresh = true;
-                            rvDistributorApproveCustomer.setAdapter(new ApproveCustomerListAdapter(context, response.body()));
+                            rvDistributorApproveCustomer.setAdapter(new DistributorManageApproveCustomerForDistOnlyAdapter(context, response.body()));
                         } else {
                             llLoading.setVisibility(View.GONE);
                             llNoDateFound.setVisibility(View.VISIBLE);
@@ -113,7 +113,7 @@ public class DistributorApproveCustomerFragment extends Fragment implements Swip
             }
 
             @Override
-            public void onFailure(Call<ArrayList<GetCustomerListPojo>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<GetCustomerListForDistributorPojo>> call, Throwable t) {
                 if (isPullToRefresh) {
                     swipeContainer.setRefreshing(false);
                 }
