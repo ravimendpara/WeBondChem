@@ -51,7 +51,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CustomerAddOrderAdapter extends RecyclerView.Adapter<CustomerAddOrderAdapter.MyViewHolder>{
+public class CustomerAddOrderAdapter extends RecyclerView.Adapter<CustomerAddOrderAdapter.MyViewHolder> {
 
     public static final String SELECT_DISTRICT = "Select District*";
     public static final String SELECT_TALUKA = "Select Taluka*";
@@ -68,21 +68,27 @@ public class CustomerAddOrderAdapter extends RecyclerView.Adapter<CustomerAddOrd
     private HashMap<String, String> talukaHashMap;
     private ArrayList<String> dealerArrayList;
     private HashMap<String, String> dealerHashMap;
+    private ArrayList<String> distributorArrayList;
+    private HashMap<String, String> distributorHashMap;
 
     TextInputEditText etContactPersonAtSite,
             etSiteAddress, etContactNo, etPinCode;
-    SearchableSpinner spDistrict, spTaluka, spDealer;
+    SearchableSpinner spDistrict, spTaluka, spDealer,spDistributor;
     AppCompatButton btnSubmit;
     AlertDialog orderDialog;
     private Calendar myCalendar = Calendar.getInstance();
+    LinearLayout llDealer;
+    LinearLayout llDistributor;
 
     public CustomerAddOrderAdapter(Context context, ArrayList<GetProductListPojo> getProductListPojoArrayList,
-                                 ArrayList<String> districtArrayList,
-                                 HashMap<String, String> districtHashMap,
-                                 ArrayList<String> talukaArrayList,
-                                 HashMap<String, String> talukaHashMap,
-                                 ArrayList<String> dealerArrayList,
-                                 HashMap<String, String> dealerHashMap) {
+                                   ArrayList<String> districtArrayList,
+                                   HashMap<String, String> districtHashMap,
+                                   ArrayList<String> talukaArrayList,
+                                   HashMap<String, String> talukaHashMap,
+                                   ArrayList<String> dealerArrayList,
+                                   HashMap<String, String> dealerHashMap,
+                                   ArrayList<String> distributorArrayList,
+                                   HashMap<String, String> distributorHashMap) {
         this.context = context;
         this.getProductListPojoArrayList = getProductListPojoArrayList;
         layoutInflater = LayoutInflater.from(context);
@@ -93,6 +99,8 @@ public class CustomerAddOrderAdapter extends RecyclerView.Adapter<CustomerAddOrd
         this.talukaHashMap = talukaHashMap;
         this.dealerArrayList = dealerArrayList;
         this.dealerHashMap = dealerHashMap;
+        this.distributorArrayList = distributorArrayList;
+        this.distributorHashMap = distributorHashMap;
     }
 
 
@@ -108,7 +116,7 @@ public class CustomerAddOrderAdapter extends RecyclerView.Adapter<CustomerAddOrd
         GetProductListPojo getProductListPojo = getProductListPojoArrayList.get(position);
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getCustomerPoint())) {
-            holder.tvTotalPoint.setText(((int)Double.parseDouble(getProductListPojo.getCustomerPoint().toString()))+"");
+            holder.tvTotalPoint.setText(((int) Double.parseDouble(getProductListPojo.getCustomerPoint().toString())) + "");
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getProductName())) {
@@ -120,7 +128,7 @@ public class CustomerAddOrderAdapter extends RecyclerView.Adapter<CustomerAddOrd
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getProductListPojo.getCustomerPoint())) {
-            holder.tvProductPoint.setText(((int)Double.parseDouble(getProductListPojo.getCustomerPoint().toString()))+"");
+            holder.tvProductPoint.setText(((int) Double.parseDouble(getProductListPojo.getCustomerPoint().toString())) + "");
 
         }
 
@@ -194,13 +202,13 @@ public class CustomerAddOrderAdapter extends RecyclerView.Adapter<CustomerAddOrd
                             Integer.parseInt(holder.etQty.getText().toString()) > 0) {
                         if (Integer.parseInt(holder.etQty.getText().toString()) <= MAX_ORDER_QUANTITY) {
                             int points = calculatePoints(
-                                    (int)Double.parseDouble(getProductListPojo.getCustomerPoint().toString()),
+                                    (int) Double.parseDouble(getProductListPojo.getCustomerPoint().toString()),
                                     Integer.parseInt(holder.etQty.getText().toString()));
                             holder.tvTotalPoint.setText(String.valueOf(points));
                         } else {
                             holder.etQty.setText(String.valueOf(MAX_ORDER_QUANTITY));
                             int points = calculatePoints(
-                                    (int)Double.parseDouble(getProductListPojo.getCustomerPoint().toString()),
+                                    (int) Double.parseDouble(getProductListPojo.getCustomerPoint().toString()),
                                     MAX_ORDER_QUANTITY);
                             holder.tvTotalPoint.setText(String.valueOf(points));
                             Toast.makeText(context, "You can not enter more than " + MAX_ORDER_QUANTITY + " quantity", Toast.LENGTH_SHORT).show();
@@ -208,7 +216,7 @@ public class CustomerAddOrderAdapter extends RecyclerView.Adapter<CustomerAddOrd
                     } else {
                         holder.etQty.setText("1");
                         if (!CommonUtil.checkIsEmptyOrNullCommon(holder.etQty.getText().toString())) {
-                            int pointPerQuantity = (int)Double.parseDouble(getProductListPojo.getCustomerPoint().toString()) / Integer.parseInt(holder.etQty.getText().toString());
+                            int pointPerQuantity = (int) Double.parseDouble(getProductListPojo.getCustomerPoint().toString()) / Integer.parseInt(holder.etQty.getText().toString());
                             holder.tvTotalPoint.setText(String.valueOf(pointPerQuantity));
                         }
                     }
@@ -321,20 +329,23 @@ public class CustomerAddOrderAdapter extends RecyclerView.Adapter<CustomerAddOrd
                     SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
                     String orderDate = sdf.format(myCalendar.getTime()) + "";
-                    String customerDealerId = dealerHashMap.get(dealerArrayList.get(spDealer.getSelectedItemPosition()));
+                    String customerDealerId = mySharedPreferences.getCustomerUnderRegStatus().equalsIgnoreCase("1") ?
+                            dealerHashMap.get(dealerArrayList.get(spDealer.getSelectedItemPosition())) : "0";
                     String contactPerson = etContactPersonAtSite.getText().toString();
                     String siteAddress = etSiteAddress.getText().toString();
                     String contactNo = etContactNo.getText().toString();
                     String pincode = etPinCode.getText().toString();
                     String districtId = districtHashMap.get(districtArrayList.get(spDistrict.getSelectedItemPosition()));
                     String talukaId = talukaHashMap.get(talukaArrayList.get(spTaluka.getSelectedItemPosition()));
+                    String DistributorId = mySharedPreferences.getCustomerUnderRegStatus().equalsIgnoreCase("1") ?
+                            "0" : distributorHashMap.get(distributorArrayList.get(spDistributor.getSelectedItemPosition()));
 
                     JSONArray jsonArray = new JSONArray();
                     JSONObject jsonObject = new JSONObject();
                     try {
                         jsonObject.put("ProductId", getProductListPojo.getProductId() + "");
                         jsonObject.put("Qty", holder.etQty.getText().toString());
-                        jsonObject.put("SinglePoint", ((int)Double.parseDouble(getProductListPojo.getCustomerPoint())) + "");
+                        jsonObject.put("SinglePoint", ((int) Double.parseDouble(getProductListPojo.getCustomerPoint())) + "");
                         jsonObject.put("TotalPoint", holder.tvTotalPoint.getText().toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -343,8 +354,8 @@ public class CustomerAddOrderAdapter extends RecyclerView.Adapter<CustomerAddOrd
 
                     String productList = jsonArray.toString();
 
-                    addCustomerOrderApiCall(orderDate,customerDealerId,contactPerson,siteAddress,contactNo,
-                            pincode,districtId,talukaId,productList);
+                    addCustomerOrderApiCall(orderDate, customerDealerId, contactPerson, siteAddress, contactNo,
+                            pincode, districtId, talukaId, productList,mySharedPreferences.getCustomerUnderRegStatus(),DistributorId);
 
                 }
             }
@@ -366,7 +377,20 @@ public class CustomerAddOrderAdapter extends RecyclerView.Adapter<CustomerAddOrd
         spDistrict = dialogView.findViewById(R.id.spDistrict);
         spTaluka = dialogView.findViewById(R.id.spTaluka);
         spDealer = dialogView.findViewById(R.id.spDealer);
+        spDistributor = dialogView.findViewById(R.id.spDistributor);
         btnSubmit = dialogView.findViewById(R.id.btnSubmit);
+
+        llDealer = dialogView.findViewById(R.id.llDealer);
+        llDistributor = dialogView.findViewById(R.id.llDistributor);
+
+        if (mySharedPreferences.getCustomerUnderRegStatus().equalsIgnoreCase("1")){
+            llDealer.setVisibility(View.VISIBLE);
+            llDistributor.setVisibility(View.GONE);
+        }else {
+            llDistributor.setVisibility(View.VISIBLE);
+            llDealer.setVisibility(View.GONE);
+        }
+
 
         ArrayAdapter<String> districtListAdapter = new ArrayAdapter<String>
                 (context, R.layout.custome_textview_for_sp,
@@ -385,6 +409,12 @@ public class CustomerAddOrderAdapter extends RecyclerView.Adapter<CustomerAddOrd
                         dealerArrayList);
         dealerListAdapter.setDropDownViewResource(R.layout.custome_textview_for_sp);
         spDealer.setAdapter(dealerListAdapter);
+
+        ArrayAdapter<String> distributorListAdapter = new ArrayAdapter<String>
+                (context, R.layout.custome_textview_for_sp,
+                        distributorArrayList);
+        distributorListAdapter.setDropDownViewResource(R.layout.custome_textview_for_sp);
+        spDistributor.setAdapter(distributorListAdapter);
 
         spDistrict.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -440,9 +470,12 @@ public class CustomerAddOrderAdapter extends RecyclerView.Adapter<CustomerAddOrd
         } else if (spTaluka.getSelectedItemPosition() == 0) {
             isValid = false;
             Toast.makeText(context, "Please select taluka", Toast.LENGTH_SHORT).show();
-        } else if (spDealer.getSelectedItemPosition() == 0) {
+        } else if (mySharedPreferences.getCustomerUnderRegStatus().equalsIgnoreCase("1") && spDealer.getSelectedItemPosition() == 0) {
             isValid = false;
             Toast.makeText(context, "Please select dealer", Toast.LENGTH_SHORT).show();
+        }else if (mySharedPreferences.getCustomerUnderRegStatus().equalsIgnoreCase("2") && spDistributor.getSelectedItemPosition() == 0) {
+            isValid = false;
+            Toast.makeText(context, "Please select distributor", Toast.LENGTH_SHORT).show();
         }
         return isValid;
     }
@@ -581,16 +614,18 @@ public class CustomerAddOrderAdapter extends RecyclerView.Adapter<CustomerAddOrd
             }
         });
     }
-    
+
     private void addCustomerOrderApiCall(String OrderDate,
-                                       String customerDealerId,
-                                       String ContactPersonDetail,
-                                       String SiteAddress,
-                                       String ContactNo,
-                                       String PinCode,
-                                       String DistrictId,
-                                       String TalukaId,
-                                       String ProductList) {
+                                         String customerDealerId,
+                                         String ContactPersonDetail,
+                                         String SiteAddress,
+                                         String ContactNo,
+                                         String PinCode,
+                                         String DistrictId,
+                                         String TalukaId,
+                                         String ProductList,
+                                         String OrderUnderRegisterStatus,
+                                         String DistributorId) {
         DialogUtil.showProgressDialogNotCancelable(context, "");
         ApiImplementer.addCustomerOrderImplementer(OrderDate,
                 mySharedPreferences.getCustomerId(),
@@ -601,7 +636,9 @@ public class CustomerAddOrderAdapter extends RecyclerView.Adapter<CustomerAddOrd
                 PinCode,
                 DistrictId,
                 TalukaId,
-                ProductList, new Callback<ArrayList<AddCustomerOrderDataPojo>>() {
+                ProductList,
+                OrderUnderRegisterStatus,
+                DistributorId, new Callback<ArrayList<AddCustomerOrderDataPojo>>() {
                     @Override
                     public void onResponse(Call<ArrayList<AddCustomerOrderDataPojo>> call, Response<ArrayList<AddCustomerOrderDataPojo>> response) {
                         DialogUtil.hideProgressDialog();

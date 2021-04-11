@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -97,6 +99,9 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
     private ArrayList<String> distributorArrayList;
     private HashMap<String, String> distributorHashMap;
 
+    private LinearLayout llDistributor;
+    private RadioGroup rGroupDistributorCompany;
+
 
     final DatePickerDialog.OnDateSetListener dob = new DatePickerDialog.OnDateSetListener() {
         @Override
@@ -154,6 +159,19 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
         edtDOB.setOnClickListener(this);
         cvSubmit = findViewById(R.id.cvSubmit);
         cvSubmit.setOnClickListener(this);
+        llDistributor = findViewById(R.id.llDistributor);
+        rGroupDistributorCompany = findViewById(R.id.rGroupDistributorCompany);
+
+        rGroupDistributorCompany.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.rbtnDistributor) {
+                    llDistributor.setVisibility(View.VISIBLE);
+                } else {
+                    llDistributor.setVisibility(View.GONE);
+                }
+            }
+        });
 
         spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -236,7 +254,7 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
         } else if (spCity.getSelectedItemPosition() == -1 || spCity.getSelectedItemPosition() == 0) {
             Toast.makeText(this, "Please select city", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (spDistributor.getSelectedItemPosition() == -1 || spDistributor.getSelectedItemPosition() == 0) {
+        } else if (rGroupDistributorCompany.getCheckedRadioButtonId() == R.id.rbtnDistributor && (spDistributor.getSelectedItemPosition() == -1 || spDistributor.getSelectedItemPosition() == 0)) {
             Toast.makeText(this, "Please select distributor", Toast.LENGTH_SHORT).show();
             return false;
         } else if (CommonUtil.checkIsEmptyOrNullCommon(edtMobileNo.getText().toString().trim()) ||
@@ -303,7 +321,8 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
             if (isValid()) {
                 String dealerName = edtDealerName.getText().toString().trim();
                 String pedthiName = edtDealerPedthiName.getText().toString().trim();
-                String distributorId = distributorHashMap.get(distributorArrayList.get(spDistributor.getSelectedItemPosition()));
+                String distributorId = rGroupDistributorCompany.getCheckedRadioButtonId() == R.id.rbtnDistributor ?
+                        distributorHashMap.get(distributorArrayList.get(spDistributor.getSelectedItemPosition())) : "0";
                 String stateId = stateHashMap.get(stateArrayList.get(spState.getSelectedItemPosition()));
                 String districtId = districtHashMap.get(districtArrayList.get(spDistrict.getSelectedItemPosition()));
                 String talukaId = talukaHashMap.get(talukaArrayList.get(spTaluka.getSelectedItemPosition()));
@@ -320,8 +339,11 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
                 String photo = uploadedPhotoBase64;
                 String photoName = uploadedPhotoName;
                 String dob = edtDOB.getText().toString().trim();
+                String DealerRegisterUnder = rGroupDistributorCompany.getCheckedRadioButtonId() == R.id.rbtnDistributor ?
+                        "2" : "1";
+
                 addDealerApiCall(true, true, dealerName, pedthiName, distributorId, stateId, districtId, talukaId, cityId, mobileNo, mobileNo2,
-                        address, pinCode, email, aadharNo, aadharProof, aadharFileName, gstnNo, photo, photoName, dob);
+                        address, pinCode, email, aadharNo, aadharProof, aadharFileName, gstnNo, photo, photoName, dob,DealerRegisterUnder);
             }
         }
     }
@@ -692,13 +714,13 @@ public class DealerRegistrationActivity extends AppCompatActivity implements Vie
                                   String CityId, String MobileNo, String MobileNo2, String Address,
                                   String PinCode, String Email, String AadharNo, String AadharProof,
                                   String AadharFileName, String GSTNo, String Photo,
-                                  String PhotoFileName, String DateOfBirth) {
+                                  String PhotoFileName, String DateOfBirth,String DealerRegisterUnder) {
         if (isPdShow) {
             DialogUtil.showProgressDialogNotCancelable(DealerRegistrationActivity.this, "");
         }
         ApiImplementer.addDealerImplementer(dealerName, PethiName, distributorId, StateId, DistrictId, TalukaId, CityId,
                 MobileNo, MobileNo2, Address, PinCode, Email, AadharNo, AadharProof, AadharFileName, GSTNo,
-                Photo, PhotoFileName, DateOfBirth, new Callback<ArrayList<AddDealerPojo>>() {
+                Photo, PhotoFileName, DateOfBirth,DealerRegisterUnder, new Callback<ArrayList<AddDealerPojo>>() {
                     @Override
                     public void onResponse(Call<ArrayList<AddDealerPojo>> call, Response<ArrayList<AddDealerPojo>> response) {
                         if (isPdHide) {

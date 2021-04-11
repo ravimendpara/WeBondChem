@@ -28,6 +28,46 @@
                 android:layout_marginBottom="8dp"
                 android:orientation="vertical">
 
+                <com.webond.chemicals.custom_class.TextViewMediumFont
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Register Under"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <RadioGroup
+                    android:id="@+id/rGroupDealerAndDistributor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:checkedButton="@id/rbtnDelaer">
+
+
+                    <RadioButton
+                        android:id="@+id/rbtnDelaer"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Dealer" />
+
+                    <RadioButton
+                        android:id="@+id/rbtnDistributor"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Distributor" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical">
+
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
@@ -140,6 +180,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llDealer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -154,6 +195,34 @@
 
                     <Spinner
                         android:id="@+id/spDealer"
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:layout_gravity="center_vertical"
+                        android:dropDownVerticalOffset="58dp"
+                        android:minHeight="35dp"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/llDistributor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_common_input_filed_shape">
+
+                    <Spinner
+                        android:id="@+id/spDistributor"
                         android:layout_width="match_parent"
                         android:layout_height="58dp"
                         android:layout_gravity="center_vertical"

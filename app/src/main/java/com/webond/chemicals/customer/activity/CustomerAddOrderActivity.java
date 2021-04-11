@@ -14,6 +14,7 @@ import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.customer.adapter.CustomerAddOrderAdapter;
 import com.webond.chemicals.pojo.GetDealerListByTalukaIdPojo;
+import com.webond.chemicals.pojo.GetDistributorListByTalukaIdPojo;
 import com.webond.chemicals.pojo.GetDistrictListPojo;
 import com.webond.chemicals.pojo.GetProductListPojo;
 import com.webond.chemicals.pojo.GetTalukaListPojo;
@@ -34,6 +35,7 @@ public class CustomerAddOrderActivity extends AppCompatActivity implements View.
     public static final String SELECT_DISTRICT = "Select District*";
     public static final String SELECT_TALUKA = "Select Taluka*";
     public static final String SELECT_DEALER = "Select Dealer*";
+    public static final String SELECT_DISTRIBUTOR = "Select Distributor*";
 
     private MySharedPreferences mySharedPreferences;
     private RecyclerView rvProductList;
@@ -48,6 +50,8 @@ public class CustomerAddOrderActivity extends AppCompatActivity implements View.
     private HashMap<String, String> talukaHashMap;
     private ArrayList<String> dealerArrayList;
     private HashMap<String, String> dealerHashMap;
+    private ArrayList<String> distributorArrayList;
+    private HashMap<String, String> distributorHashMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +87,7 @@ public class CustomerAddOrderActivity extends AppCompatActivity implements View.
                             rvProductList.setVisibility(View.VISIBLE);
                             rvProductList.setAdapter(new CustomerAddOrderAdapter(CustomerAddOrderActivity.this,
                                     response.body(), districtArrayList, districtHashMap, talukaArrayList, talukaHashMap,
-                                    dealerArrayList, dealerHashMap));
+                                    dealerArrayList, dealerHashMap,distributorArrayList,distributorHashMap));
                         } else {
                             llLoading.setVisibility(View.GONE);
                             llNoDateFound.setVisibility(View.VISIBLE);
@@ -185,7 +189,11 @@ public class CustomerAddOrderActivity extends AppCompatActivity implements View.
                                     talukaHashMap.put(districtName, getTalukaListPojoArrayList.get(i).getTalukaId().toString());
                                 }
                             }
-                            getDealerListByTalukaIdApiCall();
+                            if (mySharedPreferences.getCustomerUnderRegStatus().equalsIgnoreCase("1")){
+                                getDealerListByTalukaIdApiCall();
+                            }else {
+                                getDistributorApiCall();
+                            }
                         } else {
                             getProductListApiCall();
                             talukaArrayList = new ArrayList<>();
@@ -248,6 +256,49 @@ public class CustomerAddOrderActivity extends AppCompatActivity implements View.
 
             @Override
             public void onFailure(Call<ArrayList<GetDealerListByTalukaIdPojo>> call, Throwable t) {
+                DialogUtil.hideProgressDialog();
+                Toast.makeText(CustomerAddOrderActivity.this, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getDistributorApiCall() {
+        ApiImplementer.getDistributorListByTalukaIdApiImplementer("0", new Callback<ArrayList<GetDistributorListByTalukaIdPojo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<GetDistributorListByTalukaIdPojo>> call, Response<ArrayList<GetDistributorListByTalukaIdPojo>> response) {
+                try {
+                    if (response.code() == 200 && response.body() != null) {
+                        if (response.body().size() > 0) {
+                            ArrayList<GetDistributorListByTalukaIdPojo> getDistributorListByCityIdPojoArrayList = response.body();
+                            distributorArrayList = new ArrayList<>();
+                            distributorArrayList.add(SELECT_DISTRIBUTOR);
+                            distributorHashMap = new HashMap<>();
+                            for (int i = 0; i < getDistributorListByCityIdPojoArrayList.size(); i++) {
+                                if (!CommonUtil.checkIsEmptyOrNullCommon(getDistributorListByCityIdPojoArrayList.get(i).getDistributorName())) {
+                                    String distributorName = getDistributorListByCityIdPojoArrayList.get(i).getDistributorName().trim();
+                                    distributorArrayList.add(distributorName);
+                                    distributorHashMap.put(distributorName, getDistributorListByCityIdPojoArrayList.get(i).getDistributorId().toString());
+                                }
+                            }
+                            getProductListApiCall();
+                        } else {
+                            distributorArrayList = new ArrayList<>();
+                            distributorArrayList.add(SELECT_DISTRIBUTOR);
+                            distributorHashMap = new HashMap<>();
+                            getProductListApiCall();
+                            Toast.makeText(CustomerAddOrderActivity.this, "Distributors Not Found!", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        getProductListApiCall();
+                        Toast.makeText(CustomerAddOrderActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<GetDistributorListByTalukaIdPojo>> call, Throwable t) {
                 DialogUtil.hideProgressDialog();
                 Toast.makeText(CustomerAddOrderActivity.this, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }

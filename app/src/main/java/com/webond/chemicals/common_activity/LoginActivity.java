@@ -553,6 +553,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void setDataForDealer(GetDetailsForLoginUserDealerPojo getDetailsForLoginUserDealerPojo) {
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDealerPojo.getDealerRegisterUnderStatus())) {
+            mySharedPreferences.setDealerUnderRegStatus(getDetailsForLoginUserDealerPojo.getDealerRegisterUnderStatus() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDealerPojo.getDealerRegisterUnder())) {
+            mySharedPreferences.setDealerUnderReg(getDetailsForLoginUserDealerPojo.getDealerRegisterUnder() + "");
+        }
+
         if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDealerPojo.getLoginType())) {
             mySharedPreferences.setLoginType(getDetailsForLoginUserDealerPojo.getLoginType() + "");
         }
@@ -620,6 +629,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void setDataForCustomer(GetDetailsForLoginUserCustomerPojo getDetailsForLoginUserCustomerPojo) {
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getCustomerUnderRegiterStatus())) {
+            mySharedPreferences.setCustomerUnderRegStatus(getDetailsForLoginUserCustomerPojo.getCustomerUnderRegiterStatus() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getCustomerUnderRegiter())) {
+            mySharedPreferences.setCustomerUnderReg(getDetailsForLoginUserCustomerPojo.getCustomerUnderRegiter() + "");
+        }
+
         if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserCustomerPojo.getLoginType())) {
             mySharedPreferences.setLoginType(getDetailsForLoginUserCustomerPojo.getLoginType() + "");
         }

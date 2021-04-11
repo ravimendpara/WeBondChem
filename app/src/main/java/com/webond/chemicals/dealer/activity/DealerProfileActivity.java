@@ -37,6 +37,7 @@ public class DealerProfileActivity extends AppCompatActivity implements View.OnC
     private TextViewMediumFont tvTaluka;
     private TextViewMediumFont tvCity;
     private TextViewMediumFont tvDistributorName;
+    private TextViewMediumFont tvDealerUnderRegistered;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,7 @@ public class DealerProfileActivity extends AppCompatActivity implements View.OnC
         tvTaluka = findViewById(R.id.tvTaluka);
         tvCity = findViewById(R.id.tvCity);
         tvDistributorName = findViewById(R.id.tvDistributorName);
+        tvDealerUnderRegistered = findViewById(R.id.tvDealerUnderRegistered);
     }
 
     private void setData() {
@@ -105,6 +107,10 @@ public class DealerProfileActivity extends AppCompatActivity implements View.OnC
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(mySharedPreferences.getDealerDistributorName())) {
             tvDistributorName.setText(mySharedPreferences.getDealerDistributorName() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(mySharedPreferences.getDealerUnderReg())) {
+            tvDistributorName.setText(mySharedPreferences.getDealerUnderReg() + "");
         }
 
     }

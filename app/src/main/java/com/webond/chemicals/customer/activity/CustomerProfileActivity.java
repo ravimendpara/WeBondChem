@@ -38,6 +38,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements View.O
     private TextViewMediumFont tvCity;
     private TextViewMediumFont tvDistributorName;
     private TextViewMediumFont tvDealerName;
+    private TextViewMediumFont tvCustomerUnderRegistered;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements View.O
 
     public void initView() {
         mySharedPreferences = new MySharedPreferences(CustomerProfileActivity.this);
-        imgBack = findViewById(R.id.imgBack);
+        imgBack = findViewById(R.id.imgBack);desk
         imgBack.setOnClickListener(this);
         imgLogout = findViewById(R.id.imgLogout);
         imgLogout.setOnClickListener(this);
@@ -66,6 +67,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements View.O
         tvCity = findViewById(R.id.tvCity);
         tvDistributorName = findViewById(R.id.tvDistributorName);
         tvDealerName = findViewById(R.id.tvDealerName);
+        tvCustomerUnderRegistered = findViewById(R.id.tvCustomerUnderRegistered);
     }
 
     private void setData() {
@@ -111,6 +113,10 @@ public class CustomerProfileActivity extends AppCompatActivity implements View.O
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(mySharedPreferences.getCustomerDealerName())) {
             tvDealerName.setText(mySharedPreferences.getCustomerDealerName() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(mySharedPreferences.getCustomerUnderReg())) {
+            tvCustomerUnderRegistered.setText(mySharedPreferences.getCustomerUnderReg() + "");
         }
 
     }

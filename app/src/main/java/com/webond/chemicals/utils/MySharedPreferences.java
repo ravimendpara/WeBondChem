@@ -378,6 +378,24 @@ public class MySharedPreferences {
         return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.DEALER_DISTRIBUTOR_ID, "");
     }
 
+    public void setDealerUnderRegStatus(String dealerUnderRegStatus) {
+        editorForUserDetails.putString(CommonPreferencesConstants.DEALER_UNDER_REG_STATUS, dealerUnderRegStatus);
+        editorForUserDetails.apply();
+    }
+
+    public String getDealerUnderRegStatus() {
+        return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.DEALER_UNDER_REG_STATUS, "");
+    }
+
+    public void setDealerUnderReg(String dealerUnderReg) {
+        editorForUserDetails.putString(CommonPreferencesConstants.DEALER_UNDER_REG, dealerUnderReg);
+        editorForUserDetails.apply();
+    }
+
+    public String getDealerUnderReg() {
+        return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.DEALER_UNDER_REG, "");
+    }
+
 //    --Customer--
 
     public void setCustomerId(String customerId) {
@@ -531,6 +549,25 @@ public class MySharedPreferences {
 
     public String getCustomerDealerId() {
         return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.CUSTOMER_DEALER_ID, "");
+    }
+
+    public void setCustomerUnderRegStatus(String customerUnderRegStatus) {
+        editorForUserDetails.putString(CommonPreferencesConstants.CUSTOMER_UNDER_REG_STATUS, customerUnderRegStatus);
+        editorForUserDetails.apply();
+    }
+
+    public String getCustomerUnderRegStatus() {
+        return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.CUSTOMER_UNDER_REG_STATUS, "");
+    }
+
+
+    public void setCustomerUnderReg(String customerUnderReg) {
+        editorForUserDetails.putString(CommonPreferencesConstants.CUSTOMER_UNDER_REG, customerUnderReg);
+        editorForUserDetails.apply();
+    }
+
+    public String getCustomerUnderReg() {
+        return sharedPreferencesForUserDetails.getString(CommonPreferencesConstants.CUSTOMER_UNDER_REG, "");
     }
 
 }

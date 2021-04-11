@@ -74,6 +74,7 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
     SearchableSpinner spDistrict, spTaluka, spDistributor;
     AppCompatButton btnSubmit;
     AlertDialog orderDialog;
+    LinearLayout llDistributor;
     private Calendar myCalendar = Calendar.getInstance();
 
     public DealerAddOrderAdapter(Context context, ArrayList<GetProductListPojo> getProductListPojoArrayList,
@@ -320,7 +321,8 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
                     SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
                     String orderDate = sdf.format(myCalendar.getTime()) + "";
-                    String dealerDistributorId = distributorHashMap.get(distributorArrayList.get(spDistributor.getSelectedItemPosition()));
+                    String dealerDistributorId = mySharedPreferences.getDealerUnderRegStatus().equalsIgnoreCase("2") ?
+                            distributorHashMap.get(distributorArrayList.get(spDistributor.getSelectedItemPosition())) : "0";
                     String contactPerson = etContactPersonAtSite.getText().toString();
                     String siteAddress = etSiteAddress.getText().toString();
                     String contactNo = etContactNo.getText().toString();
@@ -343,7 +345,7 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
                     String productList = jsonArray.toString();
 
                     addDealerOrderApiCall(orderDate, dealerDistributorId, contactPerson, siteAddress, contactNo,
-                            pincode, districtId, talukaId, productList);
+                            pincode, districtId, talukaId, productList,mySharedPreferences.getDealerUnderRegStatus());
 
                 }
             }
@@ -361,7 +363,7 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
         etSiteAddress = dialogView.findViewById(R.id.etSiteAddress);
         etContactNo = dialogView.findViewById(R.id.etContactNo);
         etPinCode = dialogView.findViewById(R.id.etPinCode);
-
+        llDistributor = dialogView.findViewById(R.id.llDistributor);
         spDistrict = dialogView.findViewById(R.id.spDistrict);
         spTaluka = dialogView.findViewById(R.id.spTaluka);
         spDistributor = dialogView.findViewById(R.id.spDistributor);
@@ -378,6 +380,12 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
                         talukaArrayList);
         talukaListAdapter.setDropDownViewResource(R.layout.custome_textview_for_sp);
         spTaluka.setAdapter(talukaListAdapter);
+
+        if (mySharedPreferences.getDealerUnderRegStatus().equalsIgnoreCase("1")){
+            llDistributor.setVisibility(View.GONE);
+        }else {
+            llDistributor.setVisibility(View.VISIBLE);
+        }
 
         ArrayAdapter<String> distributorListAdapter = new ArrayAdapter<String>
                 (context, R.layout.custome_textview_for_sp,
@@ -441,7 +449,7 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
         } else if (spTaluka.getSelectedItemPosition() == 0) {
             isValid = false;
             Toast.makeText(context, "Please select taluka", Toast.LENGTH_SHORT).show();
-        } else if (spDistributor.getSelectedItemPosition() == 0) {
+        } else if (mySharedPreferences.getDealerUnderRegStatus().equalsIgnoreCase("2") && spDistributor.getSelectedItemPosition() == 0) {
             isValid = false;
             Toast.makeText(context, "Please select distributor", Toast.LENGTH_SHORT).show();
         }
@@ -591,7 +599,9 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
                                        String PinCode,
                                        String DistrictId,
                                        String TalukaId,
-                                       String ProductList) {
+                                       String ProductList,
+                                       String OrderUnderRegisterStatus
+                                       ) {
         DialogUtil.showProgressDialogNotCancelable(context, "");
         ApiImplementer.addDealerOrderImplementer(OrderDate,
                 mySharedPreferences.getDealerId(),
@@ -602,7 +612,9 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
                 PinCode,
                 DistrictId,
                 TalukaId,
-                ProductList, new Callback<ArrayList<AddDealerOrderDataPojo>>() {
+                ProductList,
+                OrderUnderRegisterStatus,
+                new Callback<ArrayList<AddDealerOrderDataPojo>>() {
                     @Override
                     public void onResponse(Call<ArrayList<AddDealerOrderDataPojo>> call, Response<ArrayList<AddDealerOrderDataPojo>> response) {
                         DialogUtil.hideProgressDialog();

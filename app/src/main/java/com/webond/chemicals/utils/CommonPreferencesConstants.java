@@ -1,8 +1,5 @@
 package com.webond.chemicals.utils;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 public class CommonPreferencesConstants {
     public static final String FCM_TOKEN = "fcm_token";
 
@@ -54,6 +51,8 @@ public class CommonPreferencesConstants {
     public static final String DEALER_DISTRICT_ID = "dealer_district_id";
     public static final String DEALER_TALUKA_ID = "dealer_taluka_id";
     public static final String DEALER_DISTRIBUTOR_ID = "dealer_distributor_id";
+    public static final String DEALER_UNDER_REG_STATUS = "dealer_under_reg_status";
+    public static final String DEALER_UNDER_REG = "dealer_under_reg";
 
     //key for customer preferences
 
@@ -74,4 +73,6 @@ public class CommonPreferencesConstants {
     public static final String CUSTOMER_DISTRICT_ID = "customer_district_id";
     public static final String CUSTOMER_TALUKA_ID = "customer_taluka_id";
     public static final String CUSTOMER_DEALER_ID = "customer_dealer_id";
+    public static final String CUSTOMER_UNDER_REG_STATUS = "customer_under_reg_status";
+    public static final String CUSTOMER_UNDER_REG = "customer_under_reg";
 }

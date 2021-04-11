@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ import com.webond.chemicals.pojo.AddCustomerPojo;
 import com.webond.chemicals.pojo.GetCityListPojo;
 import com.webond.chemicals.pojo.GetDealerListByCityIdPojo;
 import com.webond.chemicals.pojo.GetDetailsForLoginUserCustomerPojo;
+import com.webond.chemicals.pojo.GetDistributorListByCityIdPojo;
 import com.webond.chemicals.pojo.GetDistrictListPojo;
 import com.webond.chemicals.pojo.GetStateListPojo;
 import com.webond.chemicals.pojo.GetTalukaListPojo;
@@ -52,6 +55,7 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
     private static final String SELECT_TALUKA = "Select Taluka*";
     private static final String SELECT_CITY = "Select City*";
     private static final String SELECT_DEALER = "Select Dealer*";
+    private static final String SELECT_DISTRIBUTOR = "Select Distributor*";
 
     private MySharedPreferences mySharedPreferences;
     private AppCompatImageView imgBack;
@@ -62,6 +66,7 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
     private Spinner spTaluka;
     private Spinner spCity;
     private Spinner spDealer;
+    private Spinner spDistributor;
     private TextInputEditText edtMobileNo;
     private TextInputEditText edtMobileNo2;
     private TextInputEditText edtAddress;
@@ -84,6 +89,7 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
     private SpinnerSimpleAdapter spinnerAdapterUserTaluka;
     private SpinnerSimpleAdapter spinnerAdapterUserCity;
     private SpinnerSimpleAdapter spinnerAdapterDealerList;
+    private SpinnerSimpleAdapter spinnerAdapterDistributorList;
 
     private ArrayList<String> stateArrayList;
     private HashMap<String, String> stateHashMap;
@@ -96,13 +102,16 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
 
     private ArrayList<String> dealerArrayList;
     private HashMap<String, String> dealerHashMap;
-
+    private ArrayList<String> distributorArrayList;
+    private HashMap<String, String> distributorHashMap;
+    private RadioGroup rGroupDealerAndDistributor;
+    private LinearLayout llDistributor;
+    private LinearLayout llDealer;
 
     final DatePickerDialog.OnDateSetListener dob = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
-            // TODO Auto-generated method stub
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, monthOfYear);
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -135,6 +144,9 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
         imgBack.setOnClickListener(this);
         tvHeaderTitle = findViewById(R.id.tvHeaderTitle);
         edtCustomerName = findViewById(R.id.edtCustomerName);
+        rGroupDealerAndDistributor = findViewById(R.id.rGroupDealerAndDistributor);
+        llDealer = findViewById(R.id.llDealer);
+        llDistributor = findViewById(R.id.llDistributor);
         spState = findViewById(R.id.spState);
         spDistrict = findViewById(R.id.spDistrict);
         spTaluka = findViewById(R.id.spTaluka);
@@ -155,6 +167,21 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
         edtDOB.setOnClickListener(this);
         cvSubmit = findViewById(R.id.cvSubmit);
         cvSubmit.setOnClickListener(this);
+
+        spDistributor = findViewById(R.id.spDistributor);
+
+        rGroupDealerAndDistributor.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.rbtnDelaer) {
+                    llDealer.setVisibility(View.VISIBLE);
+                    llDistributor.setVisibility(View.GONE);
+                } else if (checkedId == R.id.rbtnDistributor) {
+                    llDistributor.setVisibility(View.VISIBLE);
+                    llDealer.setVisibility(View.GONE);
+                }
+            }
+        });
 
         spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -206,7 +233,11 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 if (position > 0) {
                     String cityId = cityHashMap.get(cityArrayList.get(position));
-                    getDealerListByCityIdApiCall(true, true, cityId);
+                    if (rGroupDealerAndDistributor.getCheckedRadioButtonId() == R.id.rbtnDelaer) {
+                        getDealerListByCityIdApiCall(true, true, cityId);
+                    }else{
+                        getDistributorByCityIdApiCall(true,true,cityId);
+                    }
                 }
             }
 
@@ -234,8 +265,11 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
         } else if (spCity.getSelectedItemPosition() == -1 || spCity.getSelectedItemPosition() == 0) {
             Toast.makeText(this, "Please select city", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (spDealer.getSelectedItemPosition() == -1 || spDealer.getSelectedItemPosition() == 0) {
+        } else if (rGroupDealerAndDistributor.getCheckedRadioButtonId() == R.id.rbtnDelaer && (spDealer.getSelectedItemPosition() == -1 || spDealer.getSelectedItemPosition() == 0)) {
             Toast.makeText(this, "Please select dealer", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (rGroupDealerAndDistributor.getCheckedRadioButtonId() == R.id.rbtnDistributor && (spDistributor.getSelectedItemPosition() == -1 || spDistributor.getSelectedItemPosition() == 0)) {
+            Toast.makeText(this, "Please select distributor", Toast.LENGTH_SHORT).show();
             return false;
         } else if (CommonUtil.checkIsEmptyOrNullCommon(edtMobileNo.getText().toString().trim()) ||
                 edtMobileNo.getText().toString().trim().length() != 10) {
@@ -253,7 +287,7 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
         } else if (CommonUtil.checkIsEmptyOrNullCommon(uploadedAadharProofBase64)) {
             Toast.makeText(this, "Please upload aadhar proof", Toast.LENGTH_SHORT).show();
             return false;
-        }  else if (CommonUtil.checkIsEmptyOrNullCommon(uploadedPhotoBase64)) {
+        } else if (CommonUtil.checkIsEmptyOrNullCommon(uploadedPhotoBase64)) {
             Toast.makeText(this, "Please upload photo", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -302,7 +336,8 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
         } else if (v.getId() == R.id.cvSubmit) {
             if (isValid()) {
                 String customerName = edtCustomerName.getText().toString().trim();
-                String dealerId = dealerHashMap.get(dealerArrayList.get(spDealer.getSelectedItemPosition()));
+                String dealerId = rGroupDealerAndDistributor.getCheckedRadioButtonId() == R.id.rbtnDelaer ?
+                        dealerHashMap.get(dealerArrayList.get(spDealer.getSelectedItemPosition())) : "0";
                 String stateId = stateHashMap.get(stateArrayList.get(spState.getSelectedItemPosition()));
                 String districtId = districtHashMap.get(districtArrayList.get(spDistrict.getSelectedItemPosition()));
                 String talukaId = talukaHashMap.get(talukaArrayList.get(spTaluka.getSelectedItemPosition()));
@@ -319,8 +354,11 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                 String photo = uploadedPhotoBase64;
                 String photoName = uploadedPhotoName;
                 String dob = edtDOB.getText().toString().trim();
+                String DistributorId = rGroupDealerAndDistributor.getCheckedRadioButtonId() == R.id.rbtnDelaer ?
+                        "0" : distributorHashMap.get(distributorArrayList.get(spDistributor.getSelectedItemPosition()));
+                String CustomerRegisterUnder = rGroupDealerAndDistributor.getCheckedRadioButtonId() == R.id.rbtnDelaer ? "1" : "2";
                 addCustomerApiCall(true, true, customerName, dealerId, stateId, districtId, talukaId, cityId, mobileNo, mobileNo2,
-                        address, pinCode, email, aadharNo, aadharProof, aadharFileName, gstnNo, photo, photoName, dob);
+                        address, pinCode, email, aadharNo, aadharProof, aadharFileName, gstnNo, photo, photoName, dob,DistributorId,CustomerRegisterUnder);
             }
         }
     }
@@ -339,9 +377,9 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                 if (data != null && data.getData() != null) {
                     String fileUrl = FileUtils.getPath(CustomerRegistrationActivity.this, data.getData());
                     File uploadedAadharProof = new File(fileUrl);
-                    if (uploadedAadharProof.length() > 500000){ //500000bytes == 500KB
+                    if (uploadedAadharProof.length() > 500000) { //500000bytes == 500KB
                         Toast.makeText(this, "File length must be less than 500KB", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         uploadedAadharProofBase64 = CommonUtil.getBase64StringFromFileObj(uploadedAadharProof);
                         uploadedAadharProofName = uploadedAadharProof.getName();
                         edtUploadAadharProof.setText(uploadedAadharProofName);
@@ -355,9 +393,9 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                 if (data != null && data.getData() != null) {
                     String fileUrl = FileUtils.getPath(CustomerRegistrationActivity.this, data.getData());
                     File uploadedPhotoFile = new File(fileUrl);
-                    if (uploadedPhotoFile.length() > 500000){
+                    if (uploadedPhotoFile.length() > 500000) {
                         Toast.makeText(this, "File length must be less than 500KB", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         uploadedPhotoBase64 = CommonUtil.getBase64StringFromFileObj(uploadedPhotoFile);
                         uploadedPhotoName = uploadedPhotoFile.getName();
                         edtUploadPhoto.setText(uploadedPhotoName);
@@ -588,7 +626,11 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                             spCity.setAdapter(spinnerAdapterUserCity);
 //                            spCity.setSelection(1);
 //                            String cityId = cityHashMap.get(cityArrayList.get(1));
-                            getDealerListByCityIdApiCall(false, true, "0");
+                            if (rGroupDealerAndDistributor.getCheckedRadioButtonId() == R.id.rbtnDelaer){
+                                getDealerListByCityIdApiCall(false, true, "0");
+                            }else{
+                                getDistributorByCityIdApiCall(false,true,"0");
+                            }
                         } else {
                             if (!isPdHide) {
                                 DialogUtil.hideProgressDialog();
@@ -690,13 +732,14 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                                     String CityId, String MobileNo, String MobileNo2, String Address,
                                     String PinCode, String Email, String AadharNo, String AadharProof,
                                     String AadharFileName, String GSTNo, String Photo,
-                                    String PhotoFileName, String DateOfBirth) {
+                                    String PhotoFileName, String DateOfBirth,String DistributorId,
+                                    String CustomerRegisterUnder) {
         if (isPdShow) {
             DialogUtil.showProgressDialogNotCancelable(CustomerRegistrationActivity.this, "");
         }
         ApiImplementer.addCustomerImplementer(CustomerName, DealerId, StateId, DistrictId, TalukaId,
                 CityId, MobileNo, MobileNo2, Address, PinCode, Email, AadharNo, AadharProof, AadharFileName,
-                GSTNo, Photo, PhotoFileName, DateOfBirth, new Callback<ArrayList<AddCustomerPojo>>() {
+                GSTNo, Photo, PhotoFileName, DateOfBirth,DistributorId,CustomerRegisterUnder, new Callback<ArrayList<AddCustomerPojo>>() {
                     @Override
                     public void onResponse(Call<ArrayList<AddCustomerPojo>> call, Response<ArrayList<AddCustomerPojo>> response) {
                         if (isPdHide) {
@@ -735,6 +778,69 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                     }
                 });
     }
+
+    private void getDistributorByCityIdApiCall(boolean isPdShow, boolean isPdHide, String cityId) {
+        if (isPdShow) {
+            DialogUtil.showProgressDialogNotCancelable(CustomerRegistrationActivity.this, "");
+        }
+        ApiImplementer.getDistributorListByCityIdApiImplementer(cityId, new Callback<ArrayList<GetDistributorListByCityIdPojo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<GetDistributorListByCityIdPojo>> call, Response<ArrayList<GetDistributorListByCityIdPojo>> response) {
+                if (isPdHide) {
+                    DialogUtil.hideProgressDialog();
+                }
+                try {
+                    if (response.code() == 200 && response.body() != null) {
+                        if (response.body().size() > 0) {
+                            ArrayList<GetDistributorListByCityIdPojo> getDistributorListByCityIdPojoArrayList = response.body();
+                            distributorArrayList = new ArrayList<>();
+                            distributorArrayList.add(SELECT_DISTRIBUTOR);
+                            distributorHashMap = new HashMap<>();
+                            for (int i = 0; i < getDistributorListByCityIdPojoArrayList.size(); i++) {
+                                if (!CommonUtil.checkIsEmptyOrNullCommon(getDistributorListByCityIdPojoArrayList.get(i).getDistributorName())) {
+                                    String distributorName = getDistributorListByCityIdPojoArrayList.get(i).getDistributorName().trim();
+                                    distributorArrayList.add(distributorName);
+                                    distributorHashMap.put(distributorName, getDistributorListByCityIdPojoArrayList.get(i).getDistributorId().toString());
+                                }
+                            }
+
+                            spinnerAdapterDistributorList = new SpinnerSimpleAdapter(CustomerRegistrationActivity.this, distributorArrayList);
+                            spDistributor.setAdapter(spinnerAdapterDistributorList);
+//                            spCity.setSelection(1);
+
+                        } else {
+                            if (!isPdHide) {
+                                DialogUtil.hideProgressDialog();
+                            }
+                            distributorArrayList = new ArrayList<>();
+                            distributorArrayList.add(SELECT_DISTRIBUTOR);
+                            distributorHashMap = new HashMap<>();
+                            spinnerAdapterDistributorList = new SpinnerSimpleAdapter(CustomerRegistrationActivity.this, distributorArrayList);
+                            spDistributor.setAdapter(spinnerAdapterDistributorList);
+                            Toast.makeText(CustomerRegistrationActivity.this, "Distributors Not Found!", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        if (!isPdHide) {
+                            DialogUtil.hideProgressDialog();
+                        }
+                        Toast.makeText(CustomerRegistrationActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception ex) {
+                    if (!isPdHide) {
+                        DialogUtil.hideProgressDialog();
+                    }
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<GetDistributorListByCityIdPojo>> call, Throwable t) {
+                DialogUtil.hideProgressDialog();
+                Toast.makeText(CustomerRegistrationActivity.this, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     private void getDetailsForLoginUserCustomer(boolean isPdShow, boolean isPdHide) {
         if (isPdShow) {

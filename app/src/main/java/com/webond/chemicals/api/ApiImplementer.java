@@ -85,6 +85,7 @@ public class ApiImplementer {
                                                  String DistrictId,
                                                  String TalukaId,
                                                  String ProductList,
+                                                 String OrderUnderRegisterStatus,
                                                  Callback<ArrayList<AddDealerOrderDataPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<AddDealerOrderDataPojo>> call = apiService.addDealerOrder(
@@ -97,7 +98,9 @@ public class ApiImplementer {
                 PinCode,
                 DistrictId,
                 TalukaId,
-                ProductList);
+                ProductList,
+                OrderUnderRegisterStatus
+                );
         call.enqueue(cb);
     }
 
@@ -111,6 +114,8 @@ public class ApiImplementer {
                                                    String DistrictId,
                                                    String TalukaId,
                                                    String ProductList,
+                                                   String OrderUnderRegisterStatus,
+                                                   String DistributorId,
                                                    Callback<ArrayList<AddCustomerOrderDataPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<AddCustomerOrderDataPojo>> call = apiService.addCustomerOrderData(
@@ -123,7 +128,9 @@ public class ApiImplementer {
                 PinCode,
                 DistrictId,
                 TalukaId,
-                ProductList);
+                ProductList,
+                OrderUnderRegisterStatus,
+                DistributorId);
         call.enqueue(cb);
     }
 
@@ -145,7 +152,10 @@ public class ApiImplementer {
                                               String GSTNo,
                                               String Photo,
                                               String PhotoFileName,
-                                              String DateOfBirth, Callback<ArrayList<AddCustomerPojo>> cb) {
+                                              String DateOfBirth,
+                                              String DistributorId,
+                                              String CustomerRegisterUnder,
+                                              Callback<ArrayList<AddCustomerPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<AddCustomerPojo>> call = apiService.addCustomer(CustomerName,
                 DealerId,
@@ -164,7 +174,9 @@ public class ApiImplementer {
                 GSTNo,
                 Photo,
                 PhotoFileName,
-                DateOfBirth);
+                DateOfBirth,
+                DistributorId,
+                CustomerRegisterUnder);
         call.enqueue(cb);
     }
 
@@ -188,6 +200,7 @@ public class ApiImplementer {
                                             String Photo,
                                             String PhotoFileName,
                                             String DateOfBirth,
+                                            String DealerRegisterUnder,
                                             Callback<ArrayList<AddDealerPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<AddDealerPojo>> call = apiService.addDealer(
@@ -209,7 +222,8 @@ public class ApiImplementer {
                 GSTNo,
                 Photo,
                 PhotoFileName,
-                DateOfBirth);
+                DateOfBirth,
+                DealerRegisterUnder);
         call.enqueue(cb);
     }
 

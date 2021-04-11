@@ -40,7 +40,7 @@ public class GetDetailsForLoginUserCustomerPojo {
     private String photoPath;
     @SerializedName("DealerName")
     @Expose
-    private String dealerName;
+    private Object dealerName;
     @SerializedName("DistributorName")
     @Expose
     private String distributorName;
@@ -59,6 +59,12 @@ public class GetDetailsForLoginUserCustomerPojo {
     @SerializedName("LoginType")
     @Expose
     private String loginType;
+    @SerializedName("CustomerUnderRegiterStatus")
+    @Expose
+    private Integer customerUnderRegiterStatus;
+    @SerializedName("CustomerUnderRegiter")
+    @Expose
+    private String customerUnderRegiter;
 
     public Integer getCustomerId() {
         return customerId;
@@ -148,11 +154,11 @@ public class GetDetailsForLoginUserCustomerPojo {
         this.photoPath = photoPath;
     }
 
-    public String getDealerName() {
+    public Object getDealerName() {
         return dealerName;
     }
 
-    public void setDealerName(String dealerName) {
+    public void setDealerName(Object dealerName) {
         this.dealerName = dealerName;
     }
 
@@ -204,4 +210,19 @@ public class GetDetailsForLoginUserCustomerPojo {
         this.loginType = loginType;
     }
 
+    public Integer getCustomerUnderRegiterStatus() {
+        return customerUnderRegiterStatus;
+    }
+
+    public void setCustomerUnderRegiterStatus(Integer customerUnderRegiterStatus) {
+        this.customerUnderRegiterStatus = customerUnderRegiterStatus;
+    }
+
+    public String getCustomerUnderRegiter() {
+        return customerUnderRegiter;
+    }
+
+    public void setCustomerUnderRegiter(String customerUnderRegiter) {
+        this.customerUnderRegiter = customerUnderRegiter;
+    }
 }

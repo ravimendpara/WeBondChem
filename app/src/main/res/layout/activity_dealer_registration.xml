@@ -28,6 +28,46 @@
                 android:layout_marginBottom="8dp"
                 android:orientation="vertical">
 
+                <com.webond.chemicals.custom_class.TextViewMediumFont
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Register Under"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <RadioGroup
+                    android:id="@+id/rGroupDistributorCompany"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:checkedButton="@id/rbtnDistributor">
+
+
+                    <RadioButton
+                        android:id="@+id/rbtnDistributor"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Distributor" />
+
+                    <RadioButton
+                        android:id="@+id/rbtnCompany"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Company" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical">
+
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
@@ -168,6 +208,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llDistributor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

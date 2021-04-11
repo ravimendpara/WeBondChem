@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class GetDetailsForLoginUserDealerPojo {
-
     @SerializedName("DealerId")
     @Expose
     private Integer dealerId;
@@ -52,10 +51,16 @@ public class GetDetailsForLoginUserDealerPojo {
     private String stateName;
     @SerializedName("DistributorName")
     @Expose
-    private String distributorName;
+    private Object distributorName;
     @SerializedName("LoginType")
     @Expose
     private String loginType;
+    @SerializedName("DealerRegisterUnderStatus")
+    @Expose
+    private Integer dealerRegisterUnderStatus;
+    @SerializedName("DealerRegisterUnder")
+    @Expose
+    private String dealerRegisterUnder;
 
     public Integer getDealerId() {
         return dealerId;
@@ -177,11 +182,11 @@ public class GetDetailsForLoginUserDealerPojo {
         this.stateName = stateName;
     }
 
-    public String getDistributorName() {
+    public Object getDistributorName() {
         return distributorName;
     }
 
-    public void setDistributorName(String distributorName) {
+    public void setDistributorName(Object distributorName) {
         this.distributorName = distributorName;
     }
 
@@ -191,6 +196,22 @@ public class GetDetailsForLoginUserDealerPojo {
 
     public void setLoginType(String loginType) {
         this.loginType = loginType;
+    }
+
+    public Integer getDealerRegisterUnderStatus() {
+        return dealerRegisterUnderStatus;
+    }
+
+    public void setDealerRegisterUnderStatus(Integer dealerRegisterUnderStatus) {
+        this.dealerRegisterUnderStatus = dealerRegisterUnderStatus;
+    }
+
+    public String getDealerRegisterUnder() {
+        return dealerRegisterUnder;
+    }
+
+    public void setDealerRegisterUnder(String dealerRegisterUnder) {
+        this.dealerRegisterUnder = dealerRegisterUnder;
     }
 
 }

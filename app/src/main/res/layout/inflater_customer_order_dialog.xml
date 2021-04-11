@@ -186,6 +186,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/llDealer"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="4dp"
@@ -194,6 +195,25 @@
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                                 android:id="@+id/spDealer"
+                                android:layout_width="match_parent"
+                                android:layout_height="58dp"
+                                android:layout_gravity="center_vertical"
+                                android:prompt="@string/app_name"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llDistributor"
+                            android:visibility="gone"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="4dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_common_input_filled_shape_new">
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:id="@+id/spDistributor"
                                 android:layout_width="match_parent"
                                 android:layout_height="58dp"
                                 android:layout_gravity="center_vertical"

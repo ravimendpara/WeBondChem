@@ -80,7 +80,8 @@ public interface IApiInterface {
             @Field("PinCode") String PinCode,
             @Field("DistrictId") String DistrictId,
             @Field("TalukaId") String TalukaId,
-            @Field("ProductList") String ProductList
+            @Field("ProductList") String ProductList,
+            @Field("OrderUnderRegisterStatus") String OrderUnderRegisterStatus
     );
 
     @FormUrlEncoded
@@ -95,7 +96,9 @@ public interface IApiInterface {
             @Field("PinCode") String PinCode,
             @Field("DistrictId") String DistrictId,
             @Field("TalukaId") String TalukaId,
-            @Field("ProductList") String ProductList
+            @Field("ProductList") String ProductList,
+            @Field("OrderUnderRegisterStatus") String OrderUnderRegisterStatus,
+            @Field("DistributorId") String DistributorId
     );
 
     @FormUrlEncoded
@@ -118,7 +121,9 @@ public interface IApiInterface {
             @Field("GSTNo") String GSTNo,
             @Field("Photo") String Photo,
             @Field("PhotoFileName") String PhotoFileName,
-            @Field("DateOfBirth") String DateOfBirth
+            @Field("DateOfBirth") String DateOfBirth,
+            @Field("DistributorId") String DistributorId,
+            @Field("CustomerRegisterUnder") String CustomerRegisterUnder
     );
 
     @FormUrlEncoded
@@ -142,7 +147,8 @@ public interface IApiInterface {
             @Field("GSTNo") String GSTNo,
             @Field("Photo") String Photo,
             @Field("PhotoFileName") String PhotoFileName,
-            @Field("DateOfBirth") String DateOfBirth
+            @Field("DateOfBirth") String DateOfBirth,
+            @Field("DealerRegisterUnder") String DealerRegisterUnder
     );
 
     @FormUrlEncoded
