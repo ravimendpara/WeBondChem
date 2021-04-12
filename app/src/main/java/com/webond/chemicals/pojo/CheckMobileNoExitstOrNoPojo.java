@@ -14,6 +14,28 @@ public class CheckMobileNoExitstOrNoPojo {
     @SerializedName("Msg")
     @Expose
     private String msg;
+    @SerializedName("IsSmsProviderWorking")
+    @Expose
+    private String isSmsProviderWorking;
+    @SerializedName("NeedToVerifyOTPOnRegister")
+    @Expose
+    private String needToVerifyOTPOnRegister;
+
+    public String getIsSmsProviderWorking() {
+        return isSmsProviderWorking;
+    }
+
+    public void setIsSmsProviderWorking(String isSmsProviderWorking) {
+        this.isSmsProviderWorking = isSmsProviderWorking;
+    }
+
+    public String getNeedToVerifyOTPOnRegister() {
+        return needToVerifyOTPOnRegister;
+    }
+
+    public void setNeedToVerifyOTPOnRegister(String needToVerifyOTPOnRegister) {
+        this.needToVerifyOTPOnRegister = needToVerifyOTPOnRegister;
+    }
 
     public Integer getStatus() {
         return status;

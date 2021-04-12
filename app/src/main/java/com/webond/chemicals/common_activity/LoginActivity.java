@@ -61,8 +61,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private MaterialCardView cvRegister;
     private BottomSheetDialogForVerifyOTP bottomSheetDialogForVerifyOTP;
     private String randomSixDigitOTP;
-
     private LinearLayout llOrRegister;
+    private boolean isOTPVerificationForRegister = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,7 +157,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         } else if (v.getId() == R.id.cvRegister) {
             if (isValid()) {
-                checkIsMobileNoIsExistOrNot(true, true, edtMobileNo.getText().toString().trim(), false);
+                checkIsMobileNoIsExistOrNot(true, false, edtMobileNo.getText().toString().trim(), false);
             }
         }
     }
@@ -168,15 +168,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             bottomSheetDialogForVerifyOTP.dismiss();
             Toast.makeText(this, "OTP Verified Successfully!", Toast.LENGTH_SHORT).show();
             mySharedPreferences.setVerifiedMobileNo(edtMobileNo.getText().toString().trim());
-            String selectedLoginUserType = selectUserTypeArrayList.get(spUserType.getSelectedItemPosition());
-            if (selectedLoginUserType.equalsIgnoreCase(ADMIN)) {
-                getDetailsForLoginUserAdmin(true, true);
-            } else if (selectedLoginUserType.equalsIgnoreCase(DISTRIBUTOR)) {
-                getDetailsForLoginUserDistributor(true, true);
-            } else if (selectedLoginUserType.equalsIgnoreCase(DEALER)) {
-                getDetailsForLoginUserDealer(true, true);
-            } else if (selectedLoginUserType.equalsIgnoreCase(CUSTOMER)) {
-                getDetailsForLoginUserCustomer(true, true);
+            if (!isOTPVerificationForRegister){
+                String selectedLoginUserType = selectUserTypeArrayList.get(spUserType.getSelectedItemPosition());
+                if (selectedLoginUserType.equalsIgnoreCase(ADMIN)) {
+                    getDetailsForLoginUserAdmin(true, true);
+                } else if (selectedLoginUserType.equalsIgnoreCase(DISTRIBUTOR)) {
+                    getDetailsForLoginUserDistributor(true, true);
+                } else if (selectedLoginUserType.equalsIgnoreCase(DEALER)) {
+                    getDetailsForLoginUserDealer(true, true);
+                } else if (selectedLoginUserType.equalsIgnoreCase(CUSTOMER)) {
+                    getDetailsForLoginUserCustomer(true, true);
+                }
+            }else {
+                redirectToRegisterScreen();
             }
         } else {
             Toast.makeText(this, "Invalid OTP", Toast.LENGTH_SHORT).show();
@@ -197,36 +201,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 try {
                     if (response.code() == 200 && response.body() != null &&
                             response.body().size() > 0) {
-
+                        CheckMobileNoExitstOrNoPojo checkMobileNoExitstOrNoPojo = response.body().get(0);
                         if (isFromLogin) {
-                            if (response.body().get(0).getStatus().toString().equalsIgnoreCase(userTypeHashMap.get(selectUserTypeArrayList.get(spUserType.getSelectedItemPosition()).trim())) &&
-                                    response.body().get(0).getApproveStatus() == 1) {
-//                                Toast.makeText(LoginActivity.this, "sended otp:- " + randomSixDigitOTP, Toast.LENGTH_LONG).show();
+                            if (checkMobileNoExitstOrNoPojo.getStatus().toString().equalsIgnoreCase(userTypeHashMap.get(selectUserTypeArrayList.get(spUserType.getSelectedItemPosition()).trim())) &&
+                                    checkMobileNoExitstOrNoPojo.getApproveStatus() == 1) {
+                                if (checkMobileNoExitstOrNoPojo.getIsSmsProviderWorking().trim().equalsIgnoreCase(CommonUtil.SMS_PROVIDER_NOT_WORKING)) {
+                                    Toast.makeText(LoginActivity.this, "OTP:- " + randomSixDigitOTP, Toast.LENGTH_LONG).show();
+                                }
                                 sendOTPApiCall(false, true, edtMobileNo.getText().toString().trim(), randomSixDigitOTP);
                             } else {
                                 if (!isPdHide) {
                                     DialogUtil.hideProgressDialog();
                                 }
-                                Toast.makeText(LoginActivity.this, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "" + checkMobileNoExitstOrNoPojo.getMsg(), Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            if (response.body().get(0).getStatus() == 0) {
-                                String selectedLoginUserType = selectUserTypeArrayList.get(spUserType.getSelectedItemPosition());
-                                if (selectedLoginUserType.equalsIgnoreCase(DISTRIBUTOR)) {
-                                    Intent intent = new Intent(LoginActivity.this, DistributorRegistrationActivity.class);
-                                    intent.putExtra(IntentConstants.MOBILE_NO, mobileNo);
-                                    startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_DISTRIBUTOR_REGISTRATION);
-                                } else if (selectedLoginUserType.equalsIgnoreCase(DEALER)) {
-                                    Intent intent = new Intent(LoginActivity.this, DealerRegistrationActivity.class);
-                                    intent.putExtra(IntentConstants.MOBILE_NO, mobileNo);
-                                    startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_DEALER_REGISTRATION);
-                                } else if (selectedLoginUserType.equalsIgnoreCase(CUSTOMER)) {
-                                    Intent intent = new Intent(LoginActivity.this, CustomerRegistrationActivity.class);
-                                    intent.putExtra(IntentConstants.MOBILE_NO, mobileNo);
-                                    startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_CUSTOMER_REGISTRATION);
+                            if (checkMobileNoExitstOrNoPojo.getStatus() == 0) {
+                                if (checkMobileNoExitstOrNoPojo.getNeedToVerifyOTPOnRegister().trim().equalsIgnoreCase(CommonUtil.REGISTER_WITHOUT_OTP_VERIFICATION)) {
+                                    if (!isPdHide) {
+                                        DialogUtil.hideProgressDialog();
+                                    }
+                                    isOTPVerificationForRegister = false;
+                                    redirectToRegisterScreen();
+                                } else {
+                                    isOTPVerificationForRegister = true;
+                                    sendOTPApiCall(false, true, edtMobileNo.getText().toString().trim(), randomSixDigitOTP);
                                 }
                             } else {
-                                Toast.makeText(LoginActivity.this, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "" + checkMobileNoExitstOrNoPojo.getMsg(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     } else {
@@ -728,4 +730,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             finish();
         }
     }
+
+
+    private void redirectToRegisterScreen() {
+        String selectedLoginUserType = selectUserTypeArrayList.get(spUserType.getSelectedItemPosition());
+        if (selectedLoginUserType.equalsIgnoreCase(DISTRIBUTOR)) {
+            Intent intent = new Intent(LoginActivity.this, DistributorRegistrationActivity.class);
+            intent.putExtra(IntentConstants.MOBILE_NO, edtMobileNo.getText().toString().trim());
+            startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_DISTRIBUTOR_REGISTRATION);
+        } else if (selectedLoginUserType.equalsIgnoreCase(DEALER)) {
+            Intent intent = new Intent(LoginActivity.this, DealerRegistrationActivity.class);
+            intent.putExtra(IntentConstants.MOBILE_NO, edtMobileNo.getText().toString().trim());
+            startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_DEALER_REGISTRATION);
+        } else if (selectedLoginUserType.equalsIgnoreCase(CUSTOMER)) {
+            Intent intent = new Intent(LoginActivity.this, CustomerRegistrationActivity.class);
+            intent.putExtra(IntentConstants.MOBILE_NO, edtMobileNo.getText().toString().trim());
+            startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_CUSTOMER_REGISTRATION);
+        }
+    }
+
 }

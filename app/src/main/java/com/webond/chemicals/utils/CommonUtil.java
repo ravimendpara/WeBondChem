@@ -72,6 +72,12 @@ public class CommonUtil {
 
     public static final String APPROVE_STATUS = "1";
     public static final String REJECT_STATUS = "2";
+    public static final String SMS_PROVIDER_WORKING = "1";
+    public static final String SMS_PROVIDER_NOT_WORKING = "0";
+    public static final String REGISTER_WITH_OTP_VERIFICATION = "1";
+    public static final String REGISTER_WITHOUT_OTP_VERIFICATION = "0";
+
+
 
 
 
