@@ -1,11 +1,11 @@
 package com.webond.chemicals.dealer.activity;
 
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.viewpager.widget.ViewPager;
-
-import android.os.Bundle;
-import android.view.View;
 
 import com.google.android.material.tabs.TabLayout;
 import com.webond.chemicals.R;
@@ -14,9 +14,6 @@ import com.webond.chemicals.custom_class.ViewPagerAdapter;
 import com.webond.chemicals.dealer.fragments.DealerAllCustomerFragment;
 import com.webond.chemicals.dealer.fragments.DealerApproveCustomerFragment;
 import com.webond.chemicals.dealer.fragments.DealerPendingCustomerFragment;
-import com.webond.chemicals.distributor.fragments.customer.DistributorAllCustomerFragment;
-import com.webond.chemicals.distributor.fragments.customer.DistributorApproveCustomerFragment;
-import com.webond.chemicals.distributor.fragments.customer.DistributorPendingCustomerFragment;
 
 public class DealerManageCustomerActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -37,7 +34,7 @@ public class DealerManageCustomerActivity extends AppCompatActivity implements V
         imgBack = findViewById(R.id.imgBack);
         imgBack.setOnClickListener(this);
         tvHeaderTitle = findViewById(R.id.tvHeaderTitle);
-        tvHeaderTitle.setText("Manage Customer");
+        tvHeaderTitle.setText("Manage Applicant");
         tlManageCustomer = findViewById(R.id.tlManageCustomer);
         vpManageCustomer = findViewById(R.id.vpManageCustomer);
         tlManageCustomer.setupWithViewPager(vpManageCustomer);

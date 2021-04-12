@@ -1,11 +1,11 @@
 package com.webond.chemicals.distributor.activity;
 
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.viewpager.widget.ViewPager;
-
-import android.os.Bundle;
-import android.view.View;
 
 import com.google.android.material.tabs.TabLayout;
 import com.webond.chemicals.R;
@@ -34,7 +34,7 @@ public class DistributorManageCustomerActivity extends AppCompatActivity impleme
         imgBack = findViewById(R.id.imgBack);
         imgBack.setOnClickListener(this);
         tvHeaderTitle = findViewById(R.id.tvHeaderTitle);
-        tvHeaderTitle.setText("Manage Customer");
+        tvHeaderTitle.setText("Manage Applicant");
         tlManageCustomer = findViewById(R.id.tlManageCustomer);
         vpManageCustomer = findViewById(R.id.vpManageCustomer);
         tlManageCustomer.setupWithViewPager(vpManageCustomer);

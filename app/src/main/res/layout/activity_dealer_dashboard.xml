@@ -300,7 +300,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:gravity="center"
-                            android:text="Manage\Applicant Order"
+                            android:text="Manage\ Applicant Order"
                             android:textColor="@color/darker_grey_color"
                             android:textSize="@dimen/dashboard_text_size" />
 

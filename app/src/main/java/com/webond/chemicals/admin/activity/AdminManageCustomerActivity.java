@@ -34,7 +34,7 @@ public class AdminManageCustomerActivity extends AppCompatActivity implements Vi
         imgBack = findViewById(R.id.imgBack);
         imgBack.setOnClickListener(this);
         tvHeaderTitle = findViewById(R.id.tvHeaderTitle);
-        tvHeaderTitle.setText("Manage Customer");
+        tvHeaderTitle.setText("Manage Applicant");
         tlManageCustomer = findViewById(R.id.tlManageCustomer);
         vpManageCustomer = findViewById(R.id.vpManageCustomer);
         tlManageCustomer.setupWithViewPager(vpManageCustomer);
