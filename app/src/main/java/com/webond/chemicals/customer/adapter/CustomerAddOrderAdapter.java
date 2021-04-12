@@ -31,6 +31,7 @@ import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
 import com.webond.chemicals.pojo.AddCustomerOrderDataPojo;
 import com.webond.chemicals.pojo.GetDealerListByTalukaIdPojo;
+import com.webond.chemicals.pojo.GetDistributorListByTalukaIdPojo;
 import com.webond.chemicals.pojo.GetProductListPojo;
 import com.webond.chemicals.pojo.GetTalukaListPojo;
 import com.webond.chemicals.utils.CommonUtil;
@@ -56,6 +57,7 @@ public class CustomerAddOrderAdapter extends RecyclerView.Adapter<CustomerAddOrd
     public static final String SELECT_DISTRICT = "Select District*";
     public static final String SELECT_TALUKA = "Select Taluka*";
     public static final String SELECT_DEALER = "Select Dealer*";
+    public static final String SELECT_DISTRIBUTOR = "Select Distributor*";
     private Context context;
     private ArrayList<GetProductListPojo> getProductListPojoArrayList;
     private LayoutInflater layoutInflater;
@@ -436,7 +438,11 @@ public class CustomerAddOrderAdapter extends RecyclerView.Adapter<CustomerAddOrd
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 if (position > 0) {
                     String talukaId = talukaHashMap.get(talukaArrayList.get(position));
-                    getDealerListByTalukaIdApiCall(true, true, talukaId);
+                    if (mySharedPreferences.getCustomerUnderRegStatus().equalsIgnoreCase("1")){
+                        getDealerListByTalukaIdApiCall(true, true, talukaId);
+                    }else {
+                        getDistributorListBytalukaIdApiCall(true,true,talukaId);
+                    }
                 }
             }
 
@@ -614,6 +620,74 @@ public class CustomerAddOrderAdapter extends RecyclerView.Adapter<CustomerAddOrd
             }
         });
     }
+
+    private void getDistributorListBytalukaIdApiCall(boolean isPdShow, boolean isPdHide, String talukaId) {
+        if (isPdShow) {
+            DialogUtil.showProgressDialogNotCancelable(context, "");
+        }
+        ApiImplementer.getDistributorListByTalukaIdApiImplementer(talukaId, new Callback<ArrayList<GetDistributorListByTalukaIdPojo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<GetDistributorListByTalukaIdPojo>> call, Response<ArrayList<GetDistributorListByTalukaIdPojo>> response) {
+                if (isPdHide) {
+                    DialogUtil.hideProgressDialog();
+                }
+                try {
+                    if (response.code() == 200 && response.body() != null) {
+                        if (response.body().size() > 0) {
+                            ArrayList<GetDistributorListByTalukaIdPojo> getDistributorListByCityIdPojoArrayList = response.body();
+                            distributorArrayList = new ArrayList<>();
+                            distributorArrayList.add(SELECT_DISTRIBUTOR);
+                            distributorHashMap = new HashMap<>();
+                            for (int i = 0; i < getDistributorListByCityIdPojoArrayList.size(); i++) {
+                                if (!CommonUtil.checkIsEmptyOrNullCommon(getDistributorListByCityIdPojoArrayList.get(i).getDistributorName())) {
+                                    String distributorName = getDistributorListByCityIdPojoArrayList.get(i).getDistributorName().trim();
+                                    distributorArrayList.add(distributorName);
+                                    distributorHashMap.put(distributorName, getDistributorListByCityIdPojoArrayList.get(i).getDistributorId().toString());
+                                }
+                            }
+
+                            ArrayAdapter<String> distributorListAdapter = new ArrayAdapter<String>
+                                    (context, R.layout.custome_textview_for_sp,
+                                            distributorArrayList);
+                            distributorListAdapter.setDropDownViewResource(R.layout.custome_textview_for_sp);
+                            spDistributor.setAdapter(distributorListAdapter);
+
+                        } else {
+                            if (!isPdHide) {
+                                DialogUtil.hideProgressDialog();
+                            }
+                            distributorArrayList = new ArrayList<>();
+                            distributorArrayList.add(SELECT_DISTRIBUTOR);
+                            distributorHashMap = new HashMap<>();
+                            ArrayAdapter<String> distributorListAdapter = new ArrayAdapter<String>
+                                    (context, R.layout.custome_textview_for_sp,
+                                            distributorArrayList);
+                            distributorListAdapter.setDropDownViewResource(R.layout.custome_textview_for_sp);
+                            spDistributor.setAdapter(distributorListAdapter);
+                            Toast.makeText(context, "Distributors Not Found!", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        if (!isPdHide) {
+                            DialogUtil.hideProgressDialog();
+                        }
+                        Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception ex) {
+                    if (!isPdHide) {
+                        DialogUtil.hideProgressDialog();
+                    }
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<GetDistributorListByTalukaIdPojo>> call, Throwable t) {
+                DialogUtil.hideProgressDialog();
+                Toast.makeText(context, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     private void addCustomerOrderApiCall(String OrderDate,
                                          String customerDealerId,
