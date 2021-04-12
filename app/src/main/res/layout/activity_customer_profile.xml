@@ -446,7 +446,7 @@
                         <com.webond.chemicals.custom_class.TextViewRegularFont
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Customer Under Registered"
+                            android:text="Applicant Under Registered"
                             android:textSize="13sp" />
 
                         <com.webond.chemicals.custom_class.TextViewMediumFont

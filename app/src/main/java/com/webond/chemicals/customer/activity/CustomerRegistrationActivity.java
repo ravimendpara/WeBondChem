@@ -257,7 +257,7 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
 
     private boolean isValid() {
         if (CommonUtil.checkIsEmptyOrNullCommon(edtCustomerName.getText().toString().trim())) {
-            Toast.makeText(this, "Please enter customer name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter applicant name", Toast.LENGTH_SHORT).show();
             return false;
         } else if (spState.getSelectedItemPosition() == -1 || spState.getSelectedItemPosition() == 0) {
             Toast.makeText(this, "Please select state", Toast.LENGTH_SHORT).show();

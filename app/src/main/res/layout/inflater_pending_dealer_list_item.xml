@@ -285,7 +285,7 @@
                     android:drawableTint="@color/white"
                     android:fontFamily="@font/montserrat_medium"
                     android:text="Approve"
-                    android:textSize="13sp"
+                    android:textSize="12sp"
                     app:iconGravity="start" />
 
                 <com.google.android.material.button.MaterialButton
@@ -296,7 +296,7 @@
                     android:backgroundTint="@color/red"
                     android:fontFamily="@font/montserrat_medium"
                     android:text="Reject"
-                    android:textSize="13sp" />
+                    android:textSize="12sp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnDeleteDealer"
@@ -307,7 +307,7 @@
                     android:backgroundTint="@color/orange"
                     android:fontFamily="@font/montserrat_medium"
                     android:text="Delete"
-                    android:textSize="13sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 

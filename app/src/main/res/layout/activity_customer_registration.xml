@@ -80,7 +80,7 @@
                         android:layout_height="58dp"
                         android:fontFamily="@font/montserrat_medium"
                         android:gravity="center_vertical"
-                        android:hint="Customer Name*"
+                        android:hint="Applicant Name*"
                         android:imeOptions="actionNext"
                         android:inputType="text"
                         android:textSize="@dimen/registration_form_text_size"

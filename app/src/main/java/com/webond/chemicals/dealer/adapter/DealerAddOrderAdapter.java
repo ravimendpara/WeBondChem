@@ -414,7 +414,9 @@ public class DealerAddOrderAdapter extends RecyclerView.Adapter<DealerAddOrderAd
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 if (position > 0) {
                     String talukaId = talukaHashMap.get(talukaArrayList.get(position));
-                    getDistributorApiCall(true, true, talukaId);
+                    if (mySharedPreferences.getDealerUnderRegStatus().equalsIgnoreCase("2")){
+                        getDistributorApiCall(true, true, talukaId);
+                    }
                 }
             }
 
