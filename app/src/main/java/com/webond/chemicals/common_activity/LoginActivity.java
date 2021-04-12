@@ -157,6 +157,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         } else if (v.getId() == R.id.cvRegister) {
             if (isValid()) {
+                randomSixDigitOTP = CommonUtil.getRandomSixDigitOTP();
                 checkIsMobileNoIsExistOrNot(true, false, edtMobileNo.getText().toString().trim(), false);
             }
         }
@@ -228,6 +229,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     sendOTPApiCall(false, true, edtMobileNo.getText().toString().trim(), randomSixDigitOTP);
                                 }
                             } else {
+                                if (!isPdHide) {
+                                    DialogUtil.hideProgressDialog();
+                                }
                                 Toast.makeText(LoginActivity.this, "" + checkMobileNoExitstOrNoPojo.getMsg(), Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -235,7 +239,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (!isPdHide) {
                             DialogUtil.hideProgressDialog();
                         }
-                        Toast.makeText(LoginActivity.this, "Something went wrong,Please try again later.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Failed to check mobile no.", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception ex) {
                     if (!isPdHide) {
@@ -283,7 +287,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (!isPdHide) {
                             DialogUtil.hideProgressDialog();
                         }
-                        Toast.makeText(LoginActivity.this, "Something went wrong,Please try again later.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Failed to send otp", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception ex) {
                     if (!isPdHide) {
@@ -324,7 +328,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 if (!isPdHide) {
                                     DialogUtil.hideProgressDialog();
                                 }
-                                Toast.makeText(LoginActivity.this, "Something went wrong,Please try again later.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Failed to get login details.", Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception ex) {
                             if (!isPdHide) {
@@ -365,7 +369,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 if (!isPdHide) {
                                     DialogUtil.hideProgressDialog();
                                 }
-                                Toast.makeText(LoginActivity.this, "Something went wrong,Please try again later.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Failed to get login details.", Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception ex) {
                             if (!isPdHide) {
@@ -406,7 +410,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 if (!isPdHide) {
                                     DialogUtil.hideProgressDialog();
                                 }
-                                Toast.makeText(LoginActivity.this, "Something went wrong,Please try again later.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Failed to get login details.", Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception ex) {
                             if (!isPdHide) {
@@ -447,7 +451,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 if (!isPdHide) {
                                     DialogUtil.hideProgressDialog();
                                 }
-                                Toast.makeText(LoginActivity.this, "Something went wrong,Please try again later.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Failed to get login details.", Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception ex) {
                             if (!isPdHide) {
