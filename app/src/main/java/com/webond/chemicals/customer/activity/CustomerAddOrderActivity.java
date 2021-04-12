@@ -70,6 +70,16 @@ public class CustomerAddOrderActivity extends AppCompatActivity implements View.
         rvProductList = findViewById(R.id.rvProductList);
         llLoading = findViewById(R.id.llLoading);
         llNoDateFound = findViewById(R.id.llNoDateFound);
+
+        //for dealer init
+        dealerArrayList = new ArrayList<>();
+        dealerArrayList.add(SELECT_DEALER);
+        dealerHashMap = new HashMap<>();
+
+        //for distributor init
+        distributorArrayList = new ArrayList<>();
+        distributorArrayList.add(SELECT_DISTRIBUTOR);
+        distributorHashMap = new HashMap<>();
     }
 
     private void getProductListApiCall() {

@@ -167,8 +167,14 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
         edtDOB.setOnClickListener(this);
         cvSubmit = findViewById(R.id.cvSubmit);
         cvSubmit.setOnClickListener(this);
-
         spDistributor = findViewById(R.id.spDistributor);
+
+        distributorArrayList = new ArrayList<>();
+        distributorArrayList.add(SELECT_DISTRIBUTOR);
+        distributorHashMap = new HashMap<>();
+        spinnerAdapterDistributorList = new SpinnerSimpleAdapter(CustomerRegistrationActivity.this, distributorArrayList);
+        spDistributor.setAdapter(spinnerAdapterDistributorList);
+
 
         rGroupDealerAndDistributor.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

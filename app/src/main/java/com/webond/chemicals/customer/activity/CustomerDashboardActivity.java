@@ -78,12 +78,16 @@ public class CustomerDashboardActivity extends AppCompatActivity implements View
         tvTotalPoints = findViewById(R.id.tvTotalPoints);
 
 
-        if (!CommonUtil.checkIsEmptyOrNullCommon(mySharedPreferences.getCustomerPhotoPath())) {
-            Glide.with(CustomerDashboardActivity.this)
-                    .load(mySharedPreferences.getCustomerPhotoPath())
-                    .centerCrop()
-                    .placeholder(R.drawable.person_img)
-                    .into(imgProfile);
+        try {
+            if (!CommonUtil.checkIsEmptyOrNullCommon(mySharedPreferences.getCustomerPhotoPath())) {
+                Glide.with(CustomerDashboardActivity.this)
+                        .load(mySharedPreferences.getCustomerPhotoPath())
+                        .centerCrop()
+                        .placeholder(R.drawable.person_img)
+                        .into(imgProfile);
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(mySharedPreferences.getCustomerName())) {

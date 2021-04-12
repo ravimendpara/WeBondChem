@@ -92,12 +92,16 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
             cvManageCustomer.setVisibility(View.INVISIBLE);
         }
 
-        if (!CommonUtil.checkIsEmptyOrNullCommon(mySharedPreferences.getCustomerPhotoPath())) {
-            Glide.with(DealerDashboardActivity.this)
-                    .load(mySharedPreferences.getDealerPhotoPath())
-                    .centerCrop()
-                    .placeholder(R.drawable.person_img)
-                    .into(imgProfile);
+        try {
+            if (!CommonUtil.checkIsEmptyOrNullCommon(mySharedPreferences.getCustomerPhotoPath())) {
+                Glide.with(DealerDashboardActivity.this)
+                        .load(mySharedPreferences.getDealerPhotoPath())
+                        .centerCrop()
+                        .placeholder(R.drawable.person_img)
+                        .into(imgProfile);
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(mySharedPreferences.getDealerName())) {
