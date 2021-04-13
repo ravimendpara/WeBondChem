@@ -219,11 +219,10 @@ public class SplashActivity extends AppCompatActivity {
             public void onClick(View v) {
                 updateDialog.dismiss();
                 try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
-                    finish();
-                } catch (android.content.ActivityNotFoundException anfe) {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName())));
                     finish();
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
                 }
 
             }

@@ -39,10 +39,10 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="18dp"
-                android:layout_marginRight="18dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="25dp"
                 app:cardElevation="8dp"
                 app:contentPadding="6dp">
 
@@ -70,10 +70,10 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="18dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginRight="18dp"
-                app:cardCornerRadius="30dp"
+                android:layout_marginRight="20dp"
+                app:cardCornerRadius="25dp"
                 app:cardElevation="8dp"
                 app:contentPadding="6dp">
 
@@ -106,14 +106,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="18dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="52dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginRight="18dp"
+                android:layout_marginRight="20dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardBackgroundColor="@color/colorPrimaryDark"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="25dp"
                 app:cardElevation="8dp"
                 app:contentPadding="6dp">
 
@@ -154,13 +154,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="18dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginRight="18dp"
+                android:layout_marginRight="20dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardBackgroundColor="@color/colorPrimaryDark"
-                app:cardCornerRadius="30dp"
+                app:cardCornerRadius="25dp"
                 app:cardElevation="8dp"
                 app:contentPadding="6dp">
 
