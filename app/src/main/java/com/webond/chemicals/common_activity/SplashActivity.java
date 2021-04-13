@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +27,6 @@ import com.webond.chemicals.R;
 import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.pojo.GetVersionInfoPojo;
-import com.webond.chemicals.utils.DialogUtil;
 
 import java.util.ArrayList;
 
@@ -141,21 +139,21 @@ public class SplashActivity extends AppCompatActivity {
         try {
             PackageInfo pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
             int versionCode = pinfo.versionCode;
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    DialogUtil.showProgressDialogNotCancelable(SplashActivity.this, "");
-                }
-            });
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    DialogUtil.showProgressDialogNotCancelable(SplashActivity.this, "");
+//                }
+//            });
             ApiImplementer.getVersionInfoApiImplementer(versionCode + "", new Callback<ArrayList<GetVersionInfoPojo>>() {
                 @Override
                 public void onResponse(Call<ArrayList<GetVersionInfoPojo>> call, Response<ArrayList<GetVersionInfoPojo>> response) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            DialogUtil.hideProgressDialog();
-                        }
-                    });
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            DialogUtil.hideProgressDialog();
+//                        }
+//                    });
                     try {
                         if (response.code() == 200 &&
                                 response.body() != null) {
@@ -172,26 +170,27 @@ public class SplashActivity extends AppCompatActivity {
                         } else {
                             redirectToLoginActivity();
                         }
-                    } catch (Exception ex) {
-                        Toast.makeText(SplashActivity.this, "" + ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    } catch (Throwable ex) {
+                        redirectToLoginActivity();
+//                        Toast.makeText(SplashActivity.this, "" + ex.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ArrayList<GetVersionInfoPojo>> call, Throwable t) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            DialogUtil.hideProgressDialog();
-                        }
-                    });
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            DialogUtil.hideProgressDialog();
+//                        }
+//                    });
                     redirectToLoginActivity();
                 }
             });
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-            finish();
+        } catch (Throwable e) {
+            redirectToLoginActivity();
+//            e.printStackTrace();
+//            finish();
         }
     }
 
