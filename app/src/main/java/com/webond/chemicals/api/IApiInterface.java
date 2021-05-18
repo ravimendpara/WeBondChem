@@ -8,6 +8,10 @@ import com.webond.chemicals.pojo.AddDealerPojo;
 import com.webond.chemicals.pojo.AddDistributerPojo;
 import com.webond.chemicals.pojo.AddDistributorOrderDataPojo;
 import com.webond.chemicals.pojo.AddProductPojo;
+import com.webond.chemicals.pojo.AdminOrderRegisterPojo;
+import com.webond.chemicals.pojo.AdminPointReportPojo;
+import com.webond.chemicals.pojo.AdminStockReportDetailPojo;
+import com.webond.chemicals.pojo.AdminStockReportPojo;
 import com.webond.chemicals.pojo.ApproveCustomerPojo;
 import com.webond.chemicals.pojo.ApproveDealerPojo;
 import com.webond.chemicals.pojo.ApproveDistributorPojo;
@@ -358,6 +362,28 @@ public interface IApiInterface {
 
     @GET("DeleteDistributor")
     Call<ArrayList<DeleteDistributorPojo>> deleteDistributor(@Query("DistributorId") String DistributorId);
+
+    @GET("GetPointReport")
+    Call<ArrayList<AdminPointReportPojo>> GetPointReport(@Query("LoginType") String LoginType
+                                                                                         );
+
+
+    @GET("GetStockReportData")
+    Call<ArrayList<AdminStockReportPojo>> GetStockReport(@Query("LoginType") String LoginType
+    );
+
+    @GET("GetStockReportDataDetail")
+    Call<ArrayList<AdminStockReportDetailPojo>> GetStockReportDataDetail(@Query("LoginType") String LoginType,
+                                                                         @Query("LoginId") String LoginId,
+                                                                         @Query("ProductId") String ProductId
+    );
+
+    @GET("GetOrderRegisterReport")
+    Call<ArrayList<AdminOrderRegisterPojo>> GetOrderRegisterReport(@Query("FromDate") String FromDate,
+                                                                     @Query("ToDate") String ToDate,
+                                                                     @Query("OrderStatus") String OrderStatus
+    );
+
 
 
 }

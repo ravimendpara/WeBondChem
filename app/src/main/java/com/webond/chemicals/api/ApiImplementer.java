@@ -8,6 +8,10 @@ import com.webond.chemicals.pojo.AddDealerPojo;
 import com.webond.chemicals.pojo.AddDistributerPojo;
 import com.webond.chemicals.pojo.AddDistributorOrderDataPojo;
 import com.webond.chemicals.pojo.AddProductPojo;
+import com.webond.chemicals.pojo.AdminOrderRegisterPojo;
+import com.webond.chemicals.pojo.AdminPointReportPojo;
+import com.webond.chemicals.pojo.AdminStockReportDetailPojo;
+import com.webond.chemicals.pojo.AdminStockReportPojo;
 import com.webond.chemicals.pojo.ApproveCustomerPojo;
 import com.webond.chemicals.pojo.ApproveDealerPojo;
 import com.webond.chemicals.pojo.ApproveDistributorPojo;
@@ -596,5 +600,31 @@ public class ApiImplementer {
         Call<ArrayList<DeleteDistributorPojo>> call = apiService.deleteDistributor(DistributorId);
         call.enqueue(cb);
     }
+
+
+    public static void getPointReport(String LoginType, Callback<ArrayList<AdminPointReportPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<AdminPointReportPojo>> call = apiService.GetPointReport(LoginType);
+        call.enqueue(cb);
+    }
+
+    public static void getStockReport(String LoginType, Callback<ArrayList<AdminStockReportPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<AdminStockReportPojo>> call = apiService.GetStockReport(LoginType);
+        call.enqueue(cb);
+    }
+
+    public static void getStockReportDataDetail(String LoginType,String LoginId,String ProductId, Callback<ArrayList<AdminStockReportDetailPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<AdminStockReportDetailPojo>> call = apiService.GetStockReportDataDetail(LoginType,LoginId,ProductId);
+        call.enqueue(cb);
+    }
+
+    public static void getOrderRegister(String fromDate,String toDate,String orderStatus, Callback<ArrayList<AdminOrderRegisterPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<AdminOrderRegisterPojo>> call = apiService.GetOrderRegisterReport(fromDate,toDate,orderStatus);
+        call.enqueue(cb);
+    }
+
 
 }

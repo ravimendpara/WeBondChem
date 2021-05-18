@@ -40,6 +40,7 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
     private MaterialCardView cvProfile;
     private MaterialCardView cvManageDistributor;
     private MaterialCardView cvManageDealer;
+    private MaterialCardView cvReport;
     private MaterialCardView cvManageCustomer;
     private MaterialCardView cvManageProduct;
     private MaterialCardView cvManageDistributorOrder;
@@ -62,6 +63,8 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         recyclerViewPagerStudentSideBanner = findViewById(R.id.recyclerViewPagerStudentSideBanner);
         mySharedPreferences = new MySharedPreferences(AdminDashboardActivity.this);
         cvProfile = findViewById(R.id.cvProfile);
+        cvReport = findViewById(R.id.cvReport);
+        cvReport.setOnClickListener(this);
         cvProfile.setOnClickListener(this);
         cvManageDistributor = findViewById(R.id.cvManageDistributor);
         cvManageDistributor.setOnClickListener(this);
@@ -161,6 +164,17 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         }else if (v.getId() == R.id.imgProfile){
             Intent intent = new Intent(AdminDashboardActivity.this, AdminProfileActivity.class);
             startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_LOGOUT);
+        }else if (v.getId() == R.id.cvReport){
+            animation = AnimationUtils.loadAnimation(AdminDashboardActivity.this, R.anim.bounce);
+            cvReport.startAnimation(animation);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(AdminDashboardActivity.this, AdminReportActivity.class);
+                    startActivity(intent);
+                }
+            }, 400);
+
         }
     }
 

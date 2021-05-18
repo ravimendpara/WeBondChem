@@ -2,6 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.webond.chemicals">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="true"
@@ -12,7 +24,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".distributor.activity.DistributorMyOrderActivity"></activity>
+        <activity android:name=".admin.activity.OrderRegisterActivity"></activity>
+        <activity android:name=".admin.activity.AdminStockReportDetailActivity" />
+        <activity android:name=".admin.activity.AdminStockReportActivity" />
+        <activity android:name=".admin.activity.AdminPointReportActivity" />
+        <activity android:name=".admin.activity.AdminReportActivity" />
+        <activity android:name=".distributor.activity.DistributorMyOrderActivity" />
         <activity android:name=".dealer.activity.DealerMyOrderActivity" />
         <activity android:name=".customer.activity.CustomerMyOrdersActivity" />
         <activity android:name=".dealer.activity.DealerManageCustomerOrderActivity" />
@@ -93,7 +110,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".common_activity.SplashActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -102,7 +119,9 @@
         </activity>
         <activity
             android:name=".admin.activity.AdminDashboardActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+
+        </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -114,16 +133,5 @@
                 android:resource="@xml/provider_path" />
         </provider>
     </application>
-
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
 </manifest>

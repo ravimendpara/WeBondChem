@@ -20,7 +20,7 @@
             android:layout_height="52dp"
             android:layout_marginRight="8dp"
             android:layout_gravity="center"
-            app:SpinKit_Color="@color/colorAccent" />
+            app:SpinKit_Color="@color/colorPrimary" />
 
 <!--        <ProgressBar-->
 <!--            android:layout_width="54dp"-->
