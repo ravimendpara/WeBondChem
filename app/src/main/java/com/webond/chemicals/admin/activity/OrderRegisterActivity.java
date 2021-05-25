@@ -2,14 +2,17 @@ package com.webond.chemicals.admin.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -21,6 +24,7 @@ import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.custom_class.SpinnerSimpleAdapter;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.pojo.AdminOrderRegisterPojo;
+import com.webond.chemicals.pojo.AdminStockReportPojo;
 import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.DownloadPdfFromUrl;
 
@@ -46,7 +50,7 @@ public class OrderRegisterActivity extends AppCompatActivity implements View.OnC
     private static final String Approve = "Approve";
     private static final String Reject = "Reject";
     private SpinnerSimpleAdapter spinnerAdapterUserType;
-    private RecyclerView rvAdminOrderReport;
+//    private RecyclerView rvAdminOrderReport;
     private LinearLayout llLoading;
     private Calendar myCalendar = Calendar.getInstance();
     private Calendar myCalendar1 = Calendar.getInstance();
@@ -55,6 +59,9 @@ public class OrderRegisterActivity extends AppCompatActivity implements View.OnC
     private HashMap<String, String> userTypeHashMap = new HashMap<>();
     private String loginType = "";
     String orderStatus = "";
+    private ScrollView svAdminOrderRegisterReport;
+    private LinearLayout llAdminDynamicOrderRegisterReportMainRow;
+    private String orderRegisterReportUrl = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +76,7 @@ public class OrderRegisterActivity extends AppCompatActivity implements View.OnC
                     if (selectedType.equals("All")) {
                         orderStatus = "3";
                         if (!edtFromDate.getText().toString().trim().equals("") && !edTodate.getText().toString().trim().equals("")) {
+                            llAdminDynamicOrderRegisterReportMainRow.removeAllViewsInLayout();
                             getOrderReisterList(edtFromDate.getText().toString(), edTodate.getText().toString(), orderStatus);
                         } else {
                             Toast.makeText(OrderRegisterActivity.this, "Please Select From-Date and To-Date", Toast.LENGTH_SHORT).show();
@@ -78,6 +86,7 @@ public class OrderRegisterActivity extends AppCompatActivity implements View.OnC
                     } else if (selectedType.equals("Pending")) {
                         orderStatus = "0";
                         if (!edtFromDate.getText().toString().trim().equals("") && !edTodate.getText().toString().trim().equals("")) {
+                            llAdminDynamicOrderRegisterReportMainRow.removeAllViewsInLayout();
                             getOrderReisterList(edtFromDate.getText().toString(), edTodate.getText().toString(), orderStatus);
                         } else {
                             Toast.makeText(OrderRegisterActivity.this, "Please Select From-Date and To-Date", Toast.LENGTH_SHORT).show();
@@ -86,6 +95,7 @@ public class OrderRegisterActivity extends AppCompatActivity implements View.OnC
                     } else if (selectedType.equals("Approve")) {
                         orderStatus = "1";
                         if (!edtFromDate.getText().toString().trim().equals("") && !edTodate.getText().toString().trim().equals("")) {
+                            llAdminDynamicOrderRegisterReportMainRow.removeAllViewsInLayout();
                             getOrderReisterList(edtFromDate.getText().toString(), edTodate.getText().toString(), orderStatus);
                         } else {
                             Toast.makeText(OrderRegisterActivity.this, "Please Select From-Date and To-Date", Toast.LENGTH_SHORT).show();
@@ -94,6 +104,7 @@ public class OrderRegisterActivity extends AppCompatActivity implements View.OnC
                     } else if (selectedType.equals("Reject")) {
                         orderStatus = "2";
                         if (!edtFromDate.getText().toString().trim().equals("") && !edTodate.getText().toString().trim().equals("")) {
+                            llAdminDynamicOrderRegisterReportMainRow.removeAllViewsInLayout();
                             getOrderReisterList(edtFromDate.getText().toString(), edTodate.getText().toString(), orderStatus);
                         } else {
                             Toast.makeText(OrderRegisterActivity.this, "Please Select From-Date and To-Date", Toast.LENGTH_SHORT).show();
@@ -146,7 +157,9 @@ public class OrderRegisterActivity extends AppCompatActivity implements View.OnC
         extFabOrderRegisterRepoert.setOnClickListener(this::onClick);
         extFabOrderRegisterRepoert.setVisibility(View.GONE);
         imgBack = findViewById(R.id.imgBack);
-        rvAdminOrderReport = findViewById(R.id.rvAdminOrderReport);
+        svAdminOrderRegisterReport = findViewById(R.id.svAdminOrderRegisterReport);
+        llAdminDynamicOrderRegisterReportMainRow = findViewById(R.id.llAdminDynamicOrderRegisterReportMainRow);
+//        rvAdminOrderReport = findViewById(R.id.rvAdminOrderReport);
         imgBack.setOnClickListener(this);
         spLoginType = findViewById(R.id.spLoginType);
         tvHeaderTitle = findViewById(R.id.tvHeaderTitle);
@@ -196,22 +209,19 @@ public class OrderRegisterActivity extends AppCompatActivity implements View.OnC
             datePickerDialog_from.getDatePicker();//.setMinDate(System.currentTimeMillis() - 1000);
             datePickerDialog_from.show();
 
-        }else if (v.getId() == R.id.extFabOrderRegisterRepoert){
-            if (arrayLists != null && arrayLists.size() > 0){
-                String fileUrl = arrayLists.get(0).getReportPDFLink();
-                String fileExtension = fileUrl.substring(fileUrl.lastIndexOf("."));
-                new DownloadPdfFromUrl(OrderRegisterActivity.this,fileUrl,fileExtension,"Order Register Reports");
-            }
+        } else if (v.getId() == R.id.extFabOrderRegisterRepoert) {
+//            if (arrayLists != null && arrayLists.size() > 0) {
+//                String fileUrl = arrayLists.get(0).getReportPDFLink();
+                String fileExtension = orderRegisterReportUrl.substring(orderRegisterReportUrl.lastIndexOf("."));
+                new DownloadPdfFromUrl(OrderRegisterActivity.this, orderRegisterReportUrl, fileExtension, "Order Register Reports");
+//            }
         }
-
     }
-
-    private ArrayList<AdminOrderRegisterPojo> arrayLists;
 
     private void getOrderReisterList(String fromDate, String toDate, String orderStatus) {
         llLoading.setVisibility(View.VISIBLE);
         llNoDateFound.setVisibility(View.GONE);
-        rvAdminOrderReport.setVisibility(View.GONE);
+        svAdminOrderRegisterReport.setVisibility(View.GONE);
         ApiImplementer.getOrderRegister(fromDate, toDate, orderStatus, new Callback<ArrayList<AdminOrderRegisterPojo>>() {
             @Override
             public void onResponse(Call<ArrayList<AdminOrderRegisterPojo>> call, Response<ArrayList<AdminOrderRegisterPojo>> response) {
@@ -219,27 +229,29 @@ public class OrderRegisterActivity extends AppCompatActivity implements View.OnC
                     if (response.code() == 200 && response.body() != null) {
 
                         if (response.body().size() > 0) {
-                            arrayLists = response.body();
-                            if (!CommonUtil.checkIsEmptyOrNullCommon(response.body().get(0).getReportPDFLink())){
+//                            arrayLists = response.body();
+                            if (!CommonUtil.checkIsEmptyOrNullCommon(response.body().get(0).getReportPDFLink())) {
+                                orderRegisterReportUrl = response.body().get(0).getReportPDFLink().trim();
                                 extFabOrderRegisterRepoert.setVisibility(View.VISIBLE);
-                            }else{
+                            } else {
                                 extFabOrderRegisterRepoert.setVisibility(View.GONE);
                             }
                             llLoading.setVisibility(View.GONE);
                             llNoDateFound.setVisibility(View.GONE);
-                            rvAdminOrderReport.setVisibility(View.VISIBLE);
-                            rvAdminOrderReport.setAdapter(new AdminOrderRegisterAdapter(OrderRegisterActivity.this, response.body()));
+                            svAdminOrderRegisterReport.setVisibility(View.VISIBLE);
+                            generateDynamicStockReport(response.body());
+//                            rvAdminOrderReport.setAdapter(new AdminOrderRegisterAdapter(OrderRegisterActivity.this, response.body()));
                         } else {
                             extFabOrderRegisterRepoert.setVisibility(View.GONE);
                             llLoading.setVisibility(View.GONE);
                             llNoDateFound.setVisibility(View.VISIBLE);
-                            rvAdminOrderReport.setVisibility(View.GONE);
+                            svAdminOrderRegisterReport.setVisibility(View.GONE);
                         }
                     } else {
                         extFabOrderRegisterRepoert.setVisibility(View.GONE);
                         llLoading.setVisibility(View.GONE);
                         llNoDateFound.setVisibility(View.VISIBLE);
-                        rvAdminOrderReport.setVisibility(View.GONE);
+                        svAdminOrderRegisterReport.setVisibility(View.GONE);
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -248,12 +260,53 @@ public class OrderRegisterActivity extends AppCompatActivity implements View.OnC
 
             @Override
             public void onFailure(Call<ArrayList<AdminOrderRegisterPojo>> call, Throwable t) {
-                String url = call.request().url().toString();
+//                String url = call.request().url().toString();
                 extFabOrderRegisterRepoert.setVisibility(View.GONE);
                 llLoading.setVisibility(View.GONE);
                 llNoDateFound.setVisibility(View.VISIBLE);
-                rvAdminOrderReport.setVisibility(View.GONE);
+                svAdminOrderRegisterReport.setVisibility(View.GONE);
             }
         });
     }
+
+    private void generateDynamicStockReport(ArrayList<AdminOrderRegisterPojo> adminOrderRegisterPojoArrayList) {
+
+        for (int i = 0; i <= adminOrderRegisterPojoArrayList.size(); i++) {
+            LinearLayout.LayoutParams layoutParamsForll = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            LinearLayout llDynamicAdminStockReport = new LinearLayout(OrderRegisterActivity.this);
+            llDynamicAdminStockReport.setOnClickListener(this);
+            llDynamicAdminStockReport.setTag(adminOrderRegisterPojoArrayList.get(i));
+
+            llDynamicAdminStockReport.setOrientation(LinearLayout.HORIZONTAL);
+            llDynamicAdminStockReport.setLayoutParams(layoutParamsForll);
+            llDynamicAdminStockReport.addView(createDynamicTextView(160, adminOrderRegisterPojoArrayList.get(i).getCdName()));
+            llDynamicAdminStockReport.addView(createDynamicTextView(160, adminOrderRegisterPojoArrayList.get(i).getProductName()));
+            llDynamicAdminStockReport.addView(createDynamicTextView(90, adminOrderRegisterPojoArrayList.get(i).getProductCode() + ""));
+            llDynamicAdminStockReport.addView(createDynamicTextView(90, adminOrderRegisterPojoArrayList.get(i).getQty() + ""));
+            llDynamicAdminStockReport.addView(createDynamicTextView(90, adminOrderRegisterPojoArrayList.get(i).getPoints() + ""));
+            llDynamicAdminStockReport.addView(createDynamicTextView(140, adminOrderRegisterPojoArrayList.get(i).getOrderNo() + ""));
+            llDynamicAdminStockReport.addView(createDynamicTextView(140, adminOrderRegisterPojoArrayList.get(i).getOrderStatus() + ""));
+
+            llAdminDynamicOrderRegisterReportMainRow.addView(llDynamicAdminStockReport);
+        }
+
+    }
+
+    private TextViewMediumFont createDynamicTextView(int txtBoxWidth, String txtBoxValue) {
+        LinearLayout.LayoutParams txtBoxLayoutParam = new LinearLayout.LayoutParams(
+                CommonUtil.convertDpToPxe(OrderRegisterActivity.this, txtBoxWidth), LinearLayout.LayoutParams.MATCH_PARENT);
+        TextViewMediumFont textViewMediumFont = new TextViewMediumFont(OrderRegisterActivity.this);
+        textViewMediumFont.setLayoutParams(txtBoxLayoutParam);
+        textViewMediumFont.setTextColor(getResources().getColor(R.color.black));
+//        textViewMediumFont.setTextSize(15);
+        textViewMediumFont.setPadding(4, 4, 4, 4);
+        textViewMediumFont.setGravity(Gravity.CENTER_VERTICAL);
+        textViewMediumFont.setBackground(ContextCompat.getDrawable(OrderRegisterActivity.this,
+                R.drawable.admin_report_corner));
+        textViewMediumFont.setText(txtBoxValue);
+        return textViewMediumFont;
+    }
+
 }

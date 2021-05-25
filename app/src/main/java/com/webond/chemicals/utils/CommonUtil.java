@@ -78,7 +78,10 @@ public class CommonUtil {
     public static final String REGISTER_WITHOUT_OTP_VERIFICATION = "0";
 
 
-
+    public static int convertFromDpsToPixel(Context context,int dps){
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return  (int) (dps * scale + 0.5f);
+    }
 
 
     public static String getBase64StringFromFileObj(File file) {
