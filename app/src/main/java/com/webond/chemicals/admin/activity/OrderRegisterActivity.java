@@ -288,6 +288,9 @@ public class OrderRegisterActivity extends AppCompatActivity implements View.OnC
             llDynamicAdminStockReport.addView(createDynamicTextView(90, adminOrderRegisterPojoArrayList.get(i).getPoints() + ""));
             llDynamicAdminStockReport.addView(createDynamicTextView(140, adminOrderRegisterPojoArrayList.get(i).getOrderNo() + ""));
             llDynamicAdminStockReport.addView(createDynamicTextView(140, adminOrderRegisterPojoArrayList.get(i).getOrderStatus() + ""));
+            llDynamicAdminStockReport.addView(createDynamicTextView(90, adminOrderRegisterPojoArrayList.get(i).getCdCode() + ""));
+            llDynamicAdminStockReport.addView(createDynamicTextView(140, adminOrderRegisterPojoArrayList.get(i).getOrderDate() + ""));
+            llDynamicAdminStockReport.addView(createDynamicTextView(140, adminOrderRegisterPojoArrayList.get(i).getOrderType() + ""));
 
             llAdminDynamicOrderRegisterReportMainRow.addView(llDynamicAdminStockReport);
         }

@@ -184,6 +184,7 @@ public class AdminStockReportActivity extends AppCompatActivity implements View.
             llDynamicAdminStockReport.setOrientation(LinearLayout.HORIZONTAL);
             llDynamicAdminStockReport.setLayoutParams(layoutParamsForll);
             llDynamicAdminStockReport.addView(createDynamicTextView(160,adminStockReportPojoArrayList.get(i).getCDName()));
+            llDynamicAdminStockReport.addView(createDynamicTextView(90,adminStockReportPojoArrayList.get(i).getCDCode()+""));
             llDynamicAdminStockReport.addView(createDynamicTextView(160,adminStockReportPojoArrayList.get(i).getProductName()));
             llDynamicAdminStockReport.addView(createDynamicTextView(90,adminStockReportPojoArrayList.get(i).getTotalQty()+""));
             llDynamicAdminStockReport.addView(createDynamicTextView(90,adminStockReportPojoArrayList.get(i).getSaleQty()+""));

@@ -41,6 +41,7 @@ public class AdminPointReportActivity extends AppCompatActivity  implements View
     private static final String SELECT_USER_TYPE = "Select User Type";
     private static final String DISTRIBUTOR = "Distributor";
     private static final String DEALER = "Dealer";
+    private static final String CUSTOMER = "Customer";
     private SpinnerSimpleAdapter spinnerAdapterUserType;
 //    private RecyclerView rvAdminPointReport;
     private LinearLayout llLoading;
@@ -70,8 +71,11 @@ public class AdminPointReportActivity extends AppCompatActivity  implements View
                         String loginType = "3";
                         llAdminPointDynamicReportMainRow.removeAllViewsInLayout();
                         getPointReportList(loginType);
+                    }else if (selectedType.equals("Customer")){
+                        String loginType = "4";
+                        llAdminPointDynamicReportMainRow.removeAllViewsInLayout();
+                        getPointReportList(loginType);
                     }
-
 
                 }
             }
@@ -102,6 +106,8 @@ public class AdminPointReportActivity extends AppCompatActivity  implements View
         userTypeHashMap.put(DISTRIBUTOR, "2");
         selectTypeArrayList.add(DEALER);
         userTypeHashMap.put(DEALER, "3");
+        selectTypeArrayList.add(CUSTOMER);
+        userTypeHashMap.put(CUSTOMER, "4");
 
         spinnerAdapterUserType = new SpinnerSimpleAdapter(AdminPointReportActivity.this, selectTypeArrayList);
         spLoginType.setAdapter(spinnerAdapterUserType);

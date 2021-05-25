@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".admin.activity.AdminManageDistributorOrderActivity">
+    android:orientation="vertical">
 
 
     <include
@@ -88,6 +87,15 @@
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:text="Name"
+                            android:textColor="@color/black"
+                            android:padding="4dp"
+                            android:background="@drawable/admin_report_corner"/>
+
+                        <com.webond.chemicals.custom_class.TextViewBoldFont
+                            android:layout_width="90dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="Code"
                             android:textColor="@color/black"
                             android:padding="4dp"
                             android:background="@drawable/admin_report_corner"/>

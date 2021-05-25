@@ -140,12 +140,14 @@ public class AdminStockReportDetailActivity extends AppCompatActivity implements
             llDynamicAdminStockReport.setOrientation(LinearLayout.HORIZONTAL);
             llDynamicAdminStockReport.setLayoutParams(layoutParamsForll);
             llDynamicAdminStockReport.addView(createDynamicTextView(160,adminStockReportPojoArrayList.get(i).getCdName()));
+            llDynamicAdminStockReport.addView(createDynamicTextView(90,adminStockReportPojoArrayList.get(i).getCdCode()+""));
             llDynamicAdminStockReport.addView(createDynamicTextView(160,adminStockReportPojoArrayList.get(i).getProductName()));
             llDynamicAdminStockReport.addView(createDynamicTextView(90,adminStockReportPojoArrayList.get(i).getProductCode()+""));
             llDynamicAdminStockReport.addView(createDynamicTextView(90,adminStockReportPojoArrayList.get(i).getQty()+""));
             llDynamicAdminStockReport.addView(createDynamicTextView(90,adminStockReportPojoArrayList.get(i).getPoints()+""));
             llDynamicAdminStockReport.addView(createDynamicTextView(90,adminStockReportPojoArrayList.get(i).getOrderNo()+""));
             llDynamicAdminStockReport.addView(createDynamicTextView(150,adminStockReportPojoArrayList.get(i).getOrderDate()+""));
+            llDynamicAdminStockReport.addView(createDynamicTextView(150,adminStockReportPojoArrayList.get(i).getOrderType()+""));
 
             llAdminDetailDynamicReportMainRow.addView(llDynamicAdminStockReport);
         }

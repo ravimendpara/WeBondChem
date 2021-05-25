@@ -22,7 +22,6 @@ public class AdminReportActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_report);
         initView();
-
     }
 
 
