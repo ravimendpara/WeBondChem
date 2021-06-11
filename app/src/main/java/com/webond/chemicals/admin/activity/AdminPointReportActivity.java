@@ -41,7 +41,7 @@ public class AdminPointReportActivity extends AppCompatActivity  implements View
     private static final String SELECT_USER_TYPE = "Select User Type";
     private static final String DISTRIBUTOR = "Distributor";
     private static final String DEALER = "Dealer";
-    private static final String CUSTOMER = "Customer";
+    private static final String CUSTOMER = "Applicant";
     private SpinnerSimpleAdapter spinnerAdapterUserType;
 //    private RecyclerView rvAdminPointReport;
     private LinearLayout llLoading;
@@ -71,7 +71,7 @@ public class AdminPointReportActivity extends AppCompatActivity  implements View
                         String loginType = "3";
                         llAdminPointDynamicReportMainRow.removeAllViewsInLayout();
                         getPointReportList(loginType);
-                    }else if (selectedType.equals("Customer")){
+                    }else if (selectedType.equals("Applicant")){
                         String loginType = "4";
                         llAdminPointDynamicReportMainRow.removeAllViewsInLayout();
                         getPointReportList(loginType);
@@ -188,6 +188,8 @@ public class AdminPointReportActivity extends AppCompatActivity  implements View
             llDynamicAdminStockReport.setLayoutParams(layoutParamsForll);
             llDynamicAdminStockReport.addView(createDynamicTextView(160,adminPointReportPojoList.get(i).getCdName()));
             llDynamicAdminStockReport.addView(createDynamicTextView(90,adminPointReportPojoList.get(i).getCdCode()));
+            llDynamicAdminStockReport.addView(createDynamicTextView(130,adminPointReportPojoList.get(i).getRedemPoint()+""));
+            llDynamicAdminStockReport.addView(createDynamicTextView(130,adminPointReportPojoList.get(i).getAvailablePoint()+""));
             llDynamicAdminStockReport.addView(createDynamicTextView(130,adminPointReportPojoList.get(i).getTotalPoint()+""));
 
             llAdminPointDynamicReportMainRow.addView(llDynamicAdminStockReport);

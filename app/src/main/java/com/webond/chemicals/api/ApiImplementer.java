@@ -10,12 +10,14 @@ import com.webond.chemicals.pojo.AddDistributorOrderDataPojo;
 import com.webond.chemicals.pojo.AddProductPojo;
 import com.webond.chemicals.pojo.AdminOrderRegisterPojo;
 import com.webond.chemicals.pojo.AdminPointReportPojo;
+import com.webond.chemicals.pojo.AdminRedeemListReportPojo;
 import com.webond.chemicals.pojo.AdminStockReportDetailPojo;
 import com.webond.chemicals.pojo.AdminStockReportPojo;
 import com.webond.chemicals.pojo.ApproveCustomerPojo;
 import com.webond.chemicals.pojo.ApproveDealerPojo;
 import com.webond.chemicals.pojo.ApproveDistributorPojo;
 import com.webond.chemicals.pojo.ApproveOrderPojo;
+import com.webond.chemicals.pojo.ApproveRedemRequestPojo;
 import com.webond.chemicals.pojo.CheckMobileNoExitstOrNoPojo;
 import com.webond.chemicals.pojo.DeleteCustomerPojo;
 import com.webond.chemicals.pojo.DeleteDealerPojo;
@@ -44,9 +46,13 @@ import com.webond.chemicals.pojo.GetLoginOrderListForDealerPojo;
 import com.webond.chemicals.pojo.GetLoginOrderListForDistributorPojo;
 import com.webond.chemicals.pojo.GetProductDetailByIdPojo;
 import com.webond.chemicals.pojo.GetProductListPojo;
+import com.webond.chemicals.pojo.GetRedemListAdminPojo;
+import com.webond.chemicals.pojo.GetRedemListForUserPojo;
+import com.webond.chemicals.pojo.GetRedemProductListPojo;
 import com.webond.chemicals.pojo.GetStateListPojo;
 import com.webond.chemicals.pojo.GetTalukaListPojo;
 import com.webond.chemicals.pojo.GetVersionInfoPojo;
+import com.webond.chemicals.pojo.SaveRedemDataPojo;
 import com.webond.chemicals.pojo.SendOtpPojo;
 import com.webond.chemicals.pojo.UpdateProductPojo;
 
@@ -614,17 +620,61 @@ public class ApiImplementer {
         call.enqueue(cb);
     }
 
-    public static void getStockReportDataDetail(String LoginType,String LoginId,String ProductId, Callback<ArrayList<AdminStockReportDetailPojo>> cb) {
+    public static void getStockReportDataDetail(String LoginType, String LoginId, String ProductId, Callback<ArrayList<AdminStockReportDetailPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
-        Call<ArrayList<AdminStockReportDetailPojo>> call = apiService.GetStockReportDataDetail(LoginType,LoginId,ProductId);
+        Call<ArrayList<AdminStockReportDetailPojo>> call = apiService.GetStockReportDataDetail(LoginType, LoginId, ProductId);
         call.enqueue(cb);
     }
 
-    public static void getOrderRegister(String fromDate,String toDate,String orderStatus, Callback<ArrayList<AdminOrderRegisterPojo>> cb) {
+    public static void getOrderRegister(String fromDate, String toDate, String orderStatus, Callback<ArrayList<AdminOrderRegisterPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
-        Call<ArrayList<AdminOrderRegisterPojo>> call = apiService.GetOrderRegisterReport(fromDate,toDate,orderStatus);
+        Call<ArrayList<AdminOrderRegisterPojo>> call = apiService.GetOrderRegisterReport(fromDate, toDate, orderStatus);
         call.enqueue(cb);
     }
 
+    public static void SaveRedeemData(String RedemProductId, String RedemPoint,
+                                      String RedemType, String RedemCustomerId,
+                                      String RedemDealerId, String RedemDistributorId,
+                                      String Qty, Callback<ArrayList<SaveRedemDataPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<SaveRedemDataPojo>> call = apiService.SaveRedeemData(RedemProductId, RedemPoint,
+                RedemType, RedemCustomerId, RedemDealerId, RedemDistributorId, Qty);
+        call.enqueue(cb);
+    }
+
+    public static void GetRedemProductList(String LoginType, String LoginId,
+                                           Callback<ArrayList<GetRedemProductListPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<GetRedemProductListPojo>> call = apiService.GetRedemProductList(LoginType,LoginId);
+        call.enqueue(cb);
+    }
+
+    public static void ApproveRedemRequest(String RedemId, String Status,
+                                           Callback<ArrayList<ApproveRedemRequestPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<ApproveRedemRequestPojo>> call = apiService.ApproveRedemRequest(RedemId,Status);
+        call.enqueue(cb);
+    }
+
+    public static void GetRedemListAdmin(String LoginType, String FilterType,
+                                           Callback<ArrayList<GetRedemListAdminPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<GetRedemListAdminPojo>> call = apiService.GetRedemListAdmin(LoginType,FilterType);
+        call.enqueue(cb);
+    }
+
+    public static void GetRedemListForUser(String LoginType, String LoginId,String FilterType,
+                                         Callback<ArrayList<GetRedemListForUserPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<GetRedemListForUserPojo>> call = apiService.GetRedemListForUser(LoginType,LoginId,FilterType);
+        call.enqueue(cb);
+    }
+
+    public static void getRedeemListReportApiImplementer(String LoginType, String FilterType,
+                                           Callback<ArrayList<AdminRedeemListReportPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<AdminRedeemListReportPojo>> call = apiService.GetRedemListReport(LoginType,FilterType);
+        call.enqueue(cb);
+    }
 
 }

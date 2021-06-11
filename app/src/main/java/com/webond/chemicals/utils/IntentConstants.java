@@ -23,6 +23,14 @@ public class IntentConstants {
     public static final int REQUEST_CODE_FOR_LOGOUT = 1045;
     public static final String MOBILE_NO = "mobileNo";
 
+    public static final int REQUEST_CODE_CUSTOMER_REDEEM_REQ = 1046;
+    public static final int REQUEST_CODE_DEALER_REDEEM_REQ = 1047;
+    public static final int REQUEST_CODE_DISTRIBUTOR_REDEEM_REQ = 1048;
 
+    public static final int REQUEST_CODE_REDEEM_SUCCESSFULLY = 1049;
+    public static final String TOTAL_POINT = "total_point";
+
+    public static final int REQUEST_CODE_FOR_CANCEL_REDEEM_REQ = 1050;
+    public static final String TOTAL_POINT_AFTER_CANCEL_REQ = "total_point_after_cancel_req";
 
 }

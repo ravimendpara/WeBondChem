@@ -39,6 +39,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements View
     private MaterialCardView cvProfile;
     private MaterialCardView cvMyOrders;
     private MaterialCardView cvAddOrder;
+    private MaterialCardView cvMyRedemption;
+    private MaterialCardView cvRedeemProduct;
     private Animation animation;
     RecyclerViewPager recyclerViewPagerStudentSideBanner;
 
@@ -68,6 +70,10 @@ public class CustomerDashboardActivity extends AppCompatActivity implements View
         cvMyOrders.setOnClickListener(this);
         cvAddOrder = findViewById(R.id.cvAddOrder);
         cvAddOrder.setOnClickListener(this);
+        cvMyRedemption = findViewById(R.id.cvMyRedemption);
+        cvMyRedemption.setOnClickListener(this);
+        cvRedeemProduct = findViewById(R.id.cvRedeemProduct);
+        cvRedeemProduct.setOnClickListener(this);
         imgProfile = findViewById(R.id.imgProfile);
         imgProfile.setOnClickListener(this);
         tvName = findViewById(R.id.tvName);
@@ -86,7 +92,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements View
                         .placeholder(R.drawable.person_img)
                         .into(imgProfile);
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
@@ -135,6 +141,28 @@ public class CustomerDashboardActivity extends AppCompatActivity implements View
         } else if (v.getId() == R.id.imgProfile) {
             Intent intent = new Intent(CustomerDashboardActivity.this, CustomerProfileActivity.class);
             startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_LOGOUT);
+        }else if (v.getId() == R.id.cvMyRedemption) {
+            animation = AnimationUtils.loadAnimation(CustomerDashboardActivity.this, R.anim.bounce);
+            cvMyRedemption.startAnimation(animation);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(CustomerDashboardActivity.this, CustomerRedeemListActivity.class);
+                    intent.putExtra(IntentConstants.TOTAL_POINT_AFTER_CANCEL_REQ, tvTotalPoints.getText().toString());
+                    startActivityForResult(intent,IntentConstants.REQUEST_CODE_FOR_CANCEL_REDEEM_REQ);
+                }
+            }, 400);
+        }else if (v.getId() == R.id.cvRedeemProduct) {
+            animation = AnimationUtils.loadAnimation(CustomerDashboardActivity.this, R.anim.bounce);
+            cvRedeemProduct.startAnimation(animation);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(CustomerDashboardActivity.this,CustomerRedeemProductActivity.class);
+                    intent.putExtra(IntentConstants.TOTAL_POINT, tvTotalPoints.getText().toString());
+                    startActivityForResult(intent,IntentConstants.REQUEST_CODE_CUSTOMER_REDEEM_REQ);
+                }
+            }, 400);
         }
     }
 
@@ -145,6 +173,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements View
             animation.cancel();
         }
     }
+
+
 
     private void getBannerList() {
         ApiImplementer.getBannerListApiImplementer(new Callback<ArrayList<GetBannerListPojo>>() {
@@ -174,6 +204,16 @@ public class CustomerDashboardActivity extends AppCompatActivity implements View
             Intent intent = new Intent(CustomerDashboardActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
+        }else if(requestCode == IntentConstants.REQUEST_CODE_CUSTOMER_REDEEM_REQ){
+            if (data != null && data.hasExtra(CustomerRedeemProductActivity.CUSTOMER_TOTAL_POINTS)){
+                String totalPoints = data.getStringExtra(CustomerRedeemProductActivity.CUSTOMER_TOTAL_POINTS);
+                tvTotalPoints.setText(totalPoints);
+            }
+        }else if (requestCode == IntentConstants.REQUEST_CODE_FOR_CANCEL_REDEEM_REQ){
+            if (data != null && data.hasExtra(IntentConstants.TOTAL_POINT_AFTER_CANCEL_REQ)){
+                String totalPoints = data.getStringExtra(IntentConstants.TOTAL_POINT_AFTER_CANCEL_REQ);
+                tvTotalPoints.setText(totalPoints);
+            }
         }
     }
 

@@ -31,6 +31,7 @@ import com.webond.chemicals.pojo.GetDetailsForLoginUserDealerPojo;
 import com.webond.chemicals.pojo.GetDetailsForLoginUserDistributorPojo;
 import com.webond.chemicals.pojo.SendOtpPojo;
 import com.webond.chemicals.utils.CommonUtil;
+import com.webond.chemicals.utils.ConnectionDetector;
 import com.webond.chemicals.utils.DialogUtil;
 import com.webond.chemicals.utils.IntentConstants;
 import com.webond.chemicals.utils.MySharedPreferences;
@@ -50,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final String ADMIN = "Admin";
     private static final String DISTRIBUTOR = "Distributor";
     private static final String DEALER = "Dealer";
-    private static final String CUSTOMER = "Customer";
+    private static final String CUSTOMER = "Applicant";
 
     private HashMap<String, String> userTypeHashMap = new HashMap<>();
 
@@ -63,6 +64,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String randomSixDigitOTP;
     private LinearLayout llOrRegister;
     private boolean isOTPVerificationForRegister = false;
+    private ConnectionDetector connectionDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +96,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void initView() {
         mySharedPreferences = new MySharedPreferences(LoginActivity.this);
+        connectionDetector = new ConnectionDetector(LoginActivity.this);
         llOrRegister = findViewById(R.id.llOrRegister);
         spUserType = findViewById(R.id.spUserType);
         edtMobileNo = findViewById(R.id.edtMobileNo);
@@ -152,13 +155,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         if (v.getId() == R.id.cvLogin) {
             if (isValid()) {
-                randomSixDigitOTP = CommonUtil.getRandomSixDigitOTP();
-                checkIsMobileNoIsExistOrNot(true, false, edtMobileNo.getText().toString().trim(), true);
+                if(connectionDetector.isConnectingToInternet()){
+                    randomSixDigitOTP = CommonUtil.getRandomSixDigitOTP();
+                    checkIsMobileNoIsExistOrNot(true, false, edtMobileNo.getText().toString().trim(), true);
+                }else{
+                    Toast.makeText(this, "No Internet Connection,Please try again later!", Toast.LENGTH_SHORT).show();
+                }
             }
         } else if (v.getId() == R.id.cvRegister) {
             if (isValid()) {
-                randomSixDigitOTP = CommonUtil.getRandomSixDigitOTP();
-                checkIsMobileNoIsExistOrNot(true, false, edtMobileNo.getText().toString().trim(), false);
+                if(connectionDetector.isConnectingToInternet()){
+                    randomSixDigitOTP = CommonUtil.getRandomSixDigitOTP();
+                    checkIsMobileNoIsExistOrNot(true, false, edtMobileNo.getText().toString().trim(), false);
+                }else{
+                    Toast.makeText(this, "No Internet Connection,Please try again later!", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }

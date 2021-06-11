@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,8 @@ import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.common_activity.LoginActivity;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
+import com.webond.chemicals.customer.activity.CustomerDashboardActivity;
+import com.webond.chemicals.customer.activity.CustomerRedeemListActivity;
 import com.webond.chemicals.pojo.GetBannerListPojo;
 import com.webond.chemicals.pojo.GetDashboardDetailsPojo;
 import com.webond.chemicals.utils.CommonUtil;
@@ -42,6 +45,8 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
     private MaterialCardView cvAddOrder;
     private MaterialCardView cvManageCustomerOrder;
     private MaterialCardView cvMyOrders;
+    private MaterialCardView cvMyRedemption;
+    private MaterialCardView cvRedeemProduct;
     private Animation animation;
     RecyclerViewPager recyclerViewPagerStudentSideBanner;
 
@@ -52,6 +57,8 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
     TextViewMediumFont tvNameCard;
     TextViewMediumFont tvCode;
     TextViewMediumFont tvTotalPoints;
+
+    private LinearLayout llManageApplicant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +83,10 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
         cvManageCustomerOrder.setOnClickListener(this);
         cvMyOrders = findViewById(R.id.cvMyOrders);
         cvMyOrders.setOnClickListener(this);
+        cvMyRedemption = findViewById(R.id.cvMyRedemption);
+        cvMyRedemption.setOnClickListener(this);
+        cvRedeemProduct = findViewById(R.id.cvRedeemProduct);
+        cvRedeemProduct.setOnClickListener(this);
 
         imgProfile = findViewById(R.id.imgProfile);
         imgProfile.setOnClickListener(this);
@@ -86,10 +97,14 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
         tvCode = findViewById(R.id.tvCode);
         tvTotalPoints = findViewById(R.id.tvTotalPoints);
 
+        llManageApplicant = findViewById(R.id.llManageApplicant);
+
         if (mySharedPreferences.getDealerUnderRegStatus().equalsIgnoreCase("2")){
+            llManageApplicant.setVisibility(View.VISIBLE);
             cvManageCustomer.setVisibility(View.VISIBLE);
         }else {
             cvManageCustomer.setVisibility(View.INVISIBLE);
+            llManageApplicant.setVisibility(View.GONE);
         }
 
         try {
@@ -169,6 +184,28 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
         }else if (v.getId() == R.id.imgProfile){
             Intent intent = new Intent(DealerDashboardActivity.this, DealerProfileActivity.class);
             startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_LOGOUT);
+        }else if (v.getId() == R.id.cvMyRedemption) {
+            animation = AnimationUtils.loadAnimation(DealerDashboardActivity.this, R.anim.bounce);
+            cvMyRedemption.startAnimation(animation);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(DealerDashboardActivity.this, DealerRedeemListActivity.class);
+                    intent.putExtra(IntentConstants.TOTAL_POINT_AFTER_CANCEL_REQ, tvTotalPoints.getText().toString());
+                    startActivityForResult(intent,IntentConstants.REQUEST_CODE_FOR_CANCEL_REDEEM_REQ);
+                }
+            }, 400);
+        }else if (v.getId() == R.id.cvRedeemProduct) {
+            animation = AnimationUtils.loadAnimation(DealerDashboardActivity.this, R.anim.bounce);
+            cvRedeemProduct.startAnimation(animation);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(DealerDashboardActivity.this,DealerRedeemProductActivity.class);
+                    intent.putExtra(IntentConstants.TOTAL_POINT, tvTotalPoints.getText().toString());
+                    startActivityForResult(intent, IntentConstants.REQUEST_CODE_DEALER_REDEEM_REQ);
+                }
+            }, 400);
         }
     }
 
@@ -208,6 +245,16 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
             Intent intent = new Intent(DealerDashboardActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
+        }else if (requestCode == IntentConstants.REQUEST_CODE_DEALER_REDEEM_REQ){
+            if (data != null && data.hasExtra(DealerRedeemProductActivity.DEALER_TOTAL_POINTS)){
+                String totalPoints = data.getStringExtra(DealerRedeemProductActivity.DEALER_TOTAL_POINTS);
+                tvTotalPoints.setText(totalPoints);
+            }
+        }else if (requestCode == IntentConstants.REQUEST_CODE_FOR_CANCEL_REDEEM_REQ){
+            if (data != null && data.hasExtra(IntentConstants.TOTAL_POINT_AFTER_CANCEL_REQ)){
+                String totalPoints = data.getStringExtra(IntentConstants.TOTAL_POINT_AFTER_CANCEL_REQ);
+                tvTotalPoints.setText(totalPoints);
+            }
         }
     }
 

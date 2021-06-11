@@ -17,6 +17,8 @@ public class AdminReportActivity extends AppCompatActivity implements View.OnCli
     private MaterialCardView cvPointReport;
     private MaterialCardView cvStockReport;
     private MaterialCardView cvOrderRegister;
+    private MaterialCardView cvRedeemListReport;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,8 @@ public class AdminReportActivity extends AppCompatActivity implements View.OnCli
         cvPointReport = findViewById(R.id.cvPointReport);
         cvOrderRegister = findViewById(R.id.cvOrderRegister);
         cvStockReport = findViewById(R.id.cvStockReport);
+        cvRedeemListReport = findViewById(R.id.cvRedeemListReport);
+        cvRedeemListReport.setOnClickListener(this);
         imgBack.setOnClickListener(this);
         cvStockReport.setOnClickListener(this);
         cvPointReport.setOnClickListener(this);
@@ -44,19 +48,17 @@ public class AdminReportActivity extends AppCompatActivity implements View.OnCli
             onBackPressed();
 
         }else if (v.getId() == R.id.cvStockReport){
-
             Intent stockReportIntent =new Intent(this,AdminStockReportActivity.class);
             startActivity(stockReportIntent);
-
         }else if (v.getId() == R.id.cvPointReport){
             Intent pointReportIntent =new Intent(this,AdminPointReportActivity.class);
             startActivity(pointReportIntent);
-
         }else if (v.getId() == R.id.cvOrderRegister){
             Intent orderRegister =new Intent(this,OrderRegisterActivity.class);
             startActivity(orderRegister);
-
+        }else if (v.getId() == R.id.cvRedeemListReport){
+            Intent redeemListReportIntent = new Intent(this,AdminRedeemListReportActivity.class);
+            startActivity(redeemListReportIntent);
         }
-
     }
 }

@@ -163,7 +163,7 @@
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_person"
+                            app:srcCompat="@drawable/ic_person"
                             android:tint="@color/white" />
 
                     </LinearLayout>
@@ -172,7 +172,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Ordern Register \nReport"
+                        android:gravity="center"
+                        android:text="Order Register\nReport"
                         android:textColor="@color/darker_grey_color"
                         android:textSize="@dimen/dashboard_text_size" />
 
@@ -212,7 +213,7 @@
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_manage_order"
+                            app:srcCompat="@drawable/ic_manage_order"
                             android:tint="@color/white" />
 
                     </LinearLayout>
@@ -268,7 +269,7 @@
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_manage"
+                            app:srcCompat="@drawable/ic_manage"
                             android:tint="@color/white" />
 
                     </LinearLayout>
@@ -286,7 +287,8 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-              android:visibility="invisible"
+                android:id="@+id/cvRedeemListReport"
+              android:visibility="visible"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -317,7 +319,7 @@
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_manage"
+                            app:srcCompat="@drawable/ic_manage"
                             android:tint="@color/white" />
 
                     </LinearLayout>
@@ -327,7 +329,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:gravity="center"
-                        android:text="Stock Report"
+                        android:text="Redeem List\nReport"
                         android:textColor="@color/darker_grey_color"
                         android:textSize="@dimen/dashboard_text_size" />
 

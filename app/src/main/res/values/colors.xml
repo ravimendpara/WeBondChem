@@ -14,6 +14,9 @@
 
     <color name="color_primary_with_75_opacity">#BF039947</color>
 
+    <color name="color_primary_40_opacity">#4D039947</color>
+    <color name="color_accent_40_opacity">#4D393186</color>
+
     <color name="red">#e53935</color>
 
     <color name="darker_grey_color">#757575</color>

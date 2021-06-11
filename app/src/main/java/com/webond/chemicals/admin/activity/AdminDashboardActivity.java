@@ -44,6 +44,7 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
     private MaterialCardView cvManageCustomer;
     private MaterialCardView cvManageProduct;
     private MaterialCardView cvManageDistributorOrder;
+    private MaterialCardView cvRedeemRequest;
     private Animation animation;
     RecyclerViewPager recyclerViewPagerStudentSideBanner;
 
@@ -76,6 +77,8 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         cvManageProduct.setOnClickListener(this);
         cvManageDistributorOrder = findViewById(R.id.cvManageDistributorOrder);
         cvManageDistributorOrder.setOnClickListener(this);
+        cvRedeemRequest = findViewById(R.id.cvRedeemRequest);
+        cvRedeemRequest.setOnClickListener(this);
 
         imgProfile = findViewById(R.id.imgProfile);
         imgProfile.setOnClickListener(this);
@@ -171,6 +174,17 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
                 @Override
                 public void run() {
                     Intent intent = new Intent(AdminDashboardActivity.this, AdminReportActivity.class);
+                    startActivity(intent);
+                }
+            }, 400);
+
+        }else if (v.getId() == R.id.cvRedeemRequest){
+            animation = AnimationUtils.loadAnimation(AdminDashboardActivity.this, R.anim.bounce);
+            cvRedeemRequest.startAnimation(animation);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(AdminDashboardActivity.this, AdminRedeemRequestActivity.class);
                     startActivity(intent);
                 }
             }, 400);

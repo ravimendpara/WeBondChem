@@ -10,12 +10,14 @@ import com.webond.chemicals.pojo.AddDistributorOrderDataPojo;
 import com.webond.chemicals.pojo.AddProductPojo;
 import com.webond.chemicals.pojo.AdminOrderRegisterPojo;
 import com.webond.chemicals.pojo.AdminPointReportPojo;
+import com.webond.chemicals.pojo.AdminRedeemListReportPojo;
 import com.webond.chemicals.pojo.AdminStockReportDetailPojo;
 import com.webond.chemicals.pojo.AdminStockReportPojo;
 import com.webond.chemicals.pojo.ApproveCustomerPojo;
 import com.webond.chemicals.pojo.ApproveDealerPojo;
 import com.webond.chemicals.pojo.ApproveDistributorPojo;
 import com.webond.chemicals.pojo.ApproveOrderPojo;
+import com.webond.chemicals.pojo.ApproveRedemRequestPojo;
 import com.webond.chemicals.pojo.CheckMobileNoExitstOrNoPojo;
 import com.webond.chemicals.pojo.DeleteCustomerPojo;
 import com.webond.chemicals.pojo.DeleteDealerPojo;
@@ -44,9 +46,13 @@ import com.webond.chemicals.pojo.GetLoginOrderListForDealerPojo;
 import com.webond.chemicals.pojo.GetLoginOrderListForDistributorPojo;
 import com.webond.chemicals.pojo.GetProductDetailByIdPojo;
 import com.webond.chemicals.pojo.GetProductListPojo;
+import com.webond.chemicals.pojo.GetRedemListAdminPojo;
+import com.webond.chemicals.pojo.GetRedemListForUserPojo;
+import com.webond.chemicals.pojo.GetRedemProductListPojo;
 import com.webond.chemicals.pojo.GetStateListPojo;
 import com.webond.chemicals.pojo.GetTalukaListPojo;
 import com.webond.chemicals.pojo.GetVersionInfoPojo;
+import com.webond.chemicals.pojo.SaveRedemDataPojo;
 import com.webond.chemicals.pojo.SendOtpPojo;
 import com.webond.chemicals.pojo.UpdateProductPojo;
 
@@ -364,8 +370,7 @@ public interface IApiInterface {
     Call<ArrayList<DeleteDistributorPojo>> deleteDistributor(@Query("DistributorId") String DistributorId);
 
     @GET("GetPointReport")
-    Call<ArrayList<AdminPointReportPojo>> GetPointReport(@Query("LoginType") String LoginType
-                                                                                         );
+    Call<ArrayList<AdminPointReportPojo>> GetPointReport(@Query("LoginType") String LoginType);
 
 
     @GET("GetStockReportData")
@@ -380,10 +385,37 @@ public interface IApiInterface {
 
     @GET("GetOrderRegisterReport")
     Call<ArrayList<AdminOrderRegisterPojo>> GetOrderRegisterReport(@Query("FromDate") String FromDate,
-                                                                     @Query("ToDate") String ToDate,
-                                                                     @Query("OrderStatus") String OrderStatus
-    );
+                                                                   @Query("ToDate") String ToDate,
+                                                                   @Query("OrderStatus") String OrderStatus);
 
+    @GET("SaveRedemData")
+    Call<ArrayList<SaveRedemDataPojo>> SaveRedeemData(@Query("RedemProductId") String RedemProductId,
+                                                      @Query("RedemPoint") String RedemPoint,
+                                                      @Query("RedemType") String RedemType,
+                                                      @Query("RedemCustomerId") String RedemCustomerId,
+                                                      @Query("RedemDealerId") String RedemDealerId,
+                                                      @Query("RedemDistributorId") String RedemDistributorId,
+                                                      @Query("Qty") String Qty);
 
+    @GET("GetRedemProductList")
+    Call<ArrayList<GetRedemProductListPojo>> GetRedemProductList(@Query("LoginType") String LoginType,
+                                                                 @Query("LoginId") String LoginId);
+
+    @GET("ApproveRedemRequest")
+    Call<ArrayList<ApproveRedemRequestPojo>> ApproveRedemRequest(@Query("RedemId") String RedemId,
+                                                                 @Query("Status") String Status);
+
+    @GET("GetRedemListAdmin")
+    Call<ArrayList<GetRedemListAdminPojo>> GetRedemListAdmin(@Query("LoginType") String LoginType,
+                                                             @Query("FilterType") String FilterType);
+
+    @GET("GetRedemListForUser")
+    Call<ArrayList<GetRedemListForUserPojo>> GetRedemListForUser(@Query("LoginType") String LoginType,
+                                                                 @Query("LoginId") String LoginId,
+                                                                 @Query("FilterType") String FilterType);
+
+    @GET("GetRedemListReport")
+    Call<ArrayList<AdminRedeemListReportPojo>> GetRedemListReport(@Query("LoginType") String LoginType,
+                                                                   @Query("FilterType") String FilterType);
 
 }

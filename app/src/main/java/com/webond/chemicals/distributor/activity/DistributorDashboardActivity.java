@@ -17,6 +17,8 @@ import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.common_activity.LoginActivity;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
+import com.webond.chemicals.customer.activity.CustomerDashboardActivity;
+import com.webond.chemicals.customer.activity.CustomerRedeemListActivity;
 import com.webond.chemicals.pojo.GetBannerListPojo;
 import com.webond.chemicals.pojo.GetDashboardDetailsPojo;
 import com.webond.chemicals.utils.CommonUtil;
@@ -42,6 +44,8 @@ public class DistributorDashboardActivity extends AppCompatActivity implements V
     private MaterialCardView cvManageDealerOrder;
     private MaterialCardView cvAddOrder;
     private MaterialCardView cvMyOrders;
+    private MaterialCardView cvMyRedemption;
+    private MaterialCardView cvRedeemProduct;
     private Animation animation;
     RecyclerViewPager recyclerViewPagerStudentSideBanner;
 
@@ -78,6 +82,10 @@ public class DistributorDashboardActivity extends AppCompatActivity implements V
         cvAddOrder.setOnClickListener(this);
         cvMyOrders = findViewById(R.id.cvMyOrders);
         cvMyOrders.setOnClickListener(this);
+        cvMyRedemption = findViewById(R.id.cvMyRedemption);
+        cvMyRedemption.setOnClickListener(this);
+        cvRedeemProduct = findViewById(R.id.cvRedeemProduct);
+        cvRedeemProduct.setOnClickListener(this);
 
         imgProfile = findViewById(R.id.imgProfile);
         imgProfile.setOnClickListener(this);
@@ -175,6 +183,28 @@ public class DistributorDashboardActivity extends AppCompatActivity implements V
         }else if (v.getId() == R.id.imgProfile){
             Intent intent = new Intent(DistributorDashboardActivity.this, DistributorProfileActivity.class);
             startActivityForResult(intent, IntentConstants.REQUEST_CODE_FOR_LOGOUT);
+        }else if (v.getId() == R.id.cvMyRedemption) {
+            animation = AnimationUtils.loadAnimation(DistributorDashboardActivity.this, R.anim.bounce);
+            cvMyRedemption.startAnimation(animation);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(DistributorDashboardActivity.this, DistributorRedeemListActivity.class);
+                    intent.putExtra(IntentConstants.TOTAL_POINT_AFTER_CANCEL_REQ, tvTotalPoints.getText().toString());
+                    startActivityForResult(intent,IntentConstants.REQUEST_CODE_FOR_CANCEL_REDEEM_REQ);
+                }
+            }, 400);
+        }else if (v.getId() == R.id.cvRedeemProduct) {
+            animation = AnimationUtils.loadAnimation(DistributorDashboardActivity.this, R.anim.bounce);
+            cvRedeemProduct.startAnimation(animation);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(DistributorDashboardActivity.this, DistributorRedeemProductActivity.class);
+                    intent.putExtra(IntentConstants.TOTAL_POINT, tvTotalPoints.getText().toString());
+                    startActivityForResult(intent,IntentConstants.REQUEST_CODE_DISTRIBUTOR_REDEEM_REQ);
+                }
+            }, 400);
         }
     }
 
@@ -208,12 +238,22 @@ public class DistributorDashboardActivity extends AppCompatActivity implements V
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == IntentConstants.REQUEST_CODE_FOR_LOGOUT) {
             Intent intent = new Intent(DistributorDashboardActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
+        }else if (requestCode == IntentConstants.REQUEST_CODE_DISTRIBUTOR_REDEEM_REQ){
+            if (data != null && data.hasExtra(DistributorRedeemProductActivity.DISTRIBUTOR_TOTAL_POINTS)){
+                String totalPoints = data.getStringExtra(DistributorRedeemProductActivity.DISTRIBUTOR_TOTAL_POINTS);
+                tvTotalPoints.setText(totalPoints);
+            }
+        }else if (requestCode == IntentConstants.REQUEST_CODE_FOR_CANCEL_REDEEM_REQ){
+            if (data != null && data.hasExtra(IntentConstants.TOTAL_POINT_AFTER_CANCEL_REQ)){
+                String totalPoints = data.getStringExtra(IntentConstants.TOTAL_POINT_AFTER_CANCEL_REQ);
+                tvTotalPoints.setText(totalPoints);
+            }
         }
     }
 

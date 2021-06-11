@@ -12,24 +12,44 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".admin.activity.AdminRedeemListReportActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".common_activity.RedeemSuccessfullyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".distributor.activity.DistributorRedeemProductActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dealer.activity.DealerRedeemProductActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".customer.activity.CustomerRedeemProductActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".admin.activity.AdminRedeemRequestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".distributor.activity.DistributorRedeemListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dealer.activity.DealerRedeemListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".customer.activity.CustomerRedeemListActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".admin.activity.OrderRegisterActivity"
-            android:screenOrientation="portrait" >
-
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".admin.activity.AdminStockReportDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".admin.activity.AdminStockReportActivity"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".admin.activity.AdminPointReportActivity"
-            android:screenOrientation="portrait" >
-
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".admin.activity.AdminReportActivity"
             android:screenOrientation="portrait" />
@@ -125,14 +145,13 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".admin.activity.AdminDashboardActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -148,13 +167,13 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
 </manifest>
