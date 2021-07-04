@@ -22,6 +22,7 @@ import com.webond.chemicals.pojo.CheckMobileNoExitstOrNoPojo;
 import com.webond.chemicals.pojo.DeleteCustomerPojo;
 import com.webond.chemicals.pojo.DeleteDealerPojo;
 import com.webond.chemicals.pojo.DeleteDistributorPojo;
+import com.webond.chemicals.pojo.DeleteOrderPojo;
 import com.webond.chemicals.pojo.GetBannerListPojo;
 import com.webond.chemicals.pojo.GetCityListPojo;
 import com.webond.chemicals.pojo.GetCustomerListForDistributorPojo;
@@ -318,6 +319,10 @@ public interface IApiInterface {
     @GET("ApproveOrder")
     Call<ArrayList<ApproveOrderPojo>> approveOrder(@Query("OrderId") String OrderId,
                                                    @Query("Status") String Status);
+
+    @GET("DeleteOrder")
+    Call<ArrayList<DeleteOrderPojo>> DeleteOrder(@Query("OrderId") String OrderId,
+                                                 @Query("Status") String Status);
 
     @GET("GetOrderList")
     Call<ArrayList<GetDistributorOrderListPojo>> getDistributorsOrder(@Query("LoginType") String LoginType,

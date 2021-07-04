@@ -26,8 +26,10 @@ import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.pojo.AddCustomerPojo;
 import com.webond.chemicals.pojo.GetCityListPojo;
 import com.webond.chemicals.pojo.GetDealerListByCityIdPojo;
+import com.webond.chemicals.pojo.GetDealerListByTalukaIdPojo;
 import com.webond.chemicals.pojo.GetDetailsForLoginUserCustomerPojo;
 import com.webond.chemicals.pojo.GetDistributorListByCityIdPojo;
+import com.webond.chemicals.pojo.GetDistributorListByTalukaIdPojo;
 import com.webond.chemicals.pojo.GetDistrictListPojo;
 import com.webond.chemicals.pojo.GetStateListPojo;
 import com.webond.chemicals.pojo.GetTalukaListPojo;
@@ -613,6 +615,7 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                 if (isPdHide) {
                     DialogUtil.hideProgressDialog();
                 }
+
                 try {
                     if (response.code() == 200 && response.body() != null) {
                         if (response.body().size() > 0) {
@@ -632,10 +635,12 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                             spCity.setAdapter(spinnerAdapterUserCity);
 //                            spCity.setSelection(1);
 //                            String cityId = cityHashMap.get(cityArrayList.get(1));
-                            if (rGroupDealerAndDistributor.getCheckedRadioButtonId() == R.id.rbtnDelaer){
-                                getDealerListByCityIdApiCall(false, true, "0");
-                            }else{
-                                getDistributorByCityIdApiCall(false,true,"0");
+                            if (rGroupDealerAndDistributor.getCheckedRadioButtonId() == R.id.rbtnDelaer) {
+                                //getDealerListByCityIdApiCall(false, true, "0");
+                                getDealerListByTalukaIdApiCall(false, true, talukaId);
+                            } else {
+                                //getDistributorByCityIdApiCall(false, true, "0");
+                                getDistributorByTalukaIdApiCall(false, true, talukaId);
                             }
                         } else {
                             if (!isPdHide) {
@@ -660,12 +665,19 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
                     }
                     ex.printStackTrace();
                 }
+
+                //if (rGroupDealerAndDistributor.getCheckedRadioButtonId() == R.id.rbtnDelaer) {
+                //    getDealerListByTalukaIdApiCall(false, true, talukaId);
+                //}
             }
 
             @Override
             public void onFailure(Call<ArrayList<GetCityListPojo>> call, Throwable t) {
                 DialogUtil.hideProgressDialog();
                 Toast.makeText(CustomerRegistrationActivity.this, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                //if (rGroupDealerAndDistributor.getCheckedRadioButtonId() == R.id.rbtnDelaer) {
+                //    getDealerListByTalukaIdApiCall(false, true, talukaId);
+                //}
             }
         });
     }
@@ -732,6 +744,66 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
         });
     }
 
+    private void getDealerListByTalukaIdApiCall(boolean isPdShow, boolean isPdHide, String talukaid) {
+        if (isPdShow) {
+            DialogUtil.showProgressDialogNotCancelable(CustomerRegistrationActivity.this, "");
+        }
+        ApiImplementer.getDealerListByTalukaIdApiImplementer(talukaid, new Callback<ArrayList<GetDealerListByTalukaIdPojo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<GetDealerListByTalukaIdPojo>> call, Response<ArrayList<GetDealerListByTalukaIdPojo>> response) {
+                if (isPdHide) {
+                    DialogUtil.hideProgressDialog();
+                }
+                try {
+                    if (response.code() == 200 && response.body() != null) {
+                        if (response.body().size() > 0) {
+                            ArrayList<GetDealerListByTalukaIdPojo> getDealerListByCityIdPojoArrayList = response.body();
+                            dealerArrayList = new ArrayList<>();
+                            dealerArrayList.add(SELECT_DEALER);
+                            dealerHashMap = new HashMap<>();
+                            for (int i = 0; i < getDealerListByCityIdPojoArrayList.size(); i++) {
+                                if (!CommonUtil.checkIsEmptyOrNullCommon(getDealerListByCityIdPojoArrayList.get(i).getDealerName())) {
+                                    String dealerName = getDealerListByCityIdPojoArrayList.get(i).getDealerName().trim();
+                                    dealerArrayList.add(dealerName);
+                                    dealerHashMap.put(dealerName, getDealerListByCityIdPojoArrayList.get(i).getDealerId().toString());
+                                }
+                            }
+
+                            spinnerAdapterDealerList = new SpinnerSimpleAdapter(CustomerRegistrationActivity.this, dealerArrayList);
+                            spDealer.setAdapter(spinnerAdapterDealerList);
+
+                        } else {
+                            if (!isPdHide) {
+                                DialogUtil.hideProgressDialog();
+                            }
+                            dealerArrayList = new ArrayList<>();
+                            dealerArrayList.add(SELECT_DEALER);
+                            dealerHashMap = new HashMap<>();
+                            spinnerAdapterDealerList = new SpinnerSimpleAdapter(CustomerRegistrationActivity.this, dealerArrayList);
+                            spDealer.setAdapter(spinnerAdapterDealerList);
+                            Toast.makeText(CustomerRegistrationActivity.this, "Dealer Not Found!", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        if (!isPdHide) {
+                            DialogUtil.hideProgressDialog();
+                        }
+                        Toast.makeText(CustomerRegistrationActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception ex) {
+                    if (!isPdHide) {
+                        DialogUtil.hideProgressDialog();
+                    }
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<GetDealerListByTalukaIdPojo>> call, Throwable t) {
+                DialogUtil.hideProgressDialog();
+                Toast.makeText(CustomerRegistrationActivity.this, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private void addCustomerApiCall(boolean isPdShow, boolean isPdHide, String CustomerName,
                                     String DealerId, String StateId, String DistrictId, String TalukaId,
@@ -841,6 +913,67 @@ public class CustomerRegistrationActivity extends AppCompatActivity implements V
 
             @Override
             public void onFailure(Call<ArrayList<GetDistributorListByCityIdPojo>> call, Throwable t) {
+                DialogUtil.hideProgressDialog();
+                Toast.makeText(CustomerRegistrationActivity.this, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void getDistributorByTalukaIdApiCall(boolean isPdShow, boolean isPdHide, String talukaid) {
+        if (isPdShow) {
+            DialogUtil.showProgressDialogNotCancelable(CustomerRegistrationActivity.this, "");
+        }
+        ApiImplementer.getDistributorListByTalukaIdApiImplementer(talukaid, new Callback<ArrayList<GetDistributorListByTalukaIdPojo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<GetDistributorListByTalukaIdPojo>> call, Response<ArrayList<GetDistributorListByTalukaIdPojo>> response) {
+                if (isPdHide) {
+                    DialogUtil.hideProgressDialog();
+                }
+                try {
+                    if (response.code() == 200 && response.body() != null) {
+                        if (response.body().size() > 0) {
+                            ArrayList<GetDistributorListByTalukaIdPojo> getDistributorListByCityIdPojoArrayList = response.body();
+                            distributorArrayList = new ArrayList<>();
+                            distributorArrayList.add(SELECT_DISTRIBUTOR);
+                            distributorHashMap = new HashMap<>();
+                            for (int i = 0; i < getDistributorListByCityIdPojoArrayList.size(); i++) {
+                                if (!CommonUtil.checkIsEmptyOrNullCommon(getDistributorListByCityIdPojoArrayList.get(i).getDistributorName())) {
+                                    String distributorName = getDistributorListByCityIdPojoArrayList.get(i).getDistributorName().trim();
+                                    distributorArrayList.add(distributorName);
+                                    distributorHashMap.put(distributorName, getDistributorListByCityIdPojoArrayList.get(i).getDistributorId().toString());
+                                }
+                            }
+
+                            spinnerAdapterDistributorList = new SpinnerSimpleAdapter(CustomerRegistrationActivity.this, distributorArrayList);
+                            spDistributor.setAdapter(spinnerAdapterDistributorList);
+//                            spCity.setSelection(1);
+
+                        } else {
+                            if (!isPdHide) {
+                                DialogUtil.hideProgressDialog();
+                            }
+                            distributorArrayList = new ArrayList<>();
+                            distributorArrayList.add(SELECT_DISTRIBUTOR);
+                            distributorHashMap = new HashMap<>();
+                            spinnerAdapterDistributorList = new SpinnerSimpleAdapter(CustomerRegistrationActivity.this, distributorArrayList);
+                            spDistributor.setAdapter(spinnerAdapterDistributorList);
+                            Toast.makeText(CustomerRegistrationActivity.this, "Distributors Not Found!", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        if (!isPdHide) {
+                            DialogUtil.hideProgressDialog();
+                        }
+                        Toast.makeText(CustomerRegistrationActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception ex) {
+                    if (!isPdHide) {
+                        DialogUtil.hideProgressDialog();
+                    }
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<GetDistributorListByTalukaIdPojo>> call, Throwable t) {
                 DialogUtil.hideProgressDialog();
                 Toast.makeText(CustomerRegistrationActivity.this, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }

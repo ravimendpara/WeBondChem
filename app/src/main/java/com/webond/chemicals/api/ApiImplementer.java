@@ -22,6 +22,7 @@ import com.webond.chemicals.pojo.CheckMobileNoExitstOrNoPojo;
 import com.webond.chemicals.pojo.DeleteCustomerPojo;
 import com.webond.chemicals.pojo.DeleteDealerPojo;
 import com.webond.chemicals.pojo.DeleteDistributorPojo;
+import com.webond.chemicals.pojo.DeleteOrderPojo;
 import com.webond.chemicals.pojo.GetBannerListPojo;
 import com.webond.chemicals.pojo.GetCityListPojo;
 import com.webond.chemicals.pojo.GetCustomerListForDistributorPojo;
@@ -516,6 +517,12 @@ public class ApiImplementer {
     public static void approveOrderApiImplementer(String OrderId, String Status, Callback<ArrayList<ApproveOrderPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<ApproveOrderPojo>> call = apiService.approveOrder(OrderId, Status);
+        call.enqueue(cb);
+    }
+
+    public static void DeleteOrderApiImplementer(String OrderId, String Status, Callback<ArrayList<DeleteOrderPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<DeleteOrderPojo>> call = apiService.DeleteOrder(OrderId, Status);
         call.enqueue(cb);
     }
 

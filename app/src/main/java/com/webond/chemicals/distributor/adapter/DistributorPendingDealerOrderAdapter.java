@@ -1,6 +1,8 @@
 package com.webond.chemicals.distributor.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import com.webond.chemicals.R;
 import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.pojo.ApproveOrderPojo;
+import com.webond.chemicals.pojo.DeleteOrderPojo;
 import com.webond.chemicals.pojo.GetDealerOrderListPojo;
 import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.DialogUtil;
@@ -73,6 +76,15 @@ public class DistributorPendingDealerOrderAdapter extends RecyclerView.Adapter<D
 
         if (!CommonUtil.checkIsEmptyOrNullCommon(getDealerOrderListPojo.getStatus())) {
             holder.tvStatus.setText(getDealerOrderListPojo.getStatus() + "");
+
+            if (getDealerOrderListPojo.getStatus().equals("Reject")) {
+                holder.btnDeleteOrder.setVisibility(View.VISIBLE);
+                holder.btnReject.setVisibility(View.GONE);
+            } else {
+                holder.btnDeleteOrder.setVisibility(View.GONE);
+                holder.btnReject.setVisibility(View.VISIBLE);
+            }
+
         }
 
         holder.btnApprove.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +100,34 @@ public class DistributorPendingDealerOrderAdapter extends RecyclerView.Adapter<D
             public void onClick(View view) {
                 approveOrder(getDealerOrderListPojo.getOrderId() + "", CommonUtil.REJECT_STATUS,
                         position,getDealerOrderListPojoArrayList);
+            }
+        });
+
+        holder.btnDeleteOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(R.string.app_name);
+                builder.setMessage("Do you want to delete ?. Once you delete this order can't retrive.");
+                builder.setCancelable(false);
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                        DeleteOrder(getDealerOrderListPojo.getOrderId() + "", CommonUtil.DELETE_STATUS,
+                                position,getDealerOrderListPojoArrayList);
+                    }
+                });
+
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+
             }
         });
     }
@@ -109,6 +149,7 @@ public class DistributorPendingDealerOrderAdapter extends RecyclerView.Adapter<D
         TextViewMediumFont tvDealerName;
         MaterialButton btnApprove;
         MaterialButton btnReject;
+        MaterialButton btnDeleteOrder;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -121,6 +162,7 @@ public class DistributorPendingDealerOrderAdapter extends RecyclerView.Adapter<D
             btnApprove = itemView.findViewById(R.id.btnApprove);
             btnReject = itemView.findViewById(R.id.btnReject);
             tvDealerName = itemView.findViewById(R.id.tvDealerName);
+            btnDeleteOrder = itemView.findViewById(R.id.btnDeleteOrder);
         }
     }
 
@@ -155,5 +197,37 @@ public class DistributorPendingDealerOrderAdapter extends RecyclerView.Adapter<D
             }
         });
     }
-    
+
+    private void DeleteOrder(String orderId, String status,int pos,ArrayList<GetDealerOrderListPojo> getDealerOrderListPojoArratList) {
+        DialogUtil.showProgressDialogNotCancelable(context, "");
+        ApiImplementer.DeleteOrderApiImplementer(orderId, status, new Callback<ArrayList<DeleteOrderPojo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<DeleteOrderPojo>> call, Response<ArrayList<DeleteOrderPojo>> response) {
+                DialogUtil.hideProgressDialog();
+                try {
+                    if (response.code() == 200 && response.body() != null && response.body().size() > 0 &&
+                            response.body().get(0).getStatus() == 1) {
+                        Toast.makeText(context, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
+                        getDealerOrderListPojoArratList.remove(pos);
+                        notifyDataSetChanged();
+                    } else {
+                        if (!CommonUtil.checkIsEmptyOrNullCommon(response.body().get(0).getMsg())) {
+                            Toast.makeText(context, "" + response.body().get(0).getMsg(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<DeleteOrderPojo>> call, Throwable t) {
+                DialogUtil.hideProgressDialog();
+                Toast.makeText(context, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }

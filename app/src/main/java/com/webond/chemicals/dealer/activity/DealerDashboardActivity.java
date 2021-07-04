@@ -99,13 +99,14 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
 
         llManageApplicant = findViewById(R.id.llManageApplicant);
 
-        if (mySharedPreferences.getDealerUnderRegStatus().equalsIgnoreCase("2")){
+        //Remove By RaviM On 2021-07-03
+        //if (mySharedPreferences.getDealerUnderRegStatus().equalsIgnoreCase("2")){
             llManageApplicant.setVisibility(View.VISIBLE);
             cvManageCustomer.setVisibility(View.VISIBLE);
-        }else {
-            cvManageCustomer.setVisibility(View.INVISIBLE);
-            llManageApplicant.setVisibility(View.GONE);
-        }
+        //}else {
+          //  cvManageCustomer.setVisibility(View.INVISIBLE);
+          //  llManageApplicant.setVisibility(View.GONE);
+        //}
 
         try {
             if (!CommonUtil.checkIsEmptyOrNullCommon(mySharedPreferences.getCustomerPhotoPath())) {

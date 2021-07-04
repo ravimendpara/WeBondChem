@@ -148,7 +148,7 @@ public class AdminRedeemListReportActivity extends AppCompatActivity implements 
         llLoading.setVisibility(View.VISIBLE);
         llNoDateFound.setVisibility(View.GONE);
         svAdminReport.setVisibility(View.GONE);
-        ApiImplementer.getRedeemListReportApiImplementer(loginType,filterType, new Callback<ArrayList<AdminRedeemListReportPojo>>() {
+        ApiImplementer. getRedeemListReportApiImplementer(loginType,filterType, new Callback<ArrayList<AdminRedeemListReportPojo>>() {
             @Override
             public void onResponse(Call<ArrayList<AdminRedeemListReportPojo>> call, Response<ArrayList<AdminRedeemListReportPojo>> response) {
                 try {
