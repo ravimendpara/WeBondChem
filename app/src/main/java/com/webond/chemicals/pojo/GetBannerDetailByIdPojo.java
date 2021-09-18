@@ -3,7 +3,7 @@ package com.webond.chemicals.pojo;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class GetBannerListPojo {
+public class GetBannerDetailByIdPojo {
 
     @SerializedName("BannerId")
     @Expose
@@ -14,6 +14,9 @@ public class GetBannerListPojo {
     @SerializedName("BannerName")
     @Expose
     private String bannerName;
+    @SerializedName("BannerUrl")
+    @Expose
+    private String bannerUrl;
 
     public Integer getBannerId() {
         return bannerId;
@@ -37,6 +40,14 @@ public class GetBannerListPojo {
 
     public void setBannerName(String bannerName) {
         this.bannerName = bannerName;
+    }
+
+    public String getBannerUrl() {
+        return bannerUrl;
+    }
+
+    public void setBannerUrl(String bannerUrl) {
+        this.bannerUrl = bannerUrl;
     }
 
 }

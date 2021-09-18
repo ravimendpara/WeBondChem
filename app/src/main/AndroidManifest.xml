@@ -2,6 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.webond.chemicals">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="true"
@@ -12,7 +24,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".admin.activity.AdminRedeemListReportActivity"
+        <activity
+            android:name=".admin.activity.AdminUpdateBannerActivity"
+            android:label="@string/title_activity_admin_update_banner"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".admin.activity.AdminAddBannerActivity"
+            android:label="@string/title_activity_admin_add_banner"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".admin.activity.AdminManageBannerActivity" />
+        <activity
+            android:name=".admin.activity.AdminRedeemListReportActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".common_activity.RedeemSuccessfullyActivity"
@@ -163,17 +185,5 @@
                 android:resource="@xml/provider_path" />
         </provider>
     </application>
-
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
 </manifest>

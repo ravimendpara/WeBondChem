@@ -1,6 +1,8 @@
 package com.webond.chemicals.adapter.distributor;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,13 +19,17 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.webond.chemicals.R;
 import com.webond.chemicals.api.ApiImplementer;
+import com.webond.chemicals.common_activity.LoginActivity;
 import com.webond.chemicals.custom_class.Animations;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
+import com.webond.chemicals.distributor.activity.DistributorDashboardActivity;
 import com.webond.chemicals.pojo.ApproveDistributorPojo;
+import com.webond.chemicals.pojo.GetDetailsForLoginUserDistributorPojo;
 import com.webond.chemicals.pojo.GetDistributorListPojo;
 import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.DialogUtil;
+import com.webond.chemicals.utils.MySharedPreferences;
 
 import java.util.ArrayList;
 
@@ -37,6 +44,7 @@ public class ApproveDistributorListAdapter extends RecyclerView.Adapter<ApproveD
     private ArrayList<GetDistributorListPojo> getDistributorListPojos;
     private LayoutInflater layoutInflater;
     private boolean isLoaded = false;
+    private MySharedPreferences mySharedPreferences;
 
     public ApproveDistributorListAdapter(Context context, ArrayList<GetDistributorListPojo> getDistributorListPojos) {
         this.context = context;
@@ -112,6 +120,14 @@ public class ApproveDistributorListAdapter extends RecyclerView.Adapter<ApproveD
                 holder.tvStatusApproveDistributor.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
             }
             holder.tvStatusApproveDistributor.setText(getDistributorListPojo.getStatus() + "");
+
+            if (mySharedPreferences.getLoginType().equalsIgnoreCase(CommonUtil.LOGIN_TYPE_ADMIN) && getDistributorListPojo.getStatus().equalsIgnoreCase("Approved")) {
+                holder.btnLoginCDD.setVisibility(View.VISIBLE);
+            } else {
+                holder.btnLoginCDD.setVisibility(View.GONE);
+            }
+
+            //Toast.makeText(context.getApplicationContext(),mySharedPreferences.getLoginType(),Toast.LENGTH_LONG).show();
         }
 
         holder.btnRejectApprovedDistributor.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +144,15 @@ public class ApproveDistributorListAdapter extends RecyclerView.Adapter<ApproveD
                 boolean show = toggleLayout(!getDistributorListPojos.get(position).isExpanded(), holder.
                         ivViewMoreBtn, holder.llExpandableLayout);
                 getDistributorListPojos.get(position).setExpanded(show);
+            }
+        });
+
+        holder.btnLoginCDD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                getDetailsForLoginUserDistributor(true, true, getDistributorListPojo.getMobileNo());
+
             }
         });
 
@@ -156,7 +181,7 @@ public class ApproveDistributorListAdapter extends RecyclerView.Adapter<ApproveD
         LinearLayout llExpandableLayout;
 
         MaterialButton btnRejectApprovedDistributor;
-
+        MaterialButton btnLoginCDD;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -175,6 +200,11 @@ public class ApproveDistributorListAdapter extends RecyclerView.Adapter<ApproveD
             tvCityApproveDistributor = itemView.findViewById(R.id.tvCityApproveDistributor);
             tvStatusApproveDistributor = itemView.findViewById(R.id.tvStatusApproveDistributor);
             btnRejectApprovedDistributor = itemView.findViewById(R.id.btnRejectApprovedDistributor);
+
+            btnLoginCDD = itemView.findViewById(R.id.btnLoginCDD);
+
+            mySharedPreferences = new MySharedPreferences(context);
+
         }
     }
 
@@ -217,6 +247,112 @@ public class ApproveDistributorListAdapter extends RecyclerView.Adapter<ApproveD
         }
         return isExpanded;
 
+    }
+
+    private void getDetailsForLoginUserDistributor(boolean isPdShow, boolean isPdHide, String edtMobileNo) {
+        if (isPdShow) {
+            DialogUtil.showProgressDialogNotCancelable(this.context, "");
+        }
+        ApiImplementer.getDetailsForLoginUserDistributorImplementer(edtMobileNo.trim(),
+                new Callback<ArrayList<GetDetailsForLoginUserDistributorPojo>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<GetDetailsForLoginUserDistributorPojo>> call, Response<ArrayList<GetDetailsForLoginUserDistributorPojo>> response) {
+                        if (isPdHide) {
+                            DialogUtil.hideProgressDialog();
+                        }
+                        try {
+                            if (response.code() == 200 && response.body() != null &&
+                                    response.body().size() > 0) {
+                                GetDetailsForLoginUserDistributorPojo getDetailsForLoginUserDistributorPojo = response.body().get(0);
+                                setDataForDistributor(getDetailsForLoginUserDistributorPojo);
+                                ActivityCompat.finishAffinity((Activity) context);
+                                Intent intent = new Intent(context, DistributorDashboardActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                context.startActivity(intent);
+                                ((Activity) context).finish();
+                            } else {
+                                if (!isPdHide) {
+                                    DialogUtil.hideProgressDialog();
+                                }
+                                Toast.makeText(context, "Failed to get login details.", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception ex) {
+                            if (!isPdHide) {
+                                DialogUtil.hideProgressDialog();
+                            }
+                            ex.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<GetDetailsForLoginUserDistributorPojo>> call, Throwable t) {
+                        DialogUtil.hideProgressDialog();
+                        Toast.makeText(context, "Request Failed:- " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void setDataForDistributor(GetDetailsForLoginUserDistributorPojo getDetailsForLoginUserDistributorPojo) {
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDistributorPojo.getLoginType())) {
+            mySharedPreferences.setLoginType(getDetailsForLoginUserDistributorPojo.getLoginType() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDistributorPojo.getDistributorId())) {
+            mySharedPreferences.setDistributorId(getDetailsForLoginUserDistributorPojo.getDistributorId() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDistributorPojo.getDistributorName())) {
+            mySharedPreferences.setDistributorName(getDetailsForLoginUserDistributorPojo.getDistributorName() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDistributorPojo.getMobileNo())) {
+            mySharedPreferences.setDistributorMobileNo(getDetailsForLoginUserDistributorPojo.getMobileNo() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDistributorPojo.getMobileNo2())) {
+            mySharedPreferences.setDistributorMobileNo2(getDetailsForLoginUserDistributorPojo.getMobileNo2() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDistributorPojo.getEmail())) {
+            mySharedPreferences.setDistributorEmail(getDetailsForLoginUserDistributorPojo.getEmail() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDistributorPojo.getPhotoPath())) {
+            mySharedPreferences.setDistributorPhotoPath(getDetailsForLoginUserDistributorPojo.getPhotoPath() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDistributorPojo.getCityName())) {
+            mySharedPreferences.setDistributorCityName(getDetailsForLoginUserDistributorPojo.getCityName() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDistributorPojo.getTalukaName())) {
+            mySharedPreferences.setDistributorTalukaName(getDetailsForLoginUserDistributorPojo.getTalukaName() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDistributorPojo.getDistrictName())) {
+            mySharedPreferences.setDistributorDistrictName(getDetailsForLoginUserDistributorPojo.getDistrictName() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDistributorPojo.getStateName())) {
+            mySharedPreferences.setDistributorStateName(getDetailsForLoginUserDistributorPojo.getStateName() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDistributorPojo.getCityId())) {
+            mySharedPreferences.setDistributorCityId(getDetailsForLoginUserDistributorPojo.getCityId() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDistributorPojo.getTalukaId())) {
+            mySharedPreferences.setDistributorTalukaId(getDetailsForLoginUserDistributorPojo.getTalukaId() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDistributorPojo.getDistrictId())) {
+            mySharedPreferences.setDistributorDistrictId(getDetailsForLoginUserDistributorPojo.getDistrictId() + "");
+        }
+
+        if (!CommonUtil.checkIsEmptyOrNullCommon(getDetailsForLoginUserDistributorPojo.getStateId())) {
+            mySharedPreferences.setDistributorStateId(getDetailsForLoginUserDistributorPojo.getStateId() + "");
+        }
     }
 
 }

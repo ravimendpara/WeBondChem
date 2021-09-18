@@ -8,6 +8,7 @@ import com.webond.chemicals.pojo.AddDealerPojo;
 import com.webond.chemicals.pojo.AddDistributerPojo;
 import com.webond.chemicals.pojo.AddDistributorOrderDataPojo;
 import com.webond.chemicals.pojo.AddProductPojo;
+import com.webond.chemicals.pojo.AddBannerPojo;
 import com.webond.chemicals.pojo.AdminOrderRegisterPojo;
 import com.webond.chemicals.pojo.AdminPointReportPojo;
 import com.webond.chemicals.pojo.AdminRedeemListReportPojo;
@@ -23,6 +24,7 @@ import com.webond.chemicals.pojo.DeleteCustomerPojo;
 import com.webond.chemicals.pojo.DeleteDealerPojo;
 import com.webond.chemicals.pojo.DeleteDistributorPojo;
 import com.webond.chemicals.pojo.DeleteOrderPojo;
+import com.webond.chemicals.pojo.GetBannerDetailByIdPojo;
 import com.webond.chemicals.pojo.GetBannerListPojo;
 import com.webond.chemicals.pojo.GetCityListPojo;
 import com.webond.chemicals.pojo.GetCustomerListForDistributorPojo;
@@ -55,6 +57,7 @@ import com.webond.chemicals.pojo.GetTalukaListPojo;
 import com.webond.chemicals.pojo.GetVersionInfoPojo;
 import com.webond.chemicals.pojo.SaveRedemDataPojo;
 import com.webond.chemicals.pojo.SendOtpPojo;
+import com.webond.chemicals.pojo.UpdateBannerPojo;
 import com.webond.chemicals.pojo.UpdateProductPojo;
 
 import java.util.ArrayList;
@@ -328,6 +331,33 @@ public class ApiImplementer {
         call.enqueue(cb);
     }
 
+    public static void addBannerImplementer(
+            String BannerName,
+            String BannerPhoto1,
+            String BannerPhotoName1,
+            Callback<ArrayList<AddBannerPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<AddBannerPojo>> call = apiService.addBanner(
+                BannerName,
+                BannerPhoto1,
+                BannerPhotoName1);
+        call.enqueue(cb);
+    }
+
+    public static void updateBannerImplementer(
+            String BannerId,
+            String BannerName,
+            String BannerPhoto1,
+            String BannerPhotoName1,
+            Callback<ArrayList<UpdateBannerPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<UpdateBannerPojo>> call = apiService.updateBanner(
+                BannerId,
+                BannerName,
+                BannerPhoto1,
+                BannerPhotoName1);
+        call.enqueue(cb);
+    }
 
     public static void updateProductImplementer(
             String ProductId,
@@ -501,6 +531,11 @@ public class ApiImplementer {
         call.enqueue(cb);
     }
 
+    public static void getBannerDetailsByIdApiImplementer(String bannerid, Callback<ArrayList<GetBannerDetailByIdPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<GetBannerDetailByIdPojo>> call = apiService.getBannerDetailsById(bannerid);
+        call.enqueue(cb);
+    }
 
     public static void getDealerListByTalukaIdApiImplementer(String talukaId, Callback<ArrayList<GetDealerListByTalukaIdPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);

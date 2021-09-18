@@ -43,6 +43,7 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
     private MaterialCardView cvReport;
     private MaterialCardView cvManageCustomer;
     private MaterialCardView cvManageProduct;
+    private MaterialCardView cvManageBanner;
     private MaterialCardView cvManageDistributorOrder;
     private MaterialCardView cvRedeemRequest;
     private Animation animation;
@@ -75,6 +76,8 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         cvManageCustomer.setOnClickListener(this);
         cvManageProduct = findViewById(R.id.cvManageProduct);
         cvManageProduct.setOnClickListener(this);
+        cvManageBanner = findViewById(R.id.cvManageBanner);
+        cvManageBanner.setOnClickListener(this);
         cvManageDistributorOrder = findViewById(R.id.cvManageDistributorOrder);
         cvManageDistributorOrder.setOnClickListener(this);
         cvRedeemRequest = findViewById(R.id.cvRedeemRequest);
@@ -154,6 +157,16 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
                     startActivity(intent);
                 }
             }, 400);
+        } else if (v.getId() == R.id.cvManageBanner) {
+                animation = AnimationUtils.loadAnimation(AdminDashboardActivity.this, R.anim.bounce);
+                cvManageBanner.startAnimation(animation);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(AdminDashboardActivity.this, AdminManageBannerActivity.class);
+                        startActivity(intent);
+                    }
+                }, 400);
         }else if (v.getId() == R.id.cvManageDistributorOrder) {
             animation = AnimationUtils.loadAnimation(AdminDashboardActivity.this, R.anim.bounce);
             cvManageDistributorOrder.startAnimation(animation);

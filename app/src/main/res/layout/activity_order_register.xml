@@ -15,17 +15,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <include
-        android:id="@+id/llNoDateFound"
-        layout="@layout/layout_no_data_found"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.59000003" />
+<!--    <include-->
+<!--        android:id="@+id/llNoDateFound"-->
+<!--        layout="@layout/layout_no_data_found"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.59000003" />-->
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -293,19 +293,19 @@
 
         </ScrollView>
 
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:id="@+id/rvAdminPointReport"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_margin="12dp"-->
-<!--            android:scrollbars="none"-->
-<!--            android:visibility="gone"-->
-<!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />-->
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+        <!--            android:id="@+id/rvAdminPointReport"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_margin="12dp"-->
+        <!--            android:scrollbars="none"-->
+        <!--            android:visibility="gone"-->
+        <!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />-->
 
-        <include
-            android:id="@+id/llLoading"
-            layout="@layout/loading_layout"
-            android:visibility="gone" />
+<!--        <include-->
+<!--            android:id="@+id/llLoading"-->
+<!--            layout="@layout/loading_layout"-->
+<!--            android:visibility="gone" />-->
 
 
 

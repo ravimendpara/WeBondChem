@@ -1,10 +1,5 @@
 package com.webond.chemicals.admin.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -16,15 +11,17 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.ContextCompat;
+
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.webond.chemicals.R;
-import com.webond.chemicals.admin.adapter.AdminOrderRegisterAdapter;
 import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.custom_class.SpinnerSimpleAdapter;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.pojo.AdminOrderRegisterPojo;
-import com.webond.chemicals.pojo.AdminStockReportPojo;
 import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.DownloadPdfFromUrl;
 
@@ -243,8 +240,8 @@ public class OrderRegisterActivity extends AppCompatActivity implements View.OnC
 //                            rvAdminOrderReport.setAdapter(new AdminOrderRegisterAdapter(OrderRegisterActivity.this, response.body()));
                         } else {
                             extFabOrderRegisterRepoert.setVisibility(View.GONE);
-                            llLoading.setVisibility(View.GONE);
-                            llNoDateFound.setVisibility(View.VISIBLE);
+                           llLoading.setVisibility(View.GONE);
+                           llNoDateFound.setVisibility(View.VISIBLE);
                             svAdminOrderRegisterReport.setVisibility(View.GONE);
                         }
                     } else {
