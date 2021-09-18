@@ -73,7 +73,7 @@
                         android:focusable="false"
                         android:fontFamily="@font/montserrat_medium"
                         android:gravity="center_vertical"
-                        android:hint="Upload Product Photo1"
+                        android:hint="Upload Banner"
                         android:imeOptions="actionNext"
                         android:singleLine="true"
                         android:textSize="@dimen/registration_form_text_size"

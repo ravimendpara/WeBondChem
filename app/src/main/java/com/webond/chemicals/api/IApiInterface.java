@@ -20,6 +20,7 @@ import com.webond.chemicals.pojo.ApproveDistributorPojo;
 import com.webond.chemicals.pojo.ApproveOrderPojo;
 import com.webond.chemicals.pojo.ApproveRedemRequestPojo;
 import com.webond.chemicals.pojo.CheckMobileNoExitstOrNoPojo;
+import com.webond.chemicals.pojo.DeleteBannerPojo;
 import com.webond.chemicals.pojo.DeleteCustomerPojo;
 import com.webond.chemicals.pojo.DeleteDealerPojo;
 import com.webond.chemicals.pojo.DeleteDistributorPojo;
@@ -57,6 +58,7 @@ import com.webond.chemicals.pojo.GetTalukaListPojo;
 import com.webond.chemicals.pojo.GetVersionInfoPojo;
 import com.webond.chemicals.pojo.SaveRedemDataPojo;
 import com.webond.chemicals.pojo.SendOtpPojo;
+import com.webond.chemicals.pojo.StockReportByIdPojo;
 import com.webond.chemicals.pojo.UpdateBannerPojo;
 import com.webond.chemicals.pojo.UpdateProductPojo;
 
@@ -249,6 +251,12 @@ public interface IApiInterface {
     );
 
     @FormUrlEncoded
+    @POST("DeleteBanner")
+    Call<ArrayList<DeleteBannerPojo>> DeleteBanner(
+            @Field("BannerId") String BannerId
+    );
+
+    @FormUrlEncoded
     @POST("AddBanner")
     Call<ArrayList<AddBannerPojo>> addBanner(
             @Field("BannerName") String BannerName,
@@ -402,6 +410,11 @@ public interface IApiInterface {
 
     @GET("GetStockReportData")
     Call<ArrayList<AdminStockReportPojo>> GetStockReport(@Query("LoginType") String LoginType
+    );
+
+    @GET("GetStockReportDataById")
+    Call<ArrayList<StockReportByIdPojo>> GetStockReportDataById(@Query("LoginType") String LoginType,
+                                                                @Query("UserId") String UserId
     );
 
     @GET("GetStockReportDataDetail")

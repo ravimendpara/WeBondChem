@@ -20,6 +20,7 @@ import com.webond.chemicals.pojo.ApproveDistributorPojo;
 import com.webond.chemicals.pojo.ApproveOrderPojo;
 import com.webond.chemicals.pojo.ApproveRedemRequestPojo;
 import com.webond.chemicals.pojo.CheckMobileNoExitstOrNoPojo;
+import com.webond.chemicals.pojo.DeleteBannerPojo;
 import com.webond.chemicals.pojo.DeleteCustomerPojo;
 import com.webond.chemicals.pojo.DeleteDealerPojo;
 import com.webond.chemicals.pojo.DeleteDistributorPojo;
@@ -57,6 +58,7 @@ import com.webond.chemicals.pojo.GetTalukaListPojo;
 import com.webond.chemicals.pojo.GetVersionInfoPojo;
 import com.webond.chemicals.pojo.SaveRedemDataPojo;
 import com.webond.chemicals.pojo.SendOtpPojo;
+import com.webond.chemicals.pojo.StockReportByIdPojo;
 import com.webond.chemicals.pojo.UpdateBannerPojo;
 import com.webond.chemicals.pojo.UpdateProductPojo;
 
@@ -356,6 +358,15 @@ public class ApiImplementer {
                 BannerName,
                 BannerPhoto1,
                 BannerPhotoName1);
+        call.enqueue(cb);
+    }
+
+    public static void deleteBannerImplementer(
+            String BannerId,
+            Callback<ArrayList<DeleteBannerPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<DeleteBannerPojo>> call = apiService.DeleteBanner(
+                BannerId);
         call.enqueue(cb);
     }
 
@@ -665,6 +676,12 @@ public class ApiImplementer {
     public static void getStockReportDataDetail(String LoginType, String LoginId, String ProductId, Callback<ArrayList<AdminStockReportDetailPojo>> cb) {
         final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
         Call<ArrayList<AdminStockReportDetailPojo>> call = apiService.GetStockReportDataDetail(LoginType, LoginId, ProductId);
+        call.enqueue(cb);
+    }
+
+    public static void GetStockReportDataById(String LoginType, String UserId, Callback<ArrayList<StockReportByIdPojo>> cb) {
+        final IApiInterface apiService = ApiClient.getClient().create(IApiInterface.class);
+        Call<ArrayList<StockReportByIdPojo>> call = apiService.GetStockReportDataById(LoginType, UserId);
         call.enqueue(cb);
     }
 

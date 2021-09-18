@@ -20,6 +20,8 @@ import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
 import com.webond.chemicals.customer.activity.CustomerDashboardActivity;
 import com.webond.chemicals.customer.activity.CustomerRedeemListActivity;
+import com.webond.chemicals.distributor.activity.DistributorDashboardActivity;
+import com.webond.chemicals.distributor.activity.DistributorStockActivity;
 import com.webond.chemicals.pojo.GetBannerListPojo;
 import com.webond.chemicals.pojo.GetDashboardDetailsPojo;
 import com.webond.chemicals.utils.CommonUtil;
@@ -49,6 +51,7 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
     private MaterialCardView cvRedeemProduct;
     private Animation animation;
     RecyclerViewPager recyclerViewPagerStudentSideBanner;
+    private MaterialCardView cvManageStock;
 
     private CircleImageView imgProfile;
     private TextViewMediumFont tvName;
@@ -87,6 +90,9 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
         cvMyRedemption.setOnClickListener(this);
         cvRedeemProduct = findViewById(R.id.cvRedeemProduct);
         cvRedeemProduct.setOnClickListener(this);
+
+        cvManageStock = findViewById(R.id.cvManageStock);
+        cvManageStock.setOnClickListener(this);
 
         imgProfile = findViewById(R.id.imgProfile);
         imgProfile.setOnClickListener(this);
@@ -207,6 +213,17 @@ public class DealerDashboardActivity extends AppCompatActivity implements View.O
                     startActivityForResult(intent, IntentConstants.REQUEST_CODE_DEALER_REDEEM_REQ);
                 }
             }, 400);
+        }else if (v.getId() == R.id.cvManageStock){
+            animation = AnimationUtils.loadAnimation(DealerDashboardActivity.this, R.anim.bounce);
+            cvManageStock.startAnimation(animation);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(DealerDashboardActivity.this, DealerStockActivity.class);
+                    startActivity(intent);
+                }
+            }, 400);
+
         }
     }
 

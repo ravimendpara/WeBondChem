@@ -24,6 +24,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".dealer.activity.DealerStockActivity"></activity>
+        <activity android:name=".distributor.activity.DistributorStockActivity" />
         <activity
             android:name=".admin.activity.AdminUpdateBannerActivity"
             android:label="@string/title_activity_admin_update_banner"

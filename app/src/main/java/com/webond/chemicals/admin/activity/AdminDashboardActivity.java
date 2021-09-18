@@ -18,6 +18,7 @@ import com.webond.chemicals.common_activity.LoginActivity;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
 import com.webond.chemicals.custom_class.TextViewRegularFont;
 import com.webond.chemicals.distributor.activity.DistributorDashboardActivity;
+import com.webond.chemicals.distributor.activity.DistributorStockActivity;
 import com.webond.chemicals.pojo.GetBannerListPojo;
 import com.webond.chemicals.utils.CommonUtil;
 import com.webond.chemicals.utils.IntentConstants;
@@ -82,7 +83,6 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         cvManageDistributorOrder.setOnClickListener(this);
         cvRedeemRequest = findViewById(R.id.cvRedeemRequest);
         cvRedeemRequest.setOnClickListener(this);
-
         imgProfile = findViewById(R.id.imgProfile);
         imgProfile.setOnClickListener(this);
         tvName = findViewById(R.id.tvName);

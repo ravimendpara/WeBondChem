@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.google.android.material.card.MaterialCardView;
 import com.webond.chemicals.R;
+import com.webond.chemicals.admin.activity.AdminDashboardActivity;
 import com.webond.chemicals.api.ApiImplementer;
 import com.webond.chemicals.common_activity.LoginActivity;
 import com.webond.chemicals.custom_class.TextViewMediumFont;
@@ -48,6 +49,7 @@ public class DistributorDashboardActivity extends AppCompatActivity implements V
     private MaterialCardView cvRedeemProduct;
     private Animation animation;
     RecyclerViewPager recyclerViewPagerStudentSideBanner;
+    private MaterialCardView cvManageStock;
 
     private CircleImageView imgProfile;
     private TextViewMediumFont tvName;
@@ -86,6 +88,8 @@ public class DistributorDashboardActivity extends AppCompatActivity implements V
         cvMyRedemption.setOnClickListener(this);
         cvRedeemProduct = findViewById(R.id.cvRedeemProduct);
         cvRedeemProduct.setOnClickListener(this);
+        cvManageStock = findViewById(R.id.cvManageStock);
+        cvManageStock.setOnClickListener(this);
 
         imgProfile = findViewById(R.id.imgProfile);
         imgProfile.setOnClickListener(this);
@@ -205,6 +209,17 @@ public class DistributorDashboardActivity extends AppCompatActivity implements V
                     startActivityForResult(intent,IntentConstants.REQUEST_CODE_DISTRIBUTOR_REDEEM_REQ);
                 }
             }, 400);
+        }else if (v.getId() == R.id.cvManageStock){
+            animation = AnimationUtils.loadAnimation(DistributorDashboardActivity.this, R.anim.bounce);
+            cvManageStock.startAnimation(animation);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(DistributorDashboardActivity.this, DistributorStockActivity.class);
+                    startActivity(intent);
+                }
+            }, 400);
+
         }
     }
 
